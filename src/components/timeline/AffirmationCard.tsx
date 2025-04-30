@@ -28,9 +28,6 @@ const AffirmationCard: React.FC<AffirmationCardProps> = ({
   return (
     <div className={`p-6 rounded-xl mb-6 bg-gradient-to-br ${getBgGradient()} shadow-sm`}>
       <p className="affirmation">"{affirmation}"</p>
-      <div className="mt-3 text-right">
-        <span className="text-xs font-medium opacity-70">Today's Reflection</span>
-      </div>
     </div>
   );
 };
