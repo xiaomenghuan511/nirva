@@ -14,33 +14,33 @@ interface MoodChartProps {
 // Sample data
 const moodData = {
   day: [
-    { name: 'Happy', value: 40, color: '#CCA25A' },
-    { name: 'Calm', value: 30, color: '#CBBD93' },
-    { name: 'Focused', value: 20, color: '#FFF5B8' },
-    { name: 'Stressed', value: 10, color: '#FFB16E' },
+    { name: 'Happy', value: 40, color: '#a0e4b3' },
+    { name: 'Calm', value: 30, color: '#9b87f5' },
+    { name: 'Focused', value: 20, color: '#D3E4FD' },
+    { name: 'Stressed', value: 10, color: '#FFDEE2' },
   ],
   week: [
-    { name: 'Happy', value: 35, color: '#CCA25A' },
-    { name: 'Calm', value: 25, color: '#CBBD93' },
-    { name: 'Focused', value: 20, color: '#FFF5B8' },
-    { name: 'Stressed', value: 15, color: '#FFB16E' },
-    { name: 'Tired', value: 5, color: '#E5DBBC' },
+    { name: 'Happy', value: 35, color: '#a0e4b3' },
+    { name: 'Calm', value: 25, color: '#9b87f5' },
+    { name: 'Focused', value: 20, color: '#D3E4FD' },
+    { name: 'Stressed', value: 15, color: '#FFDEE2' },
+    { name: 'Tired', value: 5, color: '#FDE1D3' },
   ],
   month: [
-    { name: 'Happy', value: 30, color: '#CCA25A' },
-    { name: 'Calm', value: 20, color: '#CBBD93' },
-    { name: 'Focused', value: 15, color: '#FFF5B8' },
-    { name: 'Stressed', value: 20, color: '#FFB16E' },
-    { name: 'Tired', value: 10, color: '#E5DBBC' },
-    { name: 'Anxious', value: 5, color: '#E6D5B0' },
+    { name: 'Happy', value: 30, color: '#a0e4b3' },
+    { name: 'Calm', value: 20, color: '#9b87f5' },
+    { name: 'Focused', value: 15, color: '#D3E4FD' },
+    { name: 'Stressed', value: 20, color: '#FFDEE2' },
+    { name: 'Tired', value: 10, color: '#FDE1D3' },
+    { name: 'Anxious', value: 5, color: '#F1F0FB' },
   ],
   year: [
-    { name: 'Happy', value: 25, color: '#CCA25A' },
-    { name: 'Calm', value: 20, color: '#CBBD93' },
-    { name: 'Focused', value: 15, color: '#FFF5B8' },
-    { name: 'Stressed', value: 15, color: '#FFB16E' },
-    { name: 'Tired', value: 15, color: '#E5DBBC' },
-    { name: 'Anxious', value: 10, color: '#E6D5B0' },
+    { name: 'Happy', value: 25, color: '#a0e4b3' },
+    { name: 'Calm', value: 20, color: '#9b87f5' },
+    { name: 'Focused', value: 15, color: '#D3E4FD' },
+    { name: 'Stressed', value: 15, color: '#FFDEE2' },
+    { name: 'Tired', value: 15, color: '#FDE1D3' },
+    { name: 'Anxious', value: 10, color: '#F1F0FB' },
   ],
 };
 
@@ -57,7 +57,7 @@ const MoodChart: React.FC = () => {
             key={period}
             className={`px-3 py-1 text-sm rounded-full ${
               activePeriod === period 
-                ? 'bg-primary text-primary-foreground' 
+                ? 'bg-primary text-white' 
                 : 'bg-accent/50 text-foreground'
             }`}
             onClick={() => setActivePeriod(period)}

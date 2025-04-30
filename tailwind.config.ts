@@ -53,30 +53,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Siltstone color palette
-				siltstone: {
-					beige: '#CBBD93',
-					yellow: '#FFF5B8',
-					peach: '#FFB16E',
-					gold: '#CCA25A',
-					soft: {
-						beige: '#E5DBBC',
-						yellow: '#FFFAD9',
-						peach: '#FFDFCA',
-						gold: '#E6D5B0',
-					}
-				},
-				// Nirva color palette (kept for backward compatibility)
+				// Nirva color palette
 				nirva: {
 					lavender: '#9b87f5',
 					mint: '#a0e4b3',
 					peach: '#fde1d3',
 					soft: {
 						green: '#F2FCE2',
-						yellow: '#FFF5B8', // Updated to match Siltstone yellow
+						yellow: '#FEF7CD',
 						purple: '#E5DEFF',
 						pink: '#FFDEE2',
-						peach: '#FFB16E', // Updated to match Siltstone peach
+						peach: '#FDE1D3',
 						blue: '#D3E4FD',
 					},
 					neutral: {

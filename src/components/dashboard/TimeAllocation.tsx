@@ -3,12 +3,12 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const data = [
-  { name: 'Work', hours: 8, color: '#CBBD93' },
-  { name: 'Exercise', hours: 1, color: '#FFF5B8' },
-  { name: 'Social', hours: 2, color: '#FFB16E' },
-  { name: 'Learning', hours: 1.5, color: '#CCA25A' },
-  { name: 'Self-care', hours: 1, color: '#E5DBBC' },
-  { name: 'Other', hours: 3.5, color: '#E6D5B0' },
+  { name: 'Work', hours: 8, color: '#9b87f5' },
+  { name: 'Exercise', hours: 1, color: '#a0e4b3' },
+  { name: 'Social', hours: 2, color: '#FFDEE2' },
+  { name: 'Learning', hours: 1.5, color: '#FDE1D3' },
+  { name: 'Self-care', hours: 1, color: '#FEF7CD' },
+  { name: 'Other', hours: 3.5, color: '#F1F0FB' },
 ];
 
 const TimeAllocation: React.FC = () => {
