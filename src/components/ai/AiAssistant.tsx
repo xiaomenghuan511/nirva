@@ -1,13 +1,18 @@
 
-import React, { useState } from 'react';
-import { MessageSquare } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Mic, Send, MessageSquare, Type } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([
-    { text: "Hi there! I'm your Nirva assistant. How can I help with your reflections today?", isUser: false }
+    { text: "Hi Wei! I know you have spent some great time with Ashley and Trent today. Do you want to chat more about it?", isUser: false }
   ]);
   const [input, setInput] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTextInput, setIsTextInput] = useState(false);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -25,12 +30,43 @@ const AiAssistant: React.FC = () => {
         setMessages(prev => [
           ...prev, 
           { 
-            text: "Thanks for sharing. I've noted this down in your reflections. Would you like me to suggest a mindfulness exercise based on what you've shared?", 
+            text: "Thanks for sharing. I've noted this down in your reflections. Would you like to discuss anything specific about your time with Ashley or Trent?", 
             isUser: false 
           }
         ]);
       }, 1000);
     }
+  };
+  
+  const startRecording = () => {
+    setIsRecording(true);
+    // Simulating voice recording - in a real app, this would use the Web Audio API
+    console.log("Started recording voice...");
+  };
+  
+  const stopRecording = () => {
+    setIsRecording(false);
+    // Simulating voice recording end and processing
+    console.log("Stopped recording voice...");
+    
+    // Simulate transcribed text and response
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        { text: "I really enjoyed the conversation about crystals with Ashley.", isUser: true }
+      ]);
+      
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          { text: "That sounds fascinating! Crystal work can be very grounding. Did you have a favorite crystal that Ashley showed you?", isUser: false }
+        ]);
+      }, 1000);
+    }, 500);
+  };
+  
+  const toggleInputMode = () => {
+    setIsTextInput(!isTextInput);
   };
   
   return (
@@ -42,7 +78,7 @@ const AiAssistant: React.FC = () => {
           isOpen ? 'bg-destructive text-white' : 'bg-primary text-white animate-pulse-soft'
         }`}
       >
-        <MessageSquare size={20} />
+        <span className="font-medium text-lg">N</span>
       </button>
       
       {/* Chat overlay */}
@@ -55,7 +91,7 @@ const AiAssistant: React.FC = () => {
             {/* Chat header */}
             <div className="bg-primary text-white p-3 flex items-center">
               <div className="h-2 w-2 rounded-full bg-nirva-mint mr-2 animate-pulse-soft"></div>
-              <span className="font-medium">Nirva Assistant</span>
+              <span className="font-medium">Nirva</span>
             </div>
             
             {/* Messages area */}
@@ -74,23 +110,45 @@ const AiAssistant: React.FC = () => {
             </div>
             
             {/* Input area */}
-            <form onSubmit={handleSend} className="absolute bottom-0 left-0 right-0 border-t border-border p-3 bg-background/80 backdrop-blur-sm">
-              <div className="flex">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  placeholder="Message Nirva..."
-                  className="flex-1 py-2 px-3 rounded-l-lg border-l border-y focus:outline-none focus:ring-1 focus:ring-primary"
-                />
-                <button 
-                  type="submit"
-                  className="bg-primary text-white px-4 rounded-r-lg"
-                >
-                  Send
-                </button>
-              </div>
-            </form>
+            <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3 bg-background/80 backdrop-blur-sm">
+              {isTextInput ? (
+                <form onSubmit={handleSend} className="flex">
+                  <Textarea
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    placeholder="Message Nirva..."
+                    className="flex-1 resize-none py-2 px-3 rounded-l-lg border-l border-y focus:outline-none focus:ring-1 focus:ring-primary h-10 min-h-0"
+                  />
+                  <Button 
+                    type="submit"
+                    className="bg-primary text-white rounded-r-lg rounded-l-none h-10"
+                  >
+                    <Send size={16} />
+                  </Button>
+                </form>
+              ) : (
+                <div className="flex justify-center items-center relative">
+                  <Button
+                    className={`w-32 h-12 rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
+                    onMouseDown={startRecording}
+                    onMouseUp={stopRecording}
+                    onTouchStart={startRecording}
+                    onTouchEnd={stopRecording}
+                  >
+                    <Mic size={18} className="mr-2" /> 
+                    {isRecording ? 'Recording...' : 'Hold to speak'}
+                  </Button>
+                  <Button 
+                    size="icon"
+                    variant="outline"
+                    className="absolute right-0 bottom-0"
+                    onClick={toggleInputMode}
+                  >
+                    <Type size={16} />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
