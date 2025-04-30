@@ -61,15 +61,20 @@ const EmotionFluxChart: React.FC = () => {
     negative: { theme: { light: '#FFDEE2', dark: '#FFDEE2' } },
   };
 
+  // Filter out specific times from the x-axis
+  const filteredTimeData = fluxData.filter(data => 
+    data.time !== '6:00' && data.time !== '7:00' && data.time !== '22:00'
+  );
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg font-medium">Energy & Emotion Flux</CardTitle>
+        <CardTitle className="text-lg font-medium">Energy Level</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-72">
           <ChartContainer config={chartConfig}>
-            <LineChart data={fluxData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+            <LineChart data={filteredTimeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis 
                 dataKey="time" 
@@ -137,12 +142,6 @@ const EmotionFluxChart: React.FC = () => {
               })}
             </LineChart>
           </ChartContainer>
-        </div>
-        
-        <div className="flex justify-between text-sm mt-4 text-muted-foreground">
-          <div>Morning</div>
-          <div>Afternoon</div>
-          <div>Evening</div>
         </div>
       </CardContent>
     </Card>
