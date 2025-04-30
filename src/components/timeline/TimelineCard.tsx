@@ -13,9 +13,9 @@ interface TimelineCardProps {
   people?: { id: number; name: string; avatar?: string }[];
   isBookmarked?: boolean;
   category?: string;
-  emotion?: 'peaceful' | 'energized' | 'engaged' | 'disengaged' | string;
-  locationType?: 'home' | 'work' | 'outdoor' | string;
-  activityType?: 'conversation' | 'meal' | 'transportation' | string;
+  emotion?: string;
+  locationType?: string;
+  activityType?: string;
   energyImpact?: 'positive' | 'negative';
   onClick?: () => void;
 }

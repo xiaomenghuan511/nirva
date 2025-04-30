@@ -26,7 +26,7 @@ const timelineEvents = [
     emotion: 'peaceful',
     locationType: 'outdoor',
     activityType: 'conversation',
-    energyImpact: 'positive',
+    energyImpact: 'positive' as const,
     people: [
       { id: 1, name: 'Ashley' }
     ]
@@ -42,7 +42,7 @@ const timelineEvents = [
     emotion: 'calm',
     locationType: 'outdoor',
     activityType: 'transportation',
-    energyImpact: 'positive',
+    energyImpact: 'positive' as const,
     people: [
       { id: 1, name: 'Ashley' }
     ]
@@ -58,7 +58,7 @@ const timelineEvents = [
     emotion: 'engaged',
     locationType: 'transportation',
     activityType: 'conversation',
-    energyImpact: 'positive',
+    energyImpact: 'positive' as const,
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -74,7 +74,7 @@ const timelineEvents = [
     emotion: 'disengaged',
     locationType: 'outdoor',
     activityType: 'meal',
-    energyImpact: 'negative',
+    energyImpact: 'negative' as const,
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -90,7 +90,7 @@ const timelineEvents = [
     emotion: 'engaged',
     locationType: 'outdoor',
     activityType: 'entertainment',
-    energyImpact: 'positive',
+    energyImpact: 'positive' as const,
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -106,7 +106,7 @@ const timelineEvents = [
     emotion: 'reflective',
     locationType: 'outdoor',
     activityType: 'meal',
-    energyImpact: 'positive',
+    energyImpact: 'positive' as const,
     people: [
       { id: 2, name: 'Trent' }
     ]

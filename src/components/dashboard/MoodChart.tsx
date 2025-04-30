@@ -8,7 +8,7 @@ interface MoodChartProps {
     value: number;
     color: string;
   }>;
-  period: 'day' | 'week' | 'month' | 'year';
+  period: 'day' | 'week' | 'month';
 }
 
 // Sample data
@@ -33,26 +33,18 @@ const moodData = {
     { name: 'Stressed', value: 20, color: '#FFDEE2' },
     { name: 'Tired', value: 10, color: '#FDE1D3' },
     { name: 'Anxious', value: 5, color: '#F1F0FB' },
-  ],
-  year: [
-    { name: 'Happy', value: 25, color: '#a0e4b3' },
-    { name: 'Calm', value: 20, color: '#9b87f5' },
-    { name: 'Focused', value: 15, color: '#D3E4FD' },
-    { name: 'Stressed', value: 15, color: '#FFDEE2' },
-    { name: 'Tired', value: 15, color: '#FDE1D3' },
-    { name: 'Anxious', value: 10, color: '#F1F0FB' },
-  ],
+  ]
 };
 
 const MoodChart: React.FC = () => {
-  const [activePeriod, setActivePeriod] = useState<'day' | 'week' | 'month' | 'year'>('day');
+  const [activePeriod, setActivePeriod] = useState<'day' | 'week' | 'month'>('day');
   
   return (
     <div className="glass-card p-4">
       <h3 className="font-medium mb-3">Mood Tracking</h3>
       
       <div className="flex justify-between mb-4">
-        {(['day', 'week', 'month', 'year'] as const).map((period) => (
+        {(['day', 'week', 'month'] as const).map((period) => (
           <button
             key={period}
             className={`px-3 py-1 text-sm rounded-full ${
