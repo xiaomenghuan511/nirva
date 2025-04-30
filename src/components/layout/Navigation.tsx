@@ -14,7 +14,7 @@ const Navigation: React.FC = () => {
       <div className="flex justify-around items-center h-16 px-4">
         <Link to="/" className={`flex flex-col items-center group ${isActive('/')}`}>
           <BookOpen className="nav-icon" />
-          <span className="nav-text">Timeline</span>
+          <span className="nav-text">Smart Diary</span>
         </Link>
         
         <Link to="/reflections" className={`flex flex-col items-center group ${isActive('/reflections')}`}>
