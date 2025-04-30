@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, MapPinned, MessagesSquare, UtensilsCrossed, Car, Plus, Minus } from 'lucide-react';
+import { BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, MapPinned, MessagesSquare, UtensilsCrossed, Car, ArrowUp, ArrowDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface TimelineCardProps {
@@ -158,20 +157,20 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
     );
   };
   
-  // Generate energy impact badge
+  // Generate energy impact badge with arrow icons
   const getEnergyImpactBadge = () => {
     if (!energyImpact) return null;
     
     if (energyImpact === 'positive') {
       return (
         <div className="flex items-center rounded-full px-2 py-1 text-xs bg-green-100 text-green-700">
-          <Plus className="h-3 w-3" />
+          <ArrowUp className="h-3 w-3" />
         </div>
       );
     } else {
       return (
         <div className="flex items-center rounded-full px-2 py-1 text-xs bg-red-100 text-red-700">
-          <Minus className="h-3 w-3" />
+          <ArrowDown className="h-3 w-3" />
         </div>
       );
     }
