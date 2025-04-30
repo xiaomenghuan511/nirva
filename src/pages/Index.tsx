@@ -23,6 +23,10 @@ const timelineEvents = [
     location: 'Park',
     category: 'personal',
     isBookmarked: true,
+    emotion: 'peaceful',
+    locationType: 'outdoor',
+    activityType: 'conversation',
+    energyImpact: 'positive',
     people: [
       { id: 1, name: 'Ashley' }
     ]
@@ -35,6 +39,10 @@ const timelineEvents = [
     endTime: '1:30 PM',
     location: 'Park',
     category: 'personal',
+    emotion: 'calm',
+    locationType: 'outdoor',
+    activityType: 'transportation',
+    energyImpact: 'positive',
     people: [
       { id: 1, name: 'Ashley' }
     ]
@@ -47,6 +55,10 @@ const timelineEvents = [
     endTime: '2:50 PM',
     location: 'In the car',
     category: 'personal',
+    emotion: 'engaged',
+    locationType: 'transportation',
+    activityType: 'conversation',
+    energyImpact: 'positive',
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -59,6 +71,10 @@ const timelineEvents = [
     endTime: '3:10 PM',
     location: 'Nordic-style Cafe',
     category: 'personal',
+    emotion: 'disengaged',
+    locationType: 'outdoor',
+    activityType: 'meal',
+    energyImpact: 'negative',
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -71,6 +87,10 @@ const timelineEvents = [
     endTime: '5:40 PM',
     location: 'Roxy Theatre',
     category: 'personal',
+    emotion: 'engaged',
+    locationType: 'outdoor',
+    activityType: 'entertainment',
+    energyImpact: 'positive',
     people: [
       { id: 2, name: 'Trent' }
     ]
@@ -83,6 +103,10 @@ const timelineEvents = [
     endTime: '7:30 PM',
     location: 'Nepalese/Peruvian Restaurant',
     category: 'personal',
+    emotion: 'reflective',
+    locationType: 'outdoor',
+    activityType: 'meal',
+    energyImpact: 'positive',
     people: [
       { id: 2, name: 'Trent' }
     ]

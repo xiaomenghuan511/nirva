@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { BookOpen, Clock, MapPin, Star } from 'lucide-react';
+import { BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, MapPinned, MessagesSquare, UtensilsCrossed, Car, Plus, Minus } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface TimelineCardProps {
   id: number;
@@ -12,6 +13,10 @@ interface TimelineCardProps {
   people?: { id: number; name: string; avatar?: string }[];
   isBookmarked?: boolean;
   category?: string;
+  emotion?: 'peaceful' | 'energized' | 'engaged' | 'disengaged' | string;
+  locationType?: 'home' | 'work' | 'outdoor' | string;
+  activityType?: 'conversation' | 'meal' | 'transportation' | string;
+  energyImpact?: 'positive' | 'negative';
   onClick?: () => void;
 }
 
@@ -24,6 +29,10 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
   people = [],
   isBookmarked = false,
   category = 'event',
+  emotion,
+  locationType,
+  activityType,
+  energyImpact,
   onClick
 }) => {
   // Generate a dynamic category icon
@@ -37,6 +46,134 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
         return <div className="bg-red-100 p-2 rounded-lg"><Clock className="h-4 w-4 text-red-500" /></div>;
       default:
         return <div className="bg-purple-100 p-2 rounded-lg"><Clock className="h-4 w-4 text-purple-500" /></div>;
+    }
+  };
+
+  // Generate emotion badge
+  const getEmotionBadge = () => {
+    if (!emotion) return null;
+    
+    let bgColor = "bg-gray-100";
+    let textColor = "text-gray-700";
+    let icon = <Heart className="h-3 w-3 mr-1" />;
+    
+    switch(emotion.toLowerCase()) {
+      case 'peaceful':
+        bgColor = "bg-blue-100";
+        textColor = "text-blue-700";
+        break;
+      case 'energized':
+        bgColor = "bg-amber-100";
+        textColor = "text-amber-700";
+        break;
+      case 'engaged':
+        bgColor = "bg-green-100";
+        textColor = "text-green-700";
+        break;
+      case 'disengaged':
+        bgColor = "bg-red-100";
+        textColor = "text-red-700";
+        break;
+      default:
+        break;
+    }
+    
+    return (
+      <div className={`flex items-center rounded-full px-2 py-1 text-xs ${bgColor} ${textColor}`}>
+        {icon}
+        <span>{emotion}</span>
+      </div>
+    );
+  };
+  
+  // Generate location type badge
+  const getLocationTypeBadge = () => {
+    if (!locationType) return null;
+    
+    let bgColor = "bg-gray-100";
+    let textColor = "text-gray-700";
+    let icon = <MapPinned className="h-3 w-3 mr-1" />;
+    
+    switch(locationType.toLowerCase()) {
+      case 'home':
+        bgColor = "bg-purple-100";
+        textColor = "text-purple-700";
+        icon = <Home className="h-3 w-3 mr-1" />;
+        break;
+      case 'work':
+        bgColor = "bg-blue-100";
+        textColor = "text-blue-700";
+        icon = <Briefcase className="h-3 w-3 mr-1" />;
+        break;
+      case 'outdoor':
+        bgColor = "bg-green-100";
+        textColor = "text-green-700";
+        icon = <MapPinned className="h-3 w-3 mr-1" />;
+        break;
+      default:
+        break;
+    }
+    
+    return (
+      <div className={`flex items-center rounded-full px-2 py-1 text-xs ${bgColor} ${textColor}`}>
+        {icon}
+        <span>{locationType}</span>
+      </div>
+    );
+  };
+  
+  // Generate activity type badge
+  const getActivityTypeBadge = () => {
+    if (!activityType) return null;
+    
+    let bgColor = "bg-gray-100";
+    let textColor = "text-gray-700";
+    let icon = <Clock className="h-3 w-3 mr-1" />;
+    
+    switch(activityType.toLowerCase()) {
+      case 'conversation':
+        bgColor = "bg-indigo-100";
+        textColor = "text-indigo-700";
+        icon = <MessagesSquare className="h-3 w-3 mr-1" />;
+        break;
+      case 'meal':
+        bgColor = "bg-orange-100";
+        textColor = "text-orange-700";
+        icon = <UtensilsCrossed className="h-3 w-3 mr-1" />;
+        break;
+      case 'transportation':
+        bgColor = "bg-cyan-100";
+        textColor = "text-cyan-700";
+        icon = <Car className="h-3 w-3 mr-1" />;
+        break;
+      default:
+        break;
+    }
+    
+    return (
+      <div className={`flex items-center rounded-full px-2 py-1 text-xs ${bgColor} ${textColor}`}>
+        {icon}
+        <span>{activityType}</span>
+      </div>
+    );
+  };
+  
+  // Generate energy impact badge
+  const getEnergyImpactBadge = () => {
+    if (!energyImpact) return null;
+    
+    if (energyImpact === 'positive') {
+      return (
+        <div className="flex items-center rounded-full px-2 py-1 text-xs bg-green-100 text-green-700">
+          <Plus className="h-3 w-3" />
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex items-center rounded-full px-2 py-1 text-xs bg-red-100 text-red-700">
+          <Minus className="h-3 w-3" />
+        </div>
+      );
     }
   };
 
@@ -65,6 +202,14 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
           
           {/* Description */}
           <p className="text-sm text-muted-foreground mt-1">{description}</p>
+          
+          {/* Event labels */}
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {getEmotionBadge()}
+            {getLocationTypeBadge()}
+            {getActivityTypeBadge()}
+            {getEnergyImpactBadge()}
+          </div>
           
           {/* Footer: location and people */}
           <div className="flex items-center justify-between mt-3">
