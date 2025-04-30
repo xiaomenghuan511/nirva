@@ -3,11 +3,54 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import MoodChart from '../components/dashboard/MoodChart';
 import TimeAllocation from '../components/dashboard/TimeAllocation';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { TrendingUp, TrendingDown } from 'lucide-react';
+import EmotionFluxChart from '../components/dashboard/EmotionFluxChart';
 
 const Dashboard: React.FC = () => {
   return (
     <Layout title="Dashboard">
       <div className="px-4 py-5 space-y-6">
+        {/* Summary cards row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Mood score card */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-medium">Overall Mood Score</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-between items-center">
+                <div className="text-4xl font-bold">7.8</div>
+                <div className="flex items-center text-green-500">
+                  <TrendingUp className="h-5 w-5 mr-1" />
+                  <span className="text-sm">+0.5 from last week</span>
+                </div>
+              </div>
+              <div className="mt-2 text-sm text-muted-foreground">You've been maintaining a positive outlook this week</div>
+            </CardContent>
+          </Card>
+
+          {/* Stress level card */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-medium">Stress Level</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-between items-center">
+                <div className="text-4xl font-bold">3.2</div>
+                <div className="flex items-center text-green-500">
+                  <TrendingDown className="h-5 w-5 mr-1" />
+                  <span className="text-sm">-1.3 from last week</span>
+                </div>
+              </div>
+              <div className="mt-2 text-sm text-muted-foreground">Your stress levels are decreasing - keep it up!</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Emotion flux chart */}
+        <EmotionFluxChart />
+        
         <MoodChart />
         <TimeAllocation />
         
