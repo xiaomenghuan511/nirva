@@ -4,54 +4,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
-// Sample data for the emotion/energy flux throughout the day
-const fluxData = [
-  { time: '6:00', level: 5, event: '' },
-  { time: '7:00', level: 6, event: 'Morning meditation' },
-  { time: '8:30', level: 7.5, event: 'Coffee with partner' },
-  { time: '10:00', level: 8, event: 'Productive work' },
-  { time: '12:00', level: 7, event: '' },
-  { time: '13:00', level: 6.5, event: 'Lunch with colleagues' },
-  { time: '14:00', level: 4, event: 'Difficult meeting' },
-  { time: '15:30', level: 3, event: '' },
-  { time: '16:00', level: 5, event: 'Solved problem' },
-  { time: '17:30', level: 7, event: 'Evening walk' },
-  { time: '19:00', level: 8, event: 'Friend dinner' },
-  { time: '21:00', level: 6, event: '' },
-  { time: '22:00', level: 4.5, event: 'Preparing for tomorrow' },
+// Energy level data throughout the day based on the description
+const energyData = [
+  { time: '10:00', level: 5, event: 'Start of day' },
+  { time: '10:30', level: 7, event: 'Park session with Ashley' },
+  { time: '11:30', level: 9, event: 'Deep Talk & Tarot Reading w/ Ashley' },
+  { time: '13:00', level: 5.5, event: 'Ashley leaves, transition period' },
+  { time: '13:30', level: 7, event: 'Drive with Trent begins' },
+  { time: '14:30', level: 8, event: 'Engaging Drive & Philosophy w/ Trent' },
+  { time: '14:50', level: 3, event: 'Cafe Stop - Anxiety & Disappointment' },
+  { time: '15:10', level: 5, event: 'Movie starts' },
+  { time: '16:30', level: 6, event: 'Immersed in movie' },
+  { time: '17:40', level: 7, event: 'Post-movie walk begins' },
+  { time: '18:30', level: 8.5, event: 'Post-Movie Discussion & Dinner' },
+  { time: '19:00', level: 8, event: 'Evening continues' },
 ];
 
-// Find highest and lowest points with events
-const findExtremesWithEvents = () => {
-  let highest = { time: '', level: 0, label: '' };
-  let lowest = { time: '', level: 10, label: '' };
-  
-  fluxData.forEach(point => {
-    if (point.level > highest.level && point.event) {
-      highest = { time: point.time, level: point.level, label: point.event };
-    }
-    if (point.level < lowest.level && point.event) {
-      lowest = { time: point.time, level: point.level, label: point.event };
-    }
-  });
-
-  // If no event at lowest point, find the next lowest with an event
-  if (!lowest.label) {
-    const sortedByLevel = [...fluxData].filter(p => p.event).sort((a, b) => a.level - b.level);
-    if (sortedByLevel.length > 0) {
-      const lowestWithEvent = sortedByLevel[0];
-      lowest = { 
-        time: lowestWithEvent.time, 
-        level: lowestWithEvent.level, 
-        label: lowestWithEvent.event 
-      };
-    }
-  }
-  
-  return [highest, lowest];
-};
-
-const extremePoints = findExtremesWithEvents();
+// Define key moments to highlight
+const keyMoments = [
+  { time: '11:30', label: 'Deep Talk & Tarot Reading w/ Ashley', level: 9 },
+  { time: '14:30', label: 'Engaging Drive & Philosophy w/ Trent', level: 8 },
+  { time: '14:50', label: 'Cafe Stop - Anxiety & Disappointment', level: 3 },
+  { time: '18:30', label: 'Post-Movie Discussion & Dinner', level: 8.5 }
+];
 
 const EmotionFluxChart: React.FC = () => {
   const chartConfig = {
@@ -61,11 +36,6 @@ const EmotionFluxChart: React.FC = () => {
     negative: { theme: { light: '#FFDEE2', dark: '#FFDEE2' } },
   };
 
-  // Filter out specific times from the x-axis
-  const filteredTimeData = fluxData.filter(data => 
-    data.time !== '6:00' && data.time !== '7:00' && data.time !== '22:00'
-  );
-
   return (
     <Card>
       <CardHeader>
@@ -74,7 +44,7 @@ const EmotionFluxChart: React.FC = () => {
       <CardContent>
         <div className="h-72">
           <ChartContainer config={chartConfig}>
-            <LineChart data={filteredTimeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+            <LineChart data={energyData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis 
                 dataKey="time" 
@@ -84,14 +54,16 @@ const EmotionFluxChart: React.FC = () => {
               />
               <YAxis 
                 domain={[0, 10]} 
-                ticks={[0, 2, 4, 6, 8, 10]} 
+                ticks={[0, 2.5, 5, 7.5, 10]} 
                 axisLine={false} 
                 tickLine={false} 
                 tick={{ fontSize: 12 }} 
                 tickFormatter={(value) => {
-                  if (value === 0) return 'Low';
+                  if (value === 0) return 'Very Low';
+                  if (value === 2.5) return 'Low';
                   if (value === 5) return 'Neutral';
-                  if (value === 10) return 'High';
+                  if (value === 7.5) return 'High';
+                  if (value === 10) return 'Very High';
                   return '';
                 }}
               />
@@ -120,26 +92,22 @@ const EmotionFluxChart: React.FC = () => {
                 activeDot={{ r: 6, fill: '#9b87f5' }}
               />
               
-              {/* Only highlight the highest and lowest points with actual events */}
-              {extremePoints.map((point, index) => {
-                if (!point.time) return null;
-                
-                return (
-                  <ReferenceLine
-                    key={index}
-                    x={point.time}
-                    stroke="#9b87f5"
-                    strokeDasharray="3 3"
-                    label={{
-                      value: point.label,
-                      position: 'top',
-                      fill: '#9b87f5',
-                      fontSize: 10,
-                      offset: 10
-                    }}
-                  />
-                );
-              })}
+              {/* Highlight key moments */}
+              {keyMoments.map((moment, index) => (
+                <ReferenceLine
+                  key={index}
+                  x={moment.time}
+                  stroke="#9b87f5"
+                  strokeDasharray="3 3"
+                  label={{
+                    value: moment.label,
+                    position: moment.level > 5 ? 'top' : 'bottom',
+                    fill: '#9b87f5',
+                    fontSize: 10,
+                    offset: 10
+                  }}
+                />
+              ))}
             </LineChart>
           </ChartContainer>
         </div>
