@@ -1,5 +1,10 @@
+
 import React from 'react';
-import { BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, MapPinned, MessagesSquare, UtensilsCrossed, Car, ArrowUp, ArrowDown } from 'lucide-react';
+import { 
+  BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, 
+  MapPinned, MessagesSquare, UtensilsCrossed, Car, ArrowUp, 
+  ArrowDown, Music, Video, Camera
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface TimelineCardProps {
@@ -34,18 +39,65 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
   energyImpact,
   onClick
 }) => {
-  // Generate a dynamic category icon
-  const getCategoryIcon = () => {
-    switch(category.toLowerCase()) {
-      case 'work':
-        return <div className="bg-blue-100 p-2 rounded-lg"><BookOpen className="h-4 w-4 text-blue-500" /></div>;
-      case 'personal':
-        return <div className="bg-green-100 p-2 rounded-lg"><Clock className="h-4 w-4 text-green-500" /></div>;
-      case 'health':
-        return <div className="bg-red-100 p-2 rounded-lg"><Clock className="h-4 w-4 text-red-500" /></div>;
-      default:
-        return <div className="bg-purple-100 p-2 rounded-lg"><Clock className="h-4 w-4 text-purple-500" /></div>;
+  // Generate a dynamic icon based on activity type
+  const getActivityIcon = () => {
+    let icon = <Clock className="h-4 w-4" />;
+    let bgColor = "bg-purple-100";
+    let textColor = "text-purple-500";
+    
+    if (activityType) {
+      switch(activityType.toLowerCase()) {
+        case 'conversation':
+          icon = <MessagesSquare className="h-4 w-4" />;
+          bgColor = "bg-indigo-100";
+          textColor = "text-indigo-500";
+          break;
+        case 'meal':
+          icon = <UtensilsCrossed className="h-4 w-4" />;
+          bgColor = "bg-orange-100";
+          textColor = "text-orange-500";
+          break;
+        case 'transportation':
+          icon = <Car className="h-4 w-4" />;
+          bgColor = "bg-cyan-100";
+          textColor = "text-cyan-500";
+          break;
+        case 'entertainment':
+          icon = <Video className="h-4 w-4" />;
+          bgColor = "bg-pink-100";
+          textColor = "text-pink-500";
+          break;
+        default:
+          break;
+      }
+    } else {
+      // Fallback to category-based icon if no activity type
+      switch(category.toLowerCase()) {
+        case 'work':
+          icon = <Briefcase className="h-4 w-4" />;
+          bgColor = "bg-blue-100";
+          textColor = "text-blue-500";
+          break;
+        case 'personal':
+          icon = <Heart className="h-4 w-4" />;
+          bgColor = "bg-green-100";
+          textColor = "text-green-500";
+          break;
+        case 'health':
+          icon = <Heart className="h-4 w-4" />;
+          bgColor = "bg-red-100";
+          textColor = "text-red-500";
+          break;
+        default:
+          break;
+      }
     }
+    
+    return (
+      <div className={`${bgColor} p-2 rounded-lg`}>
+        <div className={textColor}>{icon}</div>
+      </div>
+    );
   };
 
   // Generate emotion badge
@@ -145,6 +197,11 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
         textColor = "text-cyan-700";
         icon = <Car className="h-3 w-3 mr-1" />;
         break;
+      case 'entertainment':
+        bgColor = "bg-pink-100";
+        textColor = "text-pink-700";
+        icon = <Video className="h-3 w-3 mr-1" />;
+        break;
       default:
         break;
     }
@@ -187,8 +244,8 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
       </div>
       
       <div className="flex items-start gap-3">
-        {/* Category icon */}
-        {getCategoryIcon()}
+        {/* Activity/Category icon */}
+        {getActivityIcon()}
         
         <div className="flex-1">
           {/* Title and bookmark */}
