@@ -4,34 +4,22 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ReflectionPrompt from '../components/reflections/ReflectionPrompt';
 
-const guidedQuestions = [
-  "How did this experience make you feel?",
-  "What thoughts came up during this experience?",
-  "What did you learn from this experience?",
-  "How might this experience impact your future actions or decisions?",
-];
+// Single reflection question that combines feeling and learning
+const guidedQuestion = "How did you feel about this experience? What have you learned?";
 
 const ReflectDetail: React.FC = () => {
   const navigate = useNavigate();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
-  const [answers, setAnswers] = React.useState<Record<string, string>>({});
+  const [answer, setAnswer] = React.useState('');
   
   const handleBack = () => {
     navigate(-1);
   };
   
   const handleSaveAnswer = (answer: string) => {
-    setAnswers({ ...answers, [currentQuestionIndex]: answer });
-    
-    if (currentQuestionIndex < guidedQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      // All questions answered, navigate back
-      navigate(-1);
-    }
+    setAnswer(answer);
+    // Navigate back to the diary detail page after answering
+    navigate(-1);
   };
-  
-  const progress = ((currentQuestionIndex + 1) / guidedQuestions.length) * 100;
   
   return (
     <div className="min-h-screen bg-background">
@@ -53,22 +41,8 @@ const ReflectDetail: React.FC = () => {
       
       {/* Content */}
       <main className="pt-14 px-4 py-5">
-        {/* Progress bar */}
-        <div className="mb-6">
-          <div className="flex justify-between text-sm mb-1">
-            <span>Question {currentQuestionIndex + 1} of {guidedQuestions.length}</span>
-            <span>{Math.round(progress)}%</span>
-          </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary rounded-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-        </div>
-        
         <ReflectionPrompt
-          question={guidedQuestions[currentQuestionIndex]}
+          question={guidedQuestion}
           type="self"
           onSave={handleSaveAnswer}
         />

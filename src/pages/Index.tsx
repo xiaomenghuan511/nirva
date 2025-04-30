@@ -93,15 +93,15 @@ const timelineEvents = [
 const affirmations = [
   {
     text: "Today was a day of deep conversations with friends, self-reflection, and cultural experiences.",
-    mood: "reflective"
+    mood: "reflective" as const
   },
   {
     text: "Meaningful connections with others help me understand myself better and grow as a person.",
-    mood: "calm"
+    mood: "calm" as const
   },
   {
     text: "I am grateful for friends who share their wisdom and provide space for authentic expression.",
-    mood: "focused"
+    mood: "focused" as const
   }
 ];
 
