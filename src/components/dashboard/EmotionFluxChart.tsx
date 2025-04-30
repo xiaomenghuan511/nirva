@@ -9,26 +9,22 @@ const fluxData = [
   { time: '6:00', level: 5, event: '' },
   { time: '7:00', level: 6, event: 'Morning meditation' },
   { time: '8:30', level: 7.5, event: 'Coffee with partner' },
-  { time: '10:00', level: 8, event: 'Productive work session' },
+  { time: '10:00', level: 8, event: 'Productive work' },
   { time: '12:00', level: 7, event: '' },
   { time: '13:00', level: 6.5, event: 'Lunch with colleagues' },
-  { time: '14:00', level: 4, event: 'Difficult client meeting' },
+  { time: '14:00', level: 4, event: 'Difficult meeting' },
   { time: '15:30', level: 3, event: '' },
-  { time: '16:00', level: 5, event: 'Solved a tough problem' },
+  { time: '16:00', level: 5, event: 'Solved problem' },
   { time: '17:30', level: 7, event: 'Evening walk' },
-  { time: '19:00', level: 8, event: 'Dinner with friends' },
+  { time: '19:00', level: 8, event: 'Friend dinner' },
   { time: '21:00', level: 6, event: '' },
   { time: '22:00', level: 4.5, event: 'Preparing for tomorrow' },
 ];
 
-// Highlight specific points that represent significant events
+// Only highlight the highest and lowest points
 const highlightPoints = [
-  { time: '8:30', level: 7.5, label: 'Coffee with partner' },
-  { time: '10:00', level: 8, label: 'Productive work session' },
-  { time: '14:00', level: 4, label: 'Difficult client meeting' },
-  { time: '16:00', level: 5, label: 'Solved a tough problem' },
-  { time: '17:30', level: 7, label: 'Evening walk' },
-  { time: '19:00', level: 8, label: 'Dinner with friends' },
+  { time: '10:00', level: 8, label: 'Productive work' },  // Highest point
+  { time: '15:30', level: 3, label: 'Low energy' }        // Lowest point
 ];
 
 const EmotionFluxChart: React.FC = () => {
@@ -93,7 +89,7 @@ const EmotionFluxChart: React.FC = () => {
                 activeDot={{ r: 6, fill: '#9b87f5' }}
               />
               
-              {/* Highlight specific points */}
+              {/* Only highlight the highest and lowest points */}
               {highlightPoints.map((point, index) => {
                 const dataPoint = fluxData.find(d => d.time === point.time);
                 if (!dataPoint) return null;
