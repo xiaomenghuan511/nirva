@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Mic, Send, MessageSquare, Type } from 'lucide-react';
+import { Mic, Send } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,6 @@ const AiAssistant: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [isTextInput, setIsTextInput] = useState(false);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -63,10 +62,6 @@ const AiAssistant: React.FC = () => {
         ]);
       }, 1000);
     }, 500);
-  };
-  
-  const toggleInputMode = () => {
-    setIsTextInput(!isTextInput);
   };
 
   // Handle click outside to close the chat
@@ -128,8 +123,8 @@ const AiAssistant: React.FC = () => {
             
             {/* Input area */}
             <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3 bg-background/80 backdrop-blur-sm">
-              {isTextInput ? (
-                <form onSubmit={handleSend} className="flex">
+              <div className="flex items-center gap-2">
+                <form onSubmit={handleSend} className="flex flex-1">
                   <Textarea
                     value={input}
                     onChange={e => setInput(e.target.value)}
@@ -143,29 +138,18 @@ const AiAssistant: React.FC = () => {
                     <Send size={16} />
                   </Button>
                 </form>
-              ) : (
-                <div className="flex items-center justify-between">
-                  <Button
-                    className={`w-48 h-12 rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
-                    onMouseDown={startRecording}
-                    onMouseUp={stopRecording}
-                    onTouchStart={startRecording}
-                    onTouchEnd={stopRecording}
-                  >
-                    <Mic size={18} className="mr-2" /> 
-                    {isRecording ? 'Recording...' : 'Hold to speak'}
-                  </Button>
-                  
-                  <Button 
-                    size="icon"
-                    variant="outline"
-                    className=""
-                    onClick={toggleInputMode}
-                  >
-                    <Type size={16} />
-                  </Button>
-                </div>
-              )}
+                
+                <Button
+                  size="icon"
+                  className={`rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
+                  onMouseDown={startRecording}
+                  onMouseUp={stopRecording}
+                  onTouchStart={startRecording}
+                  onTouchEnd={stopRecording}
+                >
+                  <Mic size={18} /> 
+                </Button>
+              </div>
             </div>
           </div>
         </div>
