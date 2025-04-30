@@ -11,8 +11,8 @@ const Dashboard: React.FC = () => {
   return (
     <Layout title="Dashboard">
       <div className="px-4 py-5 space-y-6">
-        {/* Summary cards row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Summary cards row - modified to be side by side */}
+        <div className="grid grid-cols-2 gap-4">
           {/* Mood score card */}
           <Card>
             <CardHeader className="pb-2">
@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
                 <div className="text-4xl font-bold">7.8</div>
                 <div className="flex items-center text-green-500">
                   <TrendingUp className="h-5 w-5 mr-1" />
-                  <span className="text-sm">+0.5 from yesterday</span>
+                  <span className="text-sm">+0.5</span>
                 </div>
               </div>
             </CardContent>
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
                 <div className="text-4xl font-bold">3.2</div>
                 <div className="flex items-center text-green-500">
                   <TrendingDown className="h-5 w-5 mr-1" />
-                  <span className="text-sm">-1.3 from yesterday</span>
+                  <span className="text-sm">-1.3</span>
                 </div>
               </div>
             </CardContent>
