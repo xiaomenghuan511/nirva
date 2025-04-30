@@ -27,6 +27,38 @@ const highlightPoints = [
   { time: '15:30', level: 3, label: 'Low energy' }        // Lowest point
 ];
 
+// Find highest and lowest points with events
+const findExtremesWithEvents = () => {
+  let highest = { time: '', level: 0, label: '' };
+  let lowest = { time: '', level: 10, label: '' };
+  
+  fluxData.forEach(point => {
+    if (point.level > highest.level && point.event) {
+      highest = { time: point.time, level: point.level, label: point.event };
+    }
+    if (point.level < lowest.level && point.event) {
+      lowest = { time: point.time, level: point.level, label: point.event };
+    }
+  });
+
+  // If no event at lowest point, find the next lowest with an event
+  if (!lowest.label) {
+    const sortedByLevel = [...fluxData].filter(p => p.event).sort((a, b) => a.level - b.level);
+    if (sortedByLevel.length > 0) {
+      const lowestWithEvent = sortedByLevel[0];
+      lowest = { 
+        time: lowestWithEvent.time, 
+        level: lowestWithEvent.level, 
+        label: lowestWithEvent.event 
+      };
+    }
+  }
+  
+  return [highest, lowest];
+};
+
+const extremePoints = findExtremesWithEvents();
+
 const EmotionFluxChart: React.FC = () => {
   const chartConfig = {
     line: { theme: { light: '#9b87f5', dark: '#9b87f5' } },
@@ -89,10 +121,9 @@ const EmotionFluxChart: React.FC = () => {
                 activeDot={{ r: 6, fill: '#9b87f5' }}
               />
               
-              {/* Only highlight the highest and lowest points */}
-              {highlightPoints.map((point, index) => {
-                const dataPoint = fluxData.find(d => d.time === point.time);
-                if (!dataPoint) return null;
+              {/* Only highlight the highest and lowest points with actual events */}
+              {extremePoints.map((point, index) => {
+                if (!point.time) return null;
                 
                 return (
                   <ReferenceLine
