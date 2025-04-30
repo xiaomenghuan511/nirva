@@ -3,7 +3,19 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle } from 'lucide-react';
+import { 
+  PlusCircle, 
+  Star, 
+  Award, 
+  TrendingUp,
+  FileText,
+  BookOpen,
+  Users,
+  Search,
+  Calendar,
+  Globe,
+  ListTodo
+} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Reflections: React.FC = () => {
@@ -32,6 +44,7 @@ const Reflections: React.FC = () => {
   const reflectionCategories = [
     {
       title: "Relationships",
+      icon: <Users className="h-5 w-5 text-nirva-soft-peach" />,
       insights: [
         "Deep conversations with friends provide invaluable emotional support and perspective.",
         "I value authentic connections but feel frustrated by unpredictable dating experiences.",
@@ -40,6 +53,7 @@ const Reflections: React.FC = () => {
     },
     {
       title: "Self-Discovery",
+      icon: <Search className="h-5 w-5 text-nirva-soft-peach" />,
       insights: [
         "I'm contemplating the balance between solitude and social connection in my life.",
         "When I have excess free time, I tend toward unproductive behaviors like oversleeping.",
@@ -48,6 +62,7 @@ const Reflections: React.FC = () => {
     },
     {
       title: "Future Planning",
+      icon: <Calendar className="h-5 w-5 text-nirva-soft-peach" />,
       insights: [
         "I'm considering egg freezing and planning to make decisions about children by age 40.",
         "Financial considerations and family support are important factors in my fertility decisions.",
@@ -56,6 +71,7 @@ const Reflections: React.FC = () => {
     },
     {
       title: "Cultural Perspectives",
+      icon: <Globe className="h-5 w-5 text-nirva-soft-peach" />,
       insights: [
         "Art and film provide windows into different cultural and historical experiences.",
         "My family background gives me a unique perspective on political events like Tiananmen Square.",
@@ -109,7 +125,7 @@ const Reflections: React.FC = () => {
 
   return (
     <Layout title="Reflections">
-      <div className="px-4 py-5 space-y-8">
+      <div className="px-4 py-5 space-y-10">
         <div className="bg-nirva-soft-yellow/60 p-6 rounded-xl">
           <h2 className="text-xl font-medium mb-3">April 19, 2025 Reflections</h2>
           <p className="text-muted-foreground">
@@ -120,10 +136,17 @@ const Reflections: React.FC = () => {
         
         {/* Section 1: Personal Reflections */}
         <section>
-          <h2 className="text-lg font-medium mb-4">Personal Reflections</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-6 w-6 bg-nirva-soft-green/30 rounded-full flex items-center justify-center">
+              <Star className="h-4 w-4 text-nirva-soft-green" />
+            </div>
+            <h2 className="text-lg font-medium">Personal Reflections</h2>
+          </div>
+          
           <div className="space-y-4">
-            <Card className="border-nirva-soft-green/30">
-              <CardHeader className="pb-2">
+            <Card className="border-nirva-soft-green/30 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2 flex flex-row items-center">
+                <Star className="h-5 w-5 text-nirva-soft-green mr-2" />
                 <CardTitle className="text-lg">I am feeling grateful for:</CardTitle>
               </CardHeader>
               <CardContent>
@@ -138,8 +161,9 @@ const Reflections: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-nirva-soft-yellow/30">
-              <CardHeader className="pb-2">
+            <Card className="border-nirva-soft-yellow/30 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2 flex flex-row items-center">
+                <Award className="h-5 w-5 text-nirva-soft-yellow mr-2" />
                 <CardTitle className="text-lg">I can celebrate:</CardTitle>
               </CardHeader>
               <CardContent>
@@ -154,8 +178,9 @@ const Reflections: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-nirva-soft-blue/30">
-              <CardHeader className="pb-2">
+            <Card className="border-nirva-soft-blue/30 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2 flex flex-row items-center">
+                <TrendingUp className="h-5 w-5 text-nirva-soft-blue mr-2" />
                 <CardTitle className="text-lg">I can do better at:</CardTitle>
               </CardHeader>
               <CardContent>
@@ -174,12 +199,19 @@ const Reflections: React.FC = () => {
         
         {/* Section 2: Insights (existing data) */}
         <section>
-          <h2 className="text-lg font-medium mb-4">Detailed Insights</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-6 w-6 bg-nirva-soft-peach/30 rounded-full flex items-center justify-center">
+              <BookOpen className="h-4 w-4 text-nirva-soft-peach" />
+            </div>
+            <h2 className="text-lg font-medium">Detailed Insights</h2>
+          </div>
+          
           <div className="space-y-4">
             {reflectionCategories.map((category, index) => (
-              <Card key={index} className="border-nirva-soft-peach/30">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{category.title}</CardTitle>
+              <Card key={index} className="border-nirva-soft-peach/30 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="pb-2 flex flex-row items-center">
+                  {category.icon}
+                  <CardTitle className="text-lg ml-2">{category.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
@@ -198,20 +230,29 @@ const Reflections: React.FC = () => {
         
         {/* Section 3: Potential Goals */}
         <section>
-          <h2 className="text-lg font-medium mb-4">I can consider pursuing the following goals:</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-6 w-6 bg-nirva-soft-purple/30 rounded-full flex items-center justify-center">
+              <FileText className="h-4 w-4 text-nirva-soft-purple" />
+            </div>
+            <h2 className="text-lg font-medium">I can consider pursuing the following goals:</h2>
+          </div>
+          
           <div className="space-y-4">
             {potentialGoals.map((goal) => (
-              <Card key={goal.id} className="border-nirva-soft-purple/30">
+              <Card key={goal.id} className="border-nirva-soft-purple/30 shadow-sm hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2 flex flex-row items-center justify-between">
-                  <CardTitle className="text-lg">{goal.title}</CardTitle>
+                  <div className="flex items-center">
+                    <FileText className="h-5 w-5 text-nirva-soft-purple mr-2" />
+                    <CardTitle className="text-lg">{goal.title}</CardTitle>
+                  </div>
                   <Button 
                     variant="ghost" 
                     size="sm" 
                     onClick={() => handleAddToTodoList(goal.id)}
                     className="text-primary hover:text-primary/70"
                   >
-                    <PlusCircle className="h-4 w-4 mr-1" />
-                    Add to todo
+                    <ListTodo className="h-4 w-4 mr-1" />
+                    To-Do
                   </Button>
                 </CardHeader>
                 <CardContent>
