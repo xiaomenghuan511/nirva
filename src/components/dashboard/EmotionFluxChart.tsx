@@ -59,11 +59,11 @@ const EmotionFluxChart: React.FC = () => {
                 tickLine={false} 
                 tick={{ fontSize: 12 }} 
                 tickFormatter={(value) => {
-                  if (value === 0) return 'Very Low';
+                  if (value === 0) return 'Low';
                   if (value === 2.5) return 'Low';
                   if (value === 5) return 'Neutral';
                   if (value === 7.5) return 'High';
-                  if (value === 10) return 'Very High';
+                  if (value === 10) return 'High';
                   return '';
                 }}
               />
