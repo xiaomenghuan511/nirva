@@ -6,12 +6,13 @@ import TimeAllocation from '../components/dashboard/TimeAllocation';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import EmotionFluxChart from '../components/dashboard/EmotionFluxChart';
+import SocialMap from '../components/dashboard/SocialMap';
 
 const Dashboard: React.FC = () => {
   return (
     <Layout title="Dashboard">
       <div className="px-4 py-5 space-y-6">
-        {/* Summary cards row - modified to be side by side */}
+        {/* Summary cards row - side by side */}
         <div className="grid grid-cols-2 gap-4">
           {/* Mood score card */}
           <Card>
@@ -51,6 +52,9 @@ const Dashboard: React.FC = () => {
         
         <MoodChart />
         <TimeAllocation />
+        
+        {/* Social Map visualization */}
+        <SocialMap />
         
         {/* Highlights section */}
         <div className="glass-card p-4">
