@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface Person {
@@ -51,10 +52,10 @@ const SocialMap: React.FC = () => {
     }
   };
   
-  // Calculate size based on time spent (max radius is 50)
+  // Calculate size based on time spent (now with larger values)
   const getSize = (hours: number) => {
-    const maxSize = 50;
-    const minSize = 10;
+    const maxSize = 80; // Increased for better visibility
+    const minSize = 20; // Increased minimum size
     // Scale size based on time spent
     if (hours >= 5) return maxSize;
     if (hours <= 0.1) return minSize;
@@ -83,8 +84,8 @@ const SocialMap: React.FC = () => {
       
       <div className="relative h-[300px] mb-4">
         {/* You - central hub */}
-        <div className="absolute" style={{ left: centerX - 20, top: centerY - 20 }}>
-          <div className="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md">
+        <div className="absolute" style={{ left: centerX - 25, top: centerY - 25 }}>
+          <div className="bg-primary w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md text-sm font-bold">
             YOU
           </div>
         </div>
@@ -112,7 +113,7 @@ const SocialMap: React.FC = () => {
           return (
             <div 
               key={`person-${index}`}
-              className="absolute flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg transition-shadow"
+              className="absolute flex flex-col items-center justify-center rounded-full cursor-pointer hover:shadow-lg transition-shadow"
               style={{ 
                 left: person.x - size/2, 
                 top: person.y - size/2, 
@@ -123,8 +124,11 @@ const SocialMap: React.FC = () => {
               }}
               onClick={() => setSelectedPerson(person)}
             >
-              <span className="text-xs font-medium" style={{ fontSize: person.timeSpent > 1 ? '0.75rem' : '0.6rem' }}>
+              <span className="text-sm font-medium">
                 {person.name}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {person.timeSpent}h
               </span>
             </div>
           );
