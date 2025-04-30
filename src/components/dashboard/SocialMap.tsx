@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface Person {
@@ -31,27 +30,6 @@ const people: Person[] = [
       'Appreciate His Perspective: Even when disagreeing (like on AI ethics), acknowledge and show respect for his viewpoint to maintain positive discourse.',
       'Continue Shared Exploration: Lean into shared interests like film, exploring challenging ideas, and trying new experiences (restaurants, neighborhoods). Ask about his work/life updates proactively.'
     ]
-  },
-  {
-    name: 'Cafe Staff',
-    timeSpent: 0.1,
-    energyImpact: 'neutral',
-    description: 'Transactional or brief, positive but momentary encounters. No significant energy drain or gain.',
-    tips: ['Standard politeness suffices.']
-  },
-  {
-    name: 'Restaurant Staff',
-    timeSpent: 0.1,
-    energyImpact: 'neutral',
-    description: 'Transactional or brief, positive but momentary encounters. No significant energy drain or gain.',
-    tips: ['Standard politeness suffices.']
-  },
-  {
-    name: 'Woman in Wheelchair',
-    timeSpent: 0.1,
-    energyImpact: 'neutral',
-    description: 'Transactional or brief, positive but momentary encounters. No significant energy drain or gain.',
-    tips: ['Standard politeness suffices.']
   }
 ];
 
