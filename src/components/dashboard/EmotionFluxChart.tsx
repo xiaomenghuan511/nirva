@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { ChartContainer } from '@/components/ui/chart';
 
 // Energy level data throughout the day based on the description
 const energyData = [
@@ -18,14 +18,6 @@ const energyData = [
   { time: '17:40', level: 7, event: 'Post-movie walk begins' },
   { time: '18:30', level: 8.5, event: 'Post-Movie Discussion & Dinner' },
   { time: '19:00', level: 8, event: 'Evening continues' },
-];
-
-// Define key moments to highlight
-const keyMoments = [
-  { time: '11:30', label: 'Deep Talk & Tarot Reading w/ Ashley', level: 9 },
-  { time: '14:30', label: 'Engaging Drive & Philosophy w/ Trent', level: 8 },
-  { time: '14:50', label: 'Cafe Stop - Anxiety & Disappointment', level: 3 },
-  { time: '18:30', label: 'Post-Movie Discussion & Dinner', level: 8.5 }
 ];
 
 const EmotionFluxChart: React.FC = () => {
@@ -67,7 +59,6 @@ const EmotionFluxChart: React.FC = () => {
                   return '';
                 }}
               />
-              <ReferenceLine y={5} stroke="#D3E4FD" strokeWidth={2} strokeDasharray="3 3" />
               <Tooltip 
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
@@ -91,23 +82,6 @@ const EmotionFluxChart: React.FC = () => {
                 dot={{ r: 4 }}
                 activeDot={{ r: 6, fill: '#9b87f5' }}
               />
-              
-              {/* Highlight key moments */}
-              {keyMoments.map((moment, index) => (
-                <ReferenceLine
-                  key={index}
-                  x={moment.time}
-                  stroke="#9b87f5"
-                  strokeDasharray="3 3"
-                  label={{
-                    value: moment.label,
-                    position: moment.level > 5 ? 'top' : 'bottom',
-                    fill: '#9b87f5',
-                    fontSize: 10,
-                    offset: 10
-                  }}
-                />
-              ))}
             </LineChart>
           </ChartContainer>
         </div>
