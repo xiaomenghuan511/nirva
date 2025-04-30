@@ -21,12 +21,6 @@ const fluxData = [
   { time: '22:00', level: 4.5, event: 'Preparing for tomorrow' },
 ];
 
-// Only highlight the highest and lowest points
-const highlightPoints = [
-  { time: '10:00', level: 8, label: 'Productive work' },  // Highest point
-  { time: '15:30', level: 3, label: 'Low energy' }        // Lowest point
-];
-
 // Find highest and lowest points with events
 const findExtremesWithEvents = () => {
   let highest = { time: '', level: 0, label: '' };
