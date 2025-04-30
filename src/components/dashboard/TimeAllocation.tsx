@@ -4,7 +4,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 const data = [
   { name: 'Work', hours: 8, color: '#9b87f5' },
-  { name: 'Sleep', hours: 7, color: '#D3E4FD' },
   { name: 'Exercise', hours: 1, color: '#a0e4b3' },
   { name: 'Social', hours: 2, color: '#FFDEE2' },
   { name: 'Learning', hours: 1.5, color: '#FDE1D3' },
@@ -15,7 +14,7 @@ const data = [
 const TimeAllocation: React.FC = () => {
   return (
     <div className="glass-card p-4">
-      <h3 className="font-medium mb-3">Time Allocation</h3>
+      <h3 className="font-medium mb-3">Awake Time Allocation</h3>
       
       <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
