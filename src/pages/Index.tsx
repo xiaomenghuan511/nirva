@@ -4,6 +4,13 @@ import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
 import TimelineCard from '../components/timeline/TimelineCard';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from "@/components/ui/carousel";
 
 // Sample timeline data based on the diary entry
 const timelineEvents = [
@@ -82,6 +89,22 @@ const timelineEvents = [
   }
 ];
 
+// Affirmation data for multiple cards
+const affirmations = [
+  {
+    text: "Today was a day of deep conversations with friends, self-reflection, and cultural experiences.",
+    mood: "reflective"
+  },
+  {
+    text: "Meaningful connections with others help me understand myself better and grow as a person.",
+    mood: "calm"
+  },
+  {
+    text: "I am grateful for friends who share their wisdom and provide space for authentic expression.",
+    mood: "focused"
+  }
+];
+
 const Index: React.FC = () => {
   const navigate = useNavigate();
   
@@ -92,10 +115,28 @@ const Index: React.FC = () => {
   return (
     <Layout title="Smart Diary">
       <div className="px-4 py-5">
-        <AffirmationCard 
-          affirmation="Today was a day of deep conversations with friends, self-reflection, and cultural experiences."
-          mood="reflective"
-        />
+        <Carousel className="mb-8">
+          <CarouselContent>
+            {affirmations.map((affirmation, index) => (
+              <CarouselItem key={index}>
+                <AffirmationCard 
+                  affirmation={affirmation.text}
+                  mood={affirmation.mood}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex justify-center mt-2">
+            <div className="flex gap-1">
+              {affirmations.map((_, index) => (
+                <div 
+                  key={index} 
+                  className="w-2 h-2 rounded-full bg-primary opacity-60"
+                />
+              ))}
+            </div>
+          </div>
+        </Carousel>
         
         <div className="mb-4">
           <h2 className="text-lg font-medium">April 19, 2025</h2>

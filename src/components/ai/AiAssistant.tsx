@@ -68,23 +68,40 @@ const AiAssistant: React.FC = () => {
   const toggleInputMode = () => {
     setIsTextInput(!isTextInput);
   };
+
+  // Handle click outside to close the chat
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && chatRef.current && !chatRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
   
   return (
     <>
-      {/* Floating chat button */}
-      <button 
-        onClick={toggleChat}
-        className={`fixed right-4 bottom-20 z-20 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all ${
-          isOpen ? 'bg-destructive text-white' : 'bg-primary text-white animate-pulse-soft'
-        }`}
-      >
-        <span className="font-medium text-lg">N</span>
-      </button>
+      {/* Floating chat button - only show when chat is closed */}
+      {!isOpen && (
+        <button 
+          onClick={toggleChat}
+          className="fixed right-4 bottom-20 z-20 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all bg-primary text-white animate-pulse-soft"
+        >
+          <span className="font-medium text-lg">N</span>
+        </button>
+      )}
       
       {/* Chat overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-10 bg-black/20 backdrop-blur-sm" onClick={toggleChat}>
+        <div className="fixed inset-0 z-10 bg-black/20 backdrop-blur-sm">
           <div 
+            ref={chatRef}
             className="absolute bottom-20 right-4 w-80 h-96 glass-card overflow-hidden animate-fade-in"
             onClick={e => e.stopPropagation()}
           >
@@ -127,9 +144,9 @@ const AiAssistant: React.FC = () => {
                   </Button>
                 </form>
               ) : (
-                <div className="flex justify-center items-center relative">
+                <div className="flex items-center justify-between">
                   <Button
-                    className={`w-32 h-12 rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
+                    className={`w-48 h-12 rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
                     onMouseDown={startRecording}
                     onMouseUp={stopRecording}
                     onTouchStart={startRecording}
@@ -138,10 +155,11 @@ const AiAssistant: React.FC = () => {
                     <Mic size={18} className="mr-2" /> 
                     {isRecording ? 'Recording...' : 'Hold to speak'}
                   </Button>
+                  
                   <Button 
                     size="icon"
                     variant="outline"
-                    className="absolute right-0 bottom-0"
+                    className=""
                     onClick={toggleInputMode}
                   >
                     <Type size={16} />
