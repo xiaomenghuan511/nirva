@@ -45,10 +45,6 @@ const EmotionFluxChart: React.FC = () => {
         <CardTitle className="text-lg font-medium">Energy & Emotion Flux</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-sm text-muted-foreground mb-4">
-          Your mood and energy levels throughout today, with key events highlighted
-        </div>
-        
         <div className="h-72">
           <ChartContainer config={chartConfig}>
             <LineChart data={fluxData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>

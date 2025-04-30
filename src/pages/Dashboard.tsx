@@ -16,17 +16,16 @@ const Dashboard: React.FC = () => {
           {/* Mood score card */}
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg font-medium">Overall Mood Score</CardTitle>
+              <CardTitle className="text-lg font-medium">Mood Score</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex justify-between items-center">
                 <div className="text-4xl font-bold">7.8</div>
                 <div className="flex items-center text-green-500">
                   <TrendingUp className="h-5 w-5 mr-1" />
-                  <span className="text-sm">+0.5 from last week</span>
+                  <span className="text-sm">+0.5 from yesterday</span>
                 </div>
               </div>
-              <div className="mt-2 text-sm text-muted-foreground">You've been maintaining a positive outlook this week</div>
             </CardContent>
           </Card>
 
@@ -40,10 +39,9 @@ const Dashboard: React.FC = () => {
                 <div className="text-4xl font-bold">3.2</div>
                 <div className="flex items-center text-green-500">
                   <TrendingDown className="h-5 w-5 mr-1" />
-                  <span className="text-sm">-1.3 from last week</span>
+                  <span className="text-sm">-1.3 from yesterday</span>
                 </div>
               </div>
-              <div className="mt-2 text-sm text-muted-foreground">Your stress levels are decreasing - keep it up!</div>
             </CardContent>
           </Card>
         </div>
