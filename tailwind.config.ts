@@ -53,23 +53,23 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Nirva color palette - warm theme
+				// Nirva color palette - luxury gold theme
 				nirva: {
-					brown: '#3E2513',
-					cream: '#F3E3D8',
-					peach: '#F7F3F0',
+					gold: '#DAA520',
+					cream: '#F5F0E6',
+					beige: '#E8DFD0',
 					soft: {
-						brown: '#5A412F',
-						cream: '#F9F1EC',
-						beige: '#E8D5C7',
-						tan: '#D4BBA7',
-						rust: '#BF8861',
-						moss: '#7D7F6A',
+						gold: '#F2D279',
+						cream: '#F9F5ED',
+						beige: '#EEE6D9',
+						sand: '#E5D9C3',
+						brown: '#8B7355',
+						charcoal: '#36322A',
 					},
 					neutral: {
-						heading: '#201B18', 
-						body: '#504C49',
-						light: '#F7F3F0'
+						heading: '#2B2618', 
+						body: '#5A5346',
+						light: '#F9F6F0'
 					}
 				}
 			},
