@@ -10,23 +10,8 @@ const AffirmationCard: React.FC<AffirmationCardProps> = ({
   affirmation,
   mood = 'calm' 
 }) => {
-  // Dynamic background based on mood
-  const getBgGradient = () => {
-    switch(mood) {
-      case 'energetic':
-        return 'from-nirva-soft-yellow to-nirva-soft-peach';
-      case 'focused':
-        return 'from-nirva-soft-blue to-nirva-soft-purple';
-      case 'reflective':
-        return 'from-nirva-soft-purple to-nirva-soft-pink';
-      case 'calm':
-      default:
-        return 'from-nirva-soft-green to-nirva-soft-blue';
-    }
-  };
-
   return (
-    <div className={`p-6 rounded-xl mb-6 bg-gradient-to-br ${getBgGradient()} shadow-sm`}>
+    <div className="p-6 rounded-xl mb-6 bg-white shadow-sm border border-border">
       <p className="affirmation">"{affirmation}"</p>
     </div>
   );
