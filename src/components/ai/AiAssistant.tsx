@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -223,7 +222,7 @@ const AiAssistant: React.FC = () => {
                 className="p-1 rounded hover:bg-primary-foreground/10"
                 title="Start voice conversation"
               >
-                <Phone size={16} />
+                <Mic size={16} />
               </button>
             </div>
             
