@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, X, Phone } from 'lucide-react';
+import { Mic, MicOff, X, PhoneOff } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,8 @@ const AiAssistant: React.FC = () => {
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [callTime, setCallTime] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -23,6 +25,37 @@ const AiAssistant: React.FC = () => {
 
   const toggleVoiceMode = () => {
     setIsVoiceMode(!isVoiceMode);
+    // Reset and start timer when voice mode is enabled
+    setCallTime(0);
+  };
+  
+  // Start timer when voice mode is activated
+  useEffect(() => {
+    if (isVoiceMode) {
+      timerRef.current = setInterval(() => {
+        setCallTime(prevTime => prevTime + 1);
+      }, 1000);
+    } else {
+      // Clear timer when voice mode is deactivated
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+
+    // Cleanup interval on component unmount
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isVoiceMode]);
+
+  // Format time as MM:SS
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
   
   const handleSend = (e: React.FormEvent) => {
@@ -82,6 +115,12 @@ const AiAssistant: React.FC = () => {
     setIsVoiceMode(false);
     setIsRecording(false);
     setIsSpeaking(false);
+    // Reset timer
+    setCallTime(0);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
   };
 
   // Handle click outside to close the chat
@@ -116,7 +155,12 @@ const AiAssistant: React.FC = () => {
       {isVoiceMode && (
         <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-between dark:bg-background">
           {/* Top area */}
-          <div className="w-full pt-12 flex justify-end px-6">
+          <div className="w-full pt-12 flex justify-between px-6">
+            {/* Call timer */}
+            <div className="text-2xl font-medium text-gray-700 dark:text-gray-300">
+              {formatTime(callTime)}
+            </div>
+            
             <button 
               onClick={endCall} 
               className="p-2 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
@@ -140,8 +184,11 @@ const AiAssistant: React.FC = () => {
           
           {/* Bottom controls */}
           <div className="w-full pb-12 flex justify-center gap-8">
-            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
-              <Phone size={24} />
+            <button 
+              className="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white"
+              onClick={endCall}
+            >
+              <PhoneOff size={24} />
             </button>
             
             <button 
@@ -152,10 +199,6 @@ const AiAssistant: React.FC = () => {
               onTouchEnd={stopRecording}
             >
               {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
-            </button>
-            
-            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
-              <span className="font-bold">•••</span>
             </button>
           </div>
         </div>
