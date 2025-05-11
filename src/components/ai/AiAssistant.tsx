@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, X, PhoneOff } from 'lucide-react';
+import { Mic, MicOff, X, PhoneOff, PhoneCall } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -222,7 +222,7 @@ const AiAssistant: React.FC = () => {
                 className="p-1 rounded hover:bg-primary-foreground/10"
                 title="Start voice conversation"
               >
-                <Mic size={16} />
+                <PhoneCall size={16} />
               </button>
             </div>
             
