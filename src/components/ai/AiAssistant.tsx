@@ -114,30 +114,38 @@ const AiAssistant: React.FC = () => {
       
       {/* Voice Chat Mode */}
       {isVoiceMode && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-between">
+        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-between dark:bg-background">
           {/* Top area */}
           <div className="w-full pt-12 flex justify-end px-6">
             <button 
               onClick={endCall} 
-              className="p-2 rounded-full bg-gray-100 text-gray-600"
+              className="p-2 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
             >
               <X size={20} />
             </button>
           </div>
           
-          {/* Middle area - Blue gradient circle */}
+          {/* Middle area - Gold gradient circle with enhanced animation */}
           <div className="flex-1 flex items-center justify-center w-full">
-            <div className={`w-60 h-60 rounded-full bg-gradient-to-b from-sky-100 to-blue-500 ${isRecording || isSpeaking ? 'animate-pulse' : ''}`}></div>
+            <div 
+              className={`rounded-full bg-gradient-to-b from-[hsl(var(--voice-gradient-from))] to-[hsl(var(--voice-gradient-to))] transition-all duration-700 ease-in-out
+                ${isSpeaking 
+                  ? 'w-72 h-72 animate-[pulse_3s_ease-in-out_infinite]' 
+                  : isRecording 
+                    ? 'w-60 h-60 animate-[pulse_1.5s_ease-in-out_infinite]' 
+                    : 'w-60 h-60'
+                }`}
+            ></div>
           </div>
           
           {/* Bottom controls */}
           <div className="w-full pb-12 flex justify-center gap-8">
-            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
               <Phone size={24} />
             </button>
             
             <button 
-              className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center"
+              className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300"
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
               onTouchStart={startRecording}
@@ -146,7 +154,7 @@ const AiAssistant: React.FC = () => {
               {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
             </button>
             
-            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
               <span className="font-bold">•••</span>
             </button>
           </div>
