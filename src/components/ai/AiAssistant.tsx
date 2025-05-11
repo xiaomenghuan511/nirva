@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -154,10 +155,6 @@ const AiAssistant: React.FC = () => {
               onTouchEnd={stopRecording}
             >
               {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
-            </button>
-            
-            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
-              <span className="font-bold">•••</span>
             </button>
           </div>
         </div>
