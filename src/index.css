@@ -36,6 +36,10 @@
     --ring: 43 76% 62%;
 
     --radius: 1rem;
+    
+    /* Voice chat gradient */
+    --voice-gradient-from: 204 100% 97%; /* sky-100 */
+    --voice-gradient-to: 217 91% 60%; /* blue-500 */
   }
 
   .dark {
@@ -66,6 +70,10 @@
     --border: 33 20% 25%;
     --input: 33 20% 25%;
     --ring: 43 76% 52%;
+    
+    /* Voice chat gradient */
+    --voice-gradient-from: 217 30% 20%;
+    --voice-gradient-to: 217 70% 40%;
   }
 }
 

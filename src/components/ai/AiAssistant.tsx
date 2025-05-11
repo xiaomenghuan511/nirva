@@ -2,8 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Mic, Send } from 'lucide-react';
+import { Mic, MicOff, X, Phone } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +10,19 @@ const AiAssistant: React.FC = () => {
     { text: "Hi Wei! I know you have spent some great time with Ashley and Trent today. Do you want to chat more about it?", isUser: false }
   ]);
   const [input, setInput] = useState('');
+  const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
+    if (isVoiceMode) {
+      setIsVoiceMode(false);
+    }
+  };
+
+  const toggleVoiceMode = () => {
+    setIsVoiceMode(!isVoiceMode);
   };
   
   const handleSend = (e: React.FormEvent) => {
@@ -56,12 +64,24 @@ const AiAssistant: React.FC = () => {
       ]);
       
       setTimeout(() => {
+        setIsSpeaking(true);
         setMessages(prev => [
           ...prev,
           { text: "That sounds fascinating! Crystal work can be very grounding. Did you have a favorite crystal that Ashley showed you?", isUser: false }
         ]);
+        
+        // Simulate AI finished speaking
+        setTimeout(() => {
+          setIsSpeaking(false);
+        }, 3000);
       }, 1000);
     }, 500);
+  };
+  
+  const endCall = () => {
+    setIsVoiceMode(false);
+    setIsRecording(false);
+    setIsSpeaking(false);
   };
 
   // Handle click outside to close the chat
@@ -69,7 +89,7 @@ const AiAssistant: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && chatRef.current && !chatRef.current.contains(event.target as Node)) {
+      if (isOpen && !isVoiceMode && chatRef.current && !chatRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -78,7 +98,7 @@ const AiAssistant: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, isVoiceMode]);
   
   return (
     <>
@@ -92,8 +112,49 @@ const AiAssistant: React.FC = () => {
         </button>
       )}
       
-      {/* Chat overlay */}
-      {isOpen && (
+      {/* Voice Chat Mode */}
+      {isVoiceMode && (
+        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-between">
+          {/* Top area */}
+          <div className="w-full pt-12 flex justify-end px-6">
+            <button 
+              onClick={endCall} 
+              className="p-2 rounded-full bg-gray-100 text-gray-600"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          
+          {/* Middle area - Blue gradient circle */}
+          <div className="flex-1 flex items-center justify-center w-full">
+            <div className={`w-60 h-60 rounded-full bg-gradient-to-b from-sky-100 to-blue-500 ${isRecording || isSpeaking ? 'animate-pulse' : ''}`}></div>
+          </div>
+          
+          {/* Bottom controls */}
+          <div className="w-full pb-12 flex justify-center gap-8">
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+              <Phone size={24} />
+            </button>
+            
+            <button 
+              className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center"
+              onMouseDown={startRecording}
+              onMouseUp={stopRecording}
+              onTouchStart={startRecording}
+              onTouchEnd={stopRecording}
+            >
+              {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
+            </button>
+            
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+              <span className="font-bold">•••</span>
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Regular Chat overlay */}
+      {isOpen && !isVoiceMode && (
         <div className="fixed inset-0 z-10 bg-black/20 backdrop-blur-sm">
           <div 
             ref={chatRef}
@@ -101,9 +162,18 @@ const AiAssistant: React.FC = () => {
             onClick={e => e.stopPropagation()}
           >
             {/* Chat header */}
-            <div className="bg-primary text-white p-3 flex items-center">
-              <div className="h-2 w-2 rounded-full bg-nirva-mint mr-2 animate-pulse-soft"></div>
-              <span className="font-medium">Nirva</span>
+            <div className="bg-primary text-white p-3 flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse-soft"></div>
+                <span className="font-medium">Nirva</span>
+              </div>
+              <button 
+                onClick={toggleVoiceMode}
+                className="p-1 rounded hover:bg-primary-foreground/10"
+                title="Start voice conversation"
+              >
+                <Phone size={16} />
+              </button>
             </div>
             
             {/* Messages area */}
@@ -135,7 +205,11 @@ const AiAssistant: React.FC = () => {
                     type="submit"
                     className="bg-primary text-white rounded-r-lg rounded-l-none h-10"
                   >
-                    <Send size={16} />
+                    <span className="sr-only">Send</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m22 2-7 20-4-9-9-4Z" />
+                      <path d="M22 2 11 13" />
+                    </svg>
                   </Button>
                 </form>
                 
