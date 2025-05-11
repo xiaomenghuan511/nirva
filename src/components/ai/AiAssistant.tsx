@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, X, PhoneOff } from 'lucide-react';
+import { Mic, MicOff, X, Phone } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -140,11 +140,8 @@ const AiAssistant: React.FC = () => {
           
           {/* Bottom controls */}
           <div className="w-full pb-12 flex justify-center gap-8">
-            <button 
-              className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-red-600 dark:bg-red-900/60 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/80 transition-colors"
-              onClick={endCall}
-            >
-              <PhoneOff size={24} />
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
+              <Phone size={24} />
             </button>
             
             <button 
@@ -155,6 +152,10 @@ const AiAssistant: React.FC = () => {
               onTouchEnd={stopRecording}
             >
               {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
+            </button>
+            
+            <button className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center dark:bg-gray-800 dark:text-gray-300">
+              <span className="font-bold">•••</span>
             </button>
           </div>
         </div>
@@ -179,7 +180,7 @@ const AiAssistant: React.FC = () => {
                 className="p-1 rounded hover:bg-primary-foreground/10"
                 title="Start voice conversation"
               >
-                <PhoneOff size={16} />
+                <Phone size={16} />
               </button>
             </div>
             
