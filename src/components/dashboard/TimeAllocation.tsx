@@ -8,7 +8,7 @@ const data = [
   { name: 'Social', hours: 2, color: '#FFDEE2' },
   { name: 'Learning', hours: 1.5, color: '#FDE1D3' },
   { name: 'Self-care', hours: 1, color: '#FEF7CD' },
-  { name: 'Other', hours: 3.5, color: '#F1F0FB' },
+  { name: 'Unknown', hours: 3.5, color: '#F1F0FB' },
 ];
 
 const TimeAllocation: React.FC = () => {
