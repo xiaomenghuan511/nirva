@@ -10,10 +10,10 @@ const EnterName: React.FC = () => {
   const [name, setName] = useState('');
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#f3d0c1] to-[#f5b8a9] p-6">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-nirva-cream to-nirva-beige p-6">
       <div className="w-full flex justify-start pt-4">
-        <button onClick={() => navigate('/onboarding')}>
-          <ArrowLeft size={24} className="text-white" />
+        <button onClick={() => navigate('/onboarding')} className="text-nirva-neutral-body">
+          <ArrowLeft size={24} />
         </button>
       </div>
       
@@ -30,7 +30,7 @@ const EnterName: React.FC = () => {
           </div>
         </div>
         
-        <h2 className="text-xl font-medium text-white mb-8">
+        <h2 className="text-xl font-medium text-nirva-neutral-heading mb-8">
           So nice to meet you! What do your friends call you?
         </h2>
       </div>
@@ -40,13 +40,13 @@ const EnterName: React.FC = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your nickname..."
-          className="w-full bg-white/20 border-none text-white placeholder:text-white/50 text-center py-6"
+          className="w-full bg-white/20 border-none text-nirva-neutral-heading placeholder:text-nirva-neutral-body/50 text-center py-6"
         />
       </div>
       
       <div className="w-full mt-auto mb-8">
         <Button 
-          className="w-full rounded-full py-6 bg-white/20 hover:bg-white/30 text-white font-medium"
+          className="w-full rounded-full py-6 bg-nirva-gold hover:bg-nirva-soft-gold text-nirva-neutral-heading font-medium"
           onClick={() => navigate('/onboarding/age')}
           disabled={!name.trim()}
         >
@@ -55,10 +55,10 @@ const EnterName: React.FC = () => {
         
         <div className="flex justify-center mt-6">
           <div className="flex space-x-2">
-            <div className="w-2 h-2 rounded-full bg-white"></div>
-            <div className="w-2 h-2 rounded-full bg-white/30"></div>
-            <div className="w-2 h-2 rounded-full bg-white/30"></div>
-            <div className="w-2 h-2 rounded-full bg-white/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
           </div>
         </div>
       </div>
