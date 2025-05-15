@@ -1,17 +1,9 @@
-
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Dot } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-
-// Sample data for diary entries (in a real app, this would come from a database or API)
-const datesWithEntries = [
-  new Date(2025, 3, 19), // April 19, 2025
-  new Date(2025, 3, 23), // April 23, 2025
-  new Date(2025, 3, 25), // April 25, 2025
-];
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -21,20 +13,10 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  // Function to check if a date has diary entries
-  const hasEntry = (date: Date) => {
-    return datesWithEntries.some(
-      (entryDate) => 
-        entryDate.getFullYear() === date.getFullYear() &&
-        entryDate.getMonth() === date.getMonth() &&
-        entryDate.getDate() === date.getDate()
-    );
-  };
-
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3 pointer-events-auto", className)}
+      className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
@@ -72,19 +54,6 @@ function Calendar({
       components={{
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-        DayContent: (props) => {
-          const date = props.date;
-          const hasEntryForDate = hasEntry(date);
-          
-          return (
-            <div className="flex flex-col items-center justify-center">
-              <div>{props.date.getDate()}</div>
-              {hasEntryForDate && (
-                <Dot className="h-4 w-4 text-[#FEF7CD] fill-[#FEF7CD]" />
-              )}
-            </div>
-          );
-        }
       }}
       {...props}
     />
@@ -93,4 +62,3 @@ function Calendar({
 Calendar.displayName = "Calendar";
 
 export { Calendar };
-
