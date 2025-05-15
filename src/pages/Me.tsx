@@ -1,29 +1,21 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock, Bell, Shield, Download, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
-
 const Me: React.FC = () => {
   const navigate = useNavigate();
-
   const handleOnboardingClick = () => {
     navigate('/onboarding');
   };
-
   const handleProfileClick = () => {
     navigate('/user-profile');
   };
-
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
-        <div 
-          className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer"
-          onClick={handleProfileClick}
-        >
+        <div className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer" onClick={handleProfileClick}>
           <Avatar className="h-16 w-16">
             <AvatarImage src="/placeholder.svg" alt="User" />
             <AvatarFallback>WW</AvatarFallback>
@@ -66,10 +58,7 @@ const Me: React.FC = () => {
           <CardContent className="p-0">
             <ul className="divide-y divide-border">
               {/* Onboarding Row */}
-              <li 
-                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
-                onClick={handleOnboardingClick}
-              >
+              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handleOnboardingClick}>
                 <div className="flex items-center gap-3">
                   <Undo2 className="text-foreground" size={20} />
                   <div>
@@ -128,8 +117,8 @@ const Me: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <Settings className="text-foreground" size={20} />
                   <div>
-                    <p className="font-medium">General Settings</p>
-                    <p className="text-sm text-muted-foreground">Language, theme, and app preferences</p>
+                    <p className="font-medium">Nirva Settings</p>
+                    <p className="text-sm text-muted-foreground">Customize Nirva's voice</p>
                   </div>
                 </div>
                 <ChevronRight className="text-muted-foreground" size={20} />
