@@ -59,23 +59,12 @@ const GoalSelection: React.FC = () => {
         </div>
       </div>
       
-      <div className="w-full mt-auto mb-8">
-        <Button 
-          variant="default"
-          className="w-full rounded-full py-6 bg-nirva-gold hover:bg-nirva-soft-gold text-nirva-neutral-heading flex items-center justify-center gap-2"
-          onClick={() => navigate('/onboarding/reflection')}
-        >
-          Continue
-          <span className="ml-1">›</span>
-        </Button>
-
-        <div className="flex justify-center mt-6">
-          <div className="flex space-x-2">
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-          </div>
+      <div className="flex justify-center mt-auto mb-8">
+        <div className="flex space-x-2">
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
         </div>
       </div>
     </div>

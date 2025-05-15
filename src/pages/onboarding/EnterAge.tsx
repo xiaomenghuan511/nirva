@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -16,6 +16,13 @@ const ageRanges = [
 
 const EnterAge: React.FC = () => {
   const navigate = useNavigate();
+  const [selectedAge, setSelectedAge] = useState<string | null>(null);
+
+  const handleAgeSelect = (age: string) => {
+    setSelectedAge(age);
+    // Auto-navigate to the next page after selection
+    navigate('/onboarding/goal');
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-nirva-cream p-6">
@@ -41,8 +48,12 @@ const EnterAge: React.FC = () => {
             <Button
               key={range}
               variant="outline"
-              className="w-full py-6 rounded-full bg-white hover:bg-nirva-soft-cream text-nirva-neutral-heading"
-              onClick={() => navigate('/onboarding/goal')}
+              className={`w-full py-6 rounded-full ${
+                selectedAge === range 
+                  ? 'bg-nirva-gold text-nirva-neutral-heading' 
+                  : 'bg-white hover:bg-nirva-soft-cream text-nirva-neutral-heading'
+              }`}
+              onClick={() => handleAgeSelect(range)}
             >
               {range}
             </Button>
@@ -50,23 +61,12 @@ const EnterAge: React.FC = () => {
         </div>
       </div>
       
-      <div className="w-full mt-auto mb-8">
-        <Button 
-          variant="default"
-          className="w-full rounded-full py-6 bg-nirva-gold hover:bg-nirva-soft-gold text-nirva-neutral-heading flex items-center justify-center gap-2"
-          onClick={() => navigate('/onboarding/goal')}
-        >
-          Continue
-          <span className="ml-1">›</span>
-        </Button>
-
-        <div className="flex justify-center mt-6">
-          <div className="flex space-x-2">
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
-          </div>
+      <div className="flex justify-center mt-auto mb-8">
+        <div className="flex space-x-2">
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+          <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
         </div>
       </div>
     </div>
