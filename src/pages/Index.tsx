@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
@@ -11,7 +12,7 @@ import {
   CarouselPrevious 
 } from "@/components/ui/carousel";
 import { format, addDays, subDays, startOfWeek, addWeeks, subWeeks } from 'date-fns';
-import { Calendar, ChevronLeft, ChevronRight, Dot } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
@@ -133,20 +134,6 @@ const affirmations = [
   }
 ];
 
-// Dates that have entries - for demo purposes we'll hardcode April 19, 20, and 23, 2025
-const datesWithEntries = [
-  new Date(2025, 3, 19), // April 19, 2025
-  new Date(2025, 3, 20), // April 20, 2025
-  new Date(2025, 3, 23), // April 23, 2025
-];
-
-// Helper function to check if a date has entries
-const hasEntries = (date: Date) => {
-  return datesWithEntries.some(entryDate => 
-    format(entryDate, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
-  );
-};
-
 const Index: React.FC = () => {
   const navigate = useNavigate();
   // Set default date to April 19, 2025
@@ -189,8 +176,7 @@ const Index: React.FC = () => {
       dayName: format(day, 'EEE').substring(0, 2),
       dayNumber: format(day, 'd'),
       isToday: isApril19(day),
-      isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd'),
-      hasEntries: hasEntries(day)
+      isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     };
   });
   
@@ -257,18 +243,13 @@ const Index: React.FC = () => {
                   <div 
                     key={index}
                     onClick={() => handleDateChange(day.date)}
-                    className="flex flex-col items-center justify-center cursor-pointer relative"
-                  >
-                    <div className={`px-2 py-1 rounded-full ${
+                    className={`flex flex-col items-center justify-center cursor-pointer px-2 py-1 rounded-full ${
                       day.isSelected ? 'bg-primary text-primary-foreground' : 
                       day.isToday ? 'font-bold' : ''
-                    }`}>
-                      <span className="text-xs font-medium">{day.dayName}</span>
-                      <span className="text-base">{day.dayNumber}</span>
-                    </div>
-                    {day.hasEntries && (
-                      <div className="w-1.5 h-1.5 bg-[#FEF7CD] rounded-full mt-1 absolute -bottom-2.5"></div>
-                    )}
+                    }`}
+                  >
+                    <span className="text-xs font-medium">{day.dayName}</span>
+                    <span className="text-base">{day.dayNumber}</span>
                   </div>
                 ))}
               </div>
