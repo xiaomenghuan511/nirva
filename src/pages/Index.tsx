@@ -138,6 +138,11 @@ const Index: React.FC = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   
+  // Define April 19, 2025 as a reference date for "Today"
+  const isApril19 = (date: Date) => {
+    return format(date, 'yyyy-MM-dd') === '2025-04-19';
+  };
+  
   const handleEventClick = (id: number) => {
     navigate(`/diary/${id}`);
   };
@@ -166,7 +171,7 @@ const Index: React.FC = () => {
       date: day,
       dayName: format(day, 'EEE').substring(0, 2),
       dayNumber: format(day, 'd'),
-      isToday: format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd'),
+      isToday: isApril19(day),
       isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     };
   });
@@ -200,8 +205,7 @@ const Index: React.FC = () => {
         {/* Date Selection Row */}
         <div className="mb-6">
           <div className="flex flex-col">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-xl font-medium">{format(selectedDate, 'MMMM')}</h2>
+            <div className="flex justify-end items-center mb-2">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -258,7 +262,7 @@ const Index: React.FC = () => {
             
             <div className="mt-4 text-center">
               <h3 className="text-lg font-medium">
-                Today {format(selectedDate, 'MMMM d')}
+                {isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d')}
               </h3>
             </div>
           </div>
