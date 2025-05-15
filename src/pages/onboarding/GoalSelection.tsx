@@ -18,6 +18,8 @@ const GoalSelection: React.FC = () => {
 
   const handleGoalSelect = (goal: string) => {
     setSelectedGoal(goal);
+    // Auto-navigate to the next page after selection
+    navigate('/onboarding/reflection');
   };
 
   return (
