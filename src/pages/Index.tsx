@@ -11,7 +11,7 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from "@/components/ui/carousel";
-import { format, addDays, subDays, startOfWeek } from 'date-fns';
+import { format, addDays, subDays, startOfWeek, addWeeks, subWeeks } from 'date-fns';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -136,7 +136,9 @@ const affirmations = [
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  // Set default date to April 19, 2025
+  const defaultDate = new Date(2025, 3, 19); // April 19, 2025
+  const [selectedDate, setSelectedDate] = useState<Date>(defaultDate);
   
   // Define April 19, 2025 as a reference date for "Today"
   const isApril19 = (date: Date) => {
@@ -153,12 +155,14 @@ const Index: React.FC = () => {
     }
   };
 
-  const handlePreviousDay = () => {
-    setSelectedDate(prevDate => subDays(prevDate, 1));
+  // Updated to navigate to previous week instead of previous day
+  const handlePreviousWeek = () => {
+    setSelectedDate(prevDate => subWeeks(prevDate, 1));
   };
 
-  const handleNextDay = () => {
-    setSelectedDate(prevDate => addDays(prevDate, 1));
+  // Updated to navigate to next week instead of next day
+  const handleNextWeek = () => {
+    setSelectedDate(prevDate => addWeeks(prevDate, 1));
   };
 
   // Get start of the current week (Sunday)
@@ -229,7 +233,7 @@ const Index: React.FC = () => {
                 variant="ghost" 
                 size="icon" 
                 className="h-8 w-8" 
-                onClick={handlePreviousDay}
+                onClick={handlePreviousWeek}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
@@ -254,7 +258,7 @@ const Index: React.FC = () => {
                 variant="ghost" 
                 size="icon" 
                 className="h-8 w-8" 
-                onClick={handleNextDay}
+                onClick={handleNextWeek}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
