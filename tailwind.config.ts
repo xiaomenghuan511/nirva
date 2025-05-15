@@ -58,8 +58,6 @@ export default {
 					gold: '#DAA520',
 					cream: '#F5F0E6',
 					beige: '#E8DFD0',
-					'soft-purple': '#E9E1F9', // Added soft purple color
-					'soft-blue': '#E1E9F9',   // Added soft blue color
 					soft: {
 						gold: '#F2D279',
 						cream: '#F9F5ED',

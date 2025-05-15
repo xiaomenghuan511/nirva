@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,30 +12,8 @@ const AiAssistant: React.FC = () => {
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isUserSpeaking, setIsUserSpeaking] = useState(false);
-  const [userSpeechVolume, setUserSpeechVolume] = useState(0);
   const [callTime, setCallTime] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const animationRef = useRef<number | null>(null);
-  
-  // Simulate speech detection with volume levels
-  const simulateSpeechDetection = () => {
-    if (isRecording) {
-      // Randomly fluctuate the volume to simulate speech patterns
-      const newVolume = Math.min(1, Math.max(0.3, Math.random() * 0.7 + 0.3));
-      setUserSpeechVolume(newVolume);
-      setIsUserSpeaking(true);
-      
-      animationRef.current = requestAnimationFrame(simulateSpeechDetection);
-    } else {
-      setIsUserSpeaking(false);
-      setUserSpeechVolume(0);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
-      }
-    }
-  };
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -70,9 +47,6 @@ const AiAssistant: React.FC = () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
     };
   }, [isVoiceMode]);
 
@@ -105,21 +79,12 @@ const AiAssistant: React.FC = () => {
   
   const startRecording = () => {
     setIsRecording(true);
-    // Start speech detection animation
-    simulateSpeechDetection();
     // Simulating voice recording - in a real app, this would use the Web Audio API
     console.log("Started recording voice...");
   };
   
   const stopRecording = () => {
     setIsRecording(false);
-    // Stop speech detection animation
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
-    setIsUserSpeaking(false);
-    
     // Simulating voice recording end and processing
     console.log("Stopped recording voice...");
     
@@ -149,16 +114,11 @@ const AiAssistant: React.FC = () => {
     setIsVoiceMode(false);
     setIsRecording(false);
     setIsSpeaking(false);
-    setIsUserSpeaking(false);
     // Reset timer
     setCallTime(0);
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
-    }
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
     }
   };
 
@@ -177,40 +137,6 @@ const AiAssistant: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, isVoiceMode]);
-  
-  // Calculate dynamic styles for the voice circle based on user's speech
-  const getCircleStyles = () => {
-    // Base size
-    let size = "60";
-    let hue = 43; // Base gold hue
-    let saturation = "76%";
-    let lightness = "62%"; // Default lightness
-    
-    if (isUserSpeaking) {
-      // Scale the circle size based on volume (ranging from 60 to 80)
-      size = String(60 + Math.floor(userSpeechVolume * 20));
-      
-      // Shift the hue slightly based on volume (from gold toward orange)
-      hue = 43 + Math.floor(userSpeechVolume * 15);
-      
-      // Increase saturation based on volume
-      saturation = `${76 + Math.floor(userSpeechVolume * 14)}%`;
-      
-      // Make it brighter based on volume
-      lightness = `${62 + Math.floor(userSpeechVolume * 18)}%`;
-    } else if (isSpeaking) {
-      // When AI is speaking
-      size = "72";
-    } 
-    
-    return {
-      width: `${size}%`, // Use percentage for responsive sizing
-      height: `${size}%`,
-      background: `linear-gradient(to bottom, hsl(${hue}, ${saturation}, ${parseInt(lightness) + 10}%), hsl(${hue}, ${saturation}, ${lightness}))`,
-      boxShadow: isUserSpeaking ? `0 0 ${25 + Math.floor(userSpeechVolume * 25)}px hsl(${hue}, ${saturation}, ${lightness})` : '',
-      transition: 'all 0.3s ease'
-    };
-  };
   
   return (
     <>
@@ -234,20 +160,25 @@ const AiAssistant: React.FC = () => {
               {formatTime(callTime)}
             </div>
             
-            {/* Removed the exit button here */}
+            <button 
+              onClick={endCall} 
+              className="p-2 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+            >
+              <X size={20} />
+            </button>
           </div>
           
           {/* Middle area - Gold gradient circle with enhanced animation */}
           <div className="flex-1 flex items-center justify-center w-full">
             <div 
-              style={getCircleStyles()}
-              className="rounded-full transition-all duration-300 ease-in-out flex items-center justify-center"
-            >
-              {/* Optional: Add a subtle pulse animation inside the circle */}
-              {isUserSpeaking && (
-                <div className="h-1/2 w-1/2 rounded-full bg-white/30 animate-pulse-soft"></div>
-              )}
-            </div>
+              className={`rounded-full bg-gradient-to-b from-[hsl(var(--voice-gradient-from))] to-[hsl(var(--voice-gradient-to))] transition-all duration-700 ease-in-out
+                ${isSpeaking 
+                  ? 'w-72 h-72 animate-[pulse_3s_ease-in-out_infinite]' 
+                  : isRecording 
+                    ? 'w-60 h-60 animate-[pulse_1.5s_ease-in-out_infinite]' 
+                    : 'w-60 h-60'
+                }`}
+            ></div>
           </div>
           
           {/* Bottom controls */}
@@ -331,17 +262,6 @@ const AiAssistant: React.FC = () => {
                     </svg>
                   </Button>
                 </form>
-                
-                {/* Added new button next to the microphone button */}
-                <Button
-                  size="icon"
-                  className="rounded-full bg-gray-100 dark:bg-gray-800 dark:text-gray-300"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                </Button>
                 
                 <Button
                   size="icon"
