@@ -18,15 +18,19 @@ const EnterName: React.FC = () => {
       </div>
       
       <div className="flex flex-col items-center justify-center text-center pt-8">
-        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 shadow-md">
-          <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-            <div className="flex flex-col items-center">
-              <div className="flex space-x-3">
-                <div className="w-1 h-1 bg-black rounded-full"></div>
-                <div className="w-1 h-1 bg-black rounded-full"></div>
+        <div className="w-20 h-20 bg-nirva-gold rounded-full flex items-center justify-center mb-6 shadow-md animate-pulse-soft">
+          <div className="w-16 h-16 bg-nirva-gold rounded-full flex items-center justify-center relative">
+            {/* Big white eyes */}
+            <div className="flex space-x-4 absolute">
+              <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 bg-black rounded-full"></div>
               </div>
-              <div className="mt-1 w-3 h-1 bg-black rounded-full transform rotate-[20deg]"></div>
+              <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 bg-black rounded-full"></div>
+              </div>
             </div>
+            {/* Smiling mouth */}
+            <div className="mt-7 w-6 h-3 border-b-2 border-black rounded-full"></div>
           </div>
         </div>
         
