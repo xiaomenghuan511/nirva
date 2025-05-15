@@ -11,6 +11,7 @@ import DiaryDetail from "./pages/DiaryDetail";
 import ReflectDetail from "./pages/ReflectDetail";
 import NotFound from "./pages/NotFound";
 import Me from "./pages/Me";
+import UserProfile from "./pages/UserProfile";
 import Onboarding from "./pages/onboarding/Onboarding";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/diary/:id" element={<DiaryDetail />} />
           <Route path="/reflect/:id" element={<ReflectDetail />} />
           <Route path="/me" element={<Me />} />
+          <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/onboarding/*" element={<Onboarding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

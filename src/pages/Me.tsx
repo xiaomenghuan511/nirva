@@ -13,10 +13,17 @@ const Me: React.FC = () => {
     navigate('/onboarding');
   };
 
+  const handleProfileClick = () => {
+    navigate('/user-profile');
+  };
+
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
-        <div className="flex items-center w-full p-4 bg-background rounded-lg border border-border">
+        <div 
+          className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer"
+          onClick={handleProfileClick}
+        >
           <Avatar className="h-16 w-16">
             <AvatarImage src="/placeholder.svg" alt="User" />
             <AvatarFallback>WW</AvatarFallback>
