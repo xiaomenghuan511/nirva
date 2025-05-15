@@ -60,7 +60,7 @@ export default {
 					beige: '#E8DFD0',
 					soft: {
 						gold: '#F2D279',
-						cream: '#F9F5ED',
+						cream: '#F5F0E6',
 						beige: '#EEE6D9',
 						sand: '#E5D9C3',
 						brown: '#8B7355',

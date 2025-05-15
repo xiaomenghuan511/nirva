@@ -1,7 +1,8 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, X, PhoneOff, PhoneCall } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, PhoneCall, Minimize } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ const AiAssistant: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callTime, setCallTime] = useState(0);
+  const [isMinimized, setIsMinimized] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const toggleChat = () => {
@@ -20,12 +22,18 @@ const AiAssistant: React.FC = () => {
     if (isVoiceMode) {
       setIsVoiceMode(false);
     }
+    setIsMinimized(false);
   };
 
   const toggleVoiceMode = () => {
     setIsVoiceMode(!isVoiceMode);
     // Reset and start timer when voice mode is enabled
     setCallTime(0);
+    setIsMinimized(false);
+  };
+
+  const toggleMinimized = () => {
+    setIsMinimized(!isMinimized);
   };
   
   // Start timer when voice mode is activated
@@ -114,6 +122,7 @@ const AiAssistant: React.FC = () => {
     setIsVoiceMode(false);
     setIsRecording(false);
     setIsSpeaking(false);
+    setIsMinimized(false);
     // Reset timer
     setCallTime(0);
     if (timerRef.current) {
@@ -137,11 +146,42 @@ const AiAssistant: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, isVoiceMode]);
+
+  // Return early if minimized to show the minimized bar
+  if (isVoiceMode && isMinimized) {
+    return (
+      <div className="fixed bottom-20 left-0 right-0 z-50 mx-auto w-fit animate-fade-in">
+        <div className="bg-white dark:bg-card flex items-center px-4 py-2 rounded-full shadow-md">
+          <div className="w-10 h-10 rounded-full bg-nirva-soft-cream flex items-center justify-center overflow-hidden">
+            <img src="/lovable-uploads/9d7afe01-87ea-4838-8372-25262a946d4d.png" alt="Nirva" className="w-8 h-8 object-contain" />
+          </div>
+          <div className="flex flex-col ml-3 mr-6">
+            <span className="font-medium text-foreground">Nirva</span>
+            <span className="text-xs text-muted-foreground">{formatTime(callTime)}</span>
+          </div>
+          <div className="flex gap-2">
+            <button 
+              onClick={toggleMinimized}
+              className="w-10 h-10 rounded-full bg-nirva-soft-cream flex items-center justify-center"
+            >
+              <Minimize size={18} />
+            </button>
+            <button 
+              onClick={endCall}
+              className="w-10 h-10 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white"
+            >
+              <PhoneOff size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <>
-      {/* Floating chat button - only show when chat is closed */}
-      {!isOpen && (
+      {/* Floating chat button - only show when chat is closed and not in minimized voice mode */}
+      {!isOpen && !isVoiceMode && (
         <button 
           onClick={toggleChat}
           className="fixed right-4 bottom-20 z-20 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all bg-primary text-white animate-pulse-soft"
@@ -151,20 +191,20 @@ const AiAssistant: React.FC = () => {
       )}
       
       {/* Voice Chat Mode */}
-      {isVoiceMode && (
+      {isVoiceMode && !isMinimized && (
         <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-between dark:bg-background">
           {/* Top area */}
-          <div className="w-full pt-12 flex justify-between px-6">
-            {/* Call timer */}
-            <div className="text-2xl font-medium text-gray-700 dark:text-gray-300">
+          <div className="w-full flex flex-col items-center pt-8 px-6">
+            <h2 className="text-2xl font-medium mb-1">Nirva</h2>
+            <div className="text-xl text-gray-500 dark:text-gray-400">
               {formatTime(callTime)}
             </div>
             
             <button 
-              onClick={endCall} 
-              className="p-2 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+              onClick={toggleMinimized} 
+              className="absolute right-6 top-8 p-2 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
             >
-              <X size={20} />
+              <Minimize size={20} />
             </button>
           </div>
           
@@ -175,7 +215,7 @@ const AiAssistant: React.FC = () => {
                 ${isSpeaking 
                   ? 'w-72 h-72 animate-[pulse_3s_ease-in-out_infinite]' 
                   : isRecording 
-                    ? 'w-60 h-60 animate-[pulse_1.5s_ease-in-out_infinite]' 
+                    ? 'w-60 h-60 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_40px_rgba(218,165,32,0.6)]' 
                     : 'w-60 h-60'
                 }`}
             ></div>
