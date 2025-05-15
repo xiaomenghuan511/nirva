@@ -3,10 +3,12 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Cloud } from 'lucide-react';
+import { Cloud, ToggleRight } from 'lucide-react';
 
 const PrivacyControls: React.FC = () => {
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
+  const [nirvaAppEnabled, setNirvaAppEnabled] = React.useState(true);
+  const [nirvaNecklaceEnabled, setNirvaNecklaceEnabled] = React.useState(true);
   
   return (
     <Layout title="Privacy Controls">
@@ -60,8 +62,11 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">On</span>
-                  <span className="text-muted-foreground">›</span>
+                  <Switch 
+                    checked={nirvaAppEnabled} 
+                    onCheckedChange={setNirvaAppEnabled}
+                    className="data-[state=checked]:bg-primary"
+                  />
                 </div>
               </div>
               
@@ -77,8 +82,11 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">On</span>
-                  <span className="text-muted-foreground">›</span>
+                  <Switch 
+                    checked={nirvaNecklaceEnabled} 
+                    onCheckedChange={setNirvaNecklaceEnabled} 
+                    className="data-[state=checked]:bg-primary"
+                  />
                 </div>
               </div>
             </CardContent>
