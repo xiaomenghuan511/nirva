@@ -13,7 +13,7 @@ const ReflectionTime: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-nirva-cream p-6">
       <div className="flex justify-start items-center pt-4">
-        <button onClick={() => navigate('/onboarding/age')} className="text-nirva-neutral-body">
+        <button onClick={() => navigate('/onboarding/goal')} className="text-nirva-neutral-body">
           <ArrowLeft size={24} />
         </button>
       </div>
@@ -63,6 +63,15 @@ const ReflectionTime: React.FC = () => {
           Continue
           <span className="ml-1">›</span>
         </Button>
+
+        <div className="flex justify-center mt-6">
+          <div className="flex space-x-2">
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-soft-gold/30"></div>
+            <div className="w-2 h-2 rounded-full bg-nirva-gold"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
