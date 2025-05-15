@@ -1,9 +1,18 @@
+
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Bell, Shield, Download, Settings, ChevronRight, Info } from 'lucide-react';
+import { Clock, Bell, Shield, Download, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
+
 const Me: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleOnboardingClick = () => {
+    navigate('/onboarding');
+  };
+
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
@@ -51,6 +60,21 @@ const Me: React.FC = () => {
         <Card className="border-border">
           <CardContent className="p-0">
             <ul className="divide-y divide-border">
+              {/* Onboarding Row */}
+              <li 
+                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
+                onClick={handleOnboardingClick}
+              >
+                <div className="flex items-center gap-3">
+                  <Undo2 className="text-foreground" size={20} />
+                  <div>
+                    <p className="font-medium">Onboarding</p>
+                    <p className="text-sm text-muted-foreground">Restart the setup process</p>
+                  </div>
+                </div>
+                <ChevronRight className="text-muted-foreground" size={20} />
+              </li>
+              
               <li className="flex items-center justify-between px-4 py-4">
                 <div className="flex items-center gap-3">
                   <Clock className="text-foreground" size={20} />
