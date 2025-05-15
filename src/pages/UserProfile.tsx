@@ -13,6 +13,11 @@ const UserProfile: React.FC = () => {
     navigate('/me');
   };
 
+  const handleLogout = () => {
+    // In a real app, we would clear session/auth state here
+    navigate('/login');
+  };
+
   return (
     <div className="min-h-screen bg-background px-4 py-5">
       {/* Header */}
@@ -62,6 +67,7 @@ const UserProfile: React.FC = () => {
         <Button
           variant="outline" 
           className="w-full py-6 bg-muted hover:bg-muted/80 text-foreground"
+          onClick={handleLogout}
         >
           Log Out
         </Button>
@@ -69,18 +75,7 @@ const UserProfile: React.FC = () => {
         {/* Spacer */}
         <div className="h-16"></div>
 
-        {/* Delete Account Button */}
-        <div className="space-y-2">
-          <Button
-            variant="outline"
-            className="w-full py-6 text-destructive hover:text-destructive bg-muted hover:bg-muted/80"
-          >
-            Delete Account
-          </Button>
-          <p className="text-sm text-destructive px-2">
-            <span className="font-medium">Warning:</span> Your account information and files will be deleted permanently.
-          </p>
-        </div>
+        {/* Delete Account Button and warning have been removed */}
       </div>
     </div>
   );
