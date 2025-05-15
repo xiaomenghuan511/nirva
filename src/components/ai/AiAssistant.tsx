@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -152,8 +151,21 @@ const AiAssistant: React.FC = () => {
     return (
       <div className="fixed bottom-20 left-0 right-0 z-50 mx-auto w-fit animate-fade-in">
         <div className="bg-white dark:bg-card flex items-center px-4 py-2 rounded-full shadow-md">
-          <div className="w-10 h-10 rounded-full bg-nirva-soft-cream flex items-center justify-center overflow-hidden">
-            <img src="/lovable-uploads/9d7afe01-87ea-4838-8372-25262a946d4d.png" alt="Nirva" className="w-8 h-8 object-contain" />
+          <div className="w-10 h-10 rounded-full bg-nirva-gold flex items-center justify-center overflow-hidden">
+            {/* Replace with smiling face from onboarding */}
+            <div className="w-8 h-8 bg-nirva-gold flex items-center justify-center relative">
+              {/* Big white eyes */}
+              <div className="flex space-x-2 absolute">
+                <div className="w-3 h-3 bg-white rounded-full flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full"></div>
+                </div>
+                <div className="w-3 h-3 bg-white rounded-full flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full"></div>
+                </div>
+              </div>
+              {/* Smiling mouth */}
+              <div className="mt-4 w-3 h-1.5 border-b-2 border-black rounded-full"></div>
+            </div>
           </div>
           <div className="flex flex-col ml-3 mr-6">
             <span className="font-medium text-foreground">Nirva</span>
