@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,11 +13,18 @@ const PrivacyControls: React.FC = () => {
   const [journalingSuggestionsEnabled, setJournalingSuggestionsEnabled] = React.useState(true);
   const [appleHealthEnabled, setAppleHealthEnabled] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [healthDialogOpen, setHealthDialogOpen] = React.useState(false);
   
   const handleJournalSuggestionClick = () => {
     // In a real app, this would use platform-specific APIs to open system settings
     // For the web demo, we'll show a dialog explaining what would happen
     setDialogOpen(true);
+  };
+  
+  const handleAppleHealthClick = () => {
+    // In a real app, this would open Apple Health settings
+    // For the web demo, we'll show a dialog explaining what would happen
+    setHealthDialogOpen(true);
   };
   
   return (
@@ -145,11 +151,14 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Switch 
-                    checked={appleHealthEnabled} 
-                    onCheckedChange={setAppleHealthEnabled}
-                    className="data-[state=checked]:bg-primary"
-                  />
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={handleAppleHealthClick}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <ArrowRight className="h-5 w-5" />
+                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -157,7 +166,7 @@ const PrivacyControls: React.FC = () => {
         </div>
       </div>
       
-      {/* System Settings Dialog (Simulates Apple system page) */}
+      {/* System Settings Dialog (Simulates Apple system page for Journaling) */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -199,6 +208,36 @@ const PrivacyControls: React.FC = () => {
               <div className="mt-8 flex flex-col gap-4">
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">Turn On Journaling Suggestions</Button>
                 <Button variant="ghost" onClick={() => setDialogOpen(false)}>Not Now</Button>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Apple Health Dialog (Simulates Apple Health settings page) */}
+      <Dialog open={healthDialogOpen} onOpenChange={setHealthDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-center">Apple Health</DialogTitle>
+            <DialogDescription className="text-center pt-4">
+              <div className="flex justify-center mb-6">
+                <div className="bg-red-400 w-16 h-16 rounded-xl flex items-center justify-center">
+                  <Apple className="h-8 w-8 text-white" />
+                </div>
+              </div>
+              
+              <h2 className="text-2xl font-bold mb-3">automatically sync your data with apple health.</h2>
+              
+              <p className="text-base mb-6">
+                Integrating Nirva with Apple Health allows you to easily track and manage your mental well-being. 
+                By syncing State of Mind and Mindful Minutes data, you'll get a comprehensive view of your 
+                mindfulness progress, alongside other health metrics, all in one convenient place.
+              </p>
+              
+              <div className="mt-12 flex flex-col gap-4">
+                <Button className="w-full bg-black hover:bg-gray-800 text-white py-6 rounded-full">
+                  Sync Health Data
+                </Button>
               </div>
             </DialogDescription>
           </DialogHeader>
