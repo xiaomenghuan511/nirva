@@ -153,7 +153,7 @@ const Reflections: React.FC = () => {
                 <ul className="space-y-3">
                   {personalReflections.gratitude.map((item, i) => (
                     <li key={i} className="flex items-start">
-                      <div className="h-2 w-2 bg-nirva-soft-green rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                      <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0"></div>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -187,7 +187,7 @@ const Reflections: React.FC = () => {
                 <ul className="space-y-3">
                   {personalReflections.improvements.map((item, i) => (
                     <li key={i} className="flex items-start">
-                      <div className="h-2 w-2 bg-nirva-soft-blue rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                      <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0"></div>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -217,7 +217,7 @@ const Reflections: React.FC = () => {
                   <ul className="space-y-3">
                     {category.insights.map((insight, i) => (
                       <li key={i} className="flex items-start">
-                        <div className="h-2 w-2 bg-nirva-soft-peach rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                        <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0"></div>
                         <span>{insight}</span>
                       </li>
                     ))}
@@ -259,7 +259,7 @@ const Reflections: React.FC = () => {
                   <ul className="space-y-2">
                     {goal.subTasks.map((task, i) => (
                       <li key={i} className="flex items-start">
-                        <div className="h-2 w-2 bg-nirva-soft-purple rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                        <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0"></div>
                         <span>{task}</span>
                       </li>
                     ))}
