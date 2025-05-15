@@ -45,9 +45,7 @@ const Me: React.FC = () => {
             </div>
             
             <div className="flex justify-center my-4">
-              <div className="rounded-lg overflow-hidden border border-border p-1">
-                
-              </div>
+              {/* The empty div with rounded border has been removed */}
             </div>
             
             <div className="flex items-center justify-between px-2 py-3">
