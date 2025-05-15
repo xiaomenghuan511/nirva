@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, BarChart3, MessageSquare } from 'lucide-react';
+import { BookOpen, BarChart3, MessageSquare, User } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -25,6 +25,11 @@ const Navigation: React.FC = () => {
         <Link to="/dashboard" className={`flex flex-col items-center group ${isActive('/dashboard')}`}>
           <BarChart3 className="nav-icon" />
           <span className="nav-text">Dashboard</span>
+        </Link>
+
+        <Link to="/me" className={`flex flex-col items-center group ${isActive('/me')}`}>
+          <User className="nav-icon" />
+          <span className="nav-text">Me</span>
         </Link>
       </div>
     </nav>

@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import DiaryDetail from "./pages/DiaryDetail";
 import ReflectDetail from "./pages/ReflectDetail";
 import NotFound from "./pages/NotFound";
+import Me from "./pages/Me";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/diary/:id" element={<DiaryDetail />} />
           <Route path="/reflect/:id" element={<ReflectDetail />} />
+          <Route path="/me" element={<Me />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
