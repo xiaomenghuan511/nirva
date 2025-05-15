@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
 import TimelineCard from '../components/timeline/TimelineCard';
@@ -11,6 +11,11 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from "@/components/ui/carousel";
+import { format, addDays, subDays, startOfWeek } from 'date-fns';
+import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 
 // Sample timeline data based on the diary entry
 const timelineEvents = [
@@ -131,10 +136,40 @@ const affirmations = [
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   
   const handleEventClick = (id: number) => {
     navigate(`/diary/${id}`);
   };
+  
+  const handleDateChange = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+    }
+  };
+
+  const handlePreviousDay = () => {
+    setSelectedDate(prevDate => subDays(prevDate, 1));
+  };
+
+  const handleNextDay = () => {
+    setSelectedDate(prevDate => addDays(prevDate, 1));
+  };
+
+  // Get start of the current week (Sunday)
+  const weekStart = startOfWeek(selectedDate);
+  
+  // Generate array of weekdays
+  const weekDays = Array.from({ length: 7 }, (_, i) => {
+    const day = addDays(weekStart, i);
+    return {
+      date: day,
+      dayName: format(day, 'EEE').substring(0, 2),
+      dayNumber: format(day, 'd'),
+      isToday: format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd'),
+      isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
+    };
+  });
   
   return (
     <Layout title="Smart Diary">
@@ -162,8 +197,71 @@ const Index: React.FC = () => {
           </div>
         </Carousel>
         
-        <div className="mb-4">
-          <h2 className="text-lg font-medium">April 19, 2025</h2>
+        {/* Date Selection Row */}
+        <div className="mb-6">
+          <div className="flex flex-col">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-xl font-medium">{format(selectedDate, 'MMMM')}</h2>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Calendar className="h-5 w-5 text-muted-foreground" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <CalendarComponent
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={handleDateChange}
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8" 
+                onClick={handlePreviousDay}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              
+              <div className="flex justify-between items-center overflow-x-auto no-scrollbar flex-grow mx-2">
+                {weekDays.map((day, index) => (
+                  <div 
+                    key={index}
+                    onClick={() => handleDateChange(day.date)}
+                    className={`flex flex-col items-center justify-center cursor-pointer px-2 py-1 rounded-full ${
+                      day.isSelected ? 'bg-primary text-primary-foreground' : 
+                      day.isToday ? 'font-bold' : ''
+                    }`}
+                  >
+                    <span className="text-xs font-medium">{day.dayName}</span>
+                    <span className="text-base">{day.dayNumber}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8" 
+                onClick={handleNextDay}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <h3 className="text-lg font-medium">
+                Today {format(selectedDate, 'MMMM d')}
+              </h3>
+            </div>
+          </div>
         </div>
         
         {timelineEvents.map((event) => (
