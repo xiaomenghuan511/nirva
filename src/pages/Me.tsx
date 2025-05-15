@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -11,6 +12,9 @@ const Me: React.FC = () => {
   };
   const handleProfileClick = () => {
     navigate('/user-profile');
+  };
+  const handleNirvaSettingsClick = () => {
+    navigate('/nirva-voice');
   };
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
@@ -113,7 +117,7 @@ const Me: React.FC = () => {
                 <ChevronRight className="text-muted-foreground" size={20} />
               </li>
               
-              <li className="flex items-center justify-between px-4 py-4">
+              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handleNirvaSettingsClick}>
                 <div className="flex items-center gap-3">
                   <Settings className="text-foreground" size={20} />
                   <div>

@@ -12,6 +12,7 @@ import ReflectDetail from "./pages/ReflectDetail";
 import NotFound from "./pages/NotFound";
 import Me from "./pages/Me";
 import UserProfile from "./pages/UserProfile";
+import NirvaVoice from "./pages/NirvaVoice";
 import Login from "./pages/Login";
 import Onboarding from "./pages/onboarding/Onboarding";
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/reflect/:id" element={<ReflectDetail />} />
           <Route path="/me" element={<Me />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/nirva-voice" element={<NirvaVoice />} />
           <Route path="/onboarding/*" element={<Onboarding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
