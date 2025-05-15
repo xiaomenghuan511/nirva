@@ -5,20 +5,30 @@ import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock, Shield, Download, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
+
 const Me: React.FC = () => {
   const navigate = useNavigate();
+  
   const handleOnboardingClick = () => {
     navigate('/onboarding');
   };
+  
   const handleProfileClick = () => {
     navigate('/user-profile');
   };
+  
   const handleNirvaSettingsClick = () => {
     navigate('/nirva-voice');
   };
+  
   const handleReflectionTimeClick = () => {
     navigate('/notification-settings');
   };
+  
+  const handlePrivacyControlsClick = () => {
+    navigate('/privacy-controls');
+  };
+  
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
@@ -87,7 +97,7 @@ const Me: React.FC = () => {
                 <ChevronRight className="text-muted-foreground" size={20} />
               </li>
               
-              <li className="flex items-center justify-between px-4 py-4">
+              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handlePrivacyControlsClick}>
                 <div className="flex items-center gap-3">
                   <Shield className="text-foreground" size={20} />
                   <div>
@@ -125,4 +135,5 @@ const Me: React.FC = () => {
       </div>
     </Layout>;
 };
+
 export default Me;

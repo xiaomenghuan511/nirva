@@ -16,6 +16,7 @@ import NirvaVoice from "./pages/NirvaVoice";
 import Login from "./pages/Login";
 import Onboarding from "./pages/onboarding/Onboarding";
 import NotificationSettings from "./pages/NotificationSettings";
+import PrivacyControls from "./pages/PrivacyControls";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/nirva-voice" element={<NirvaVoice />} />
           <Route path="/notification-settings" element={<NotificationSettings />} />
+          <Route path="/privacy-controls" element={<PrivacyControls />} />
           <Route path="/onboarding/*" element={<Onboarding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
