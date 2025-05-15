@@ -27,8 +27,8 @@ const Welcome: React.FC = () => {
                 <div className="w-2.5 h-2.5 bg-black rounded-full"></div>
               </div>
             </div>
-            {/* Small mouth */}
-            <div className="mt-7 w-2 h-0.5 bg-black rounded-full"></div>
+            {/* Smiling mouth */}
+            <div className="mt-7 w-6 h-3 border-b-2 border-black rounded-full"></div>
           </div>
         </div>
         
