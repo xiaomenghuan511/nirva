@@ -3,12 +3,14 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Cloud, ToggleRight } from 'lucide-react';
+import { Apple, BookText, Cloud, ToggleRight } from 'lucide-react';
 
 const PrivacyControls: React.FC = () => {
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
   const [nirvaAppEnabled, setNirvaAppEnabled] = React.useState(true);
   const [nirvaNecklaceEnabled, setNirvaNecklaceEnabled] = React.useState(true);
+  const [journalingSuggestionsEnabled, setJournalingSuggestionsEnabled] = React.useState(true);
+  const [appleHealthEnabled, setAppleHealthEnabled] = React.useState(false);
   
   return (
     <Layout title="Privacy Controls">
@@ -85,6 +87,55 @@ const PrivacyControls: React.FC = () => {
                   <Switch 
                     checked={nirvaNecklaceEnabled} 
                     onCheckedChange={setNirvaNecklaceEnabled} 
+                    className="data-[state=checked]:bg-primary"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* User Permissions - New Section */}
+        <div className="space-y-4">
+          <h3 className="text-lg text-muted-foreground font-medium px-2">USER PERMISSIONS</h3>
+          
+          <Card className="border-border overflow-hidden">
+            <CardContent className="p-0">
+              {/* Journaling Suggestions */}
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <div className="flex items-center gap-4">
+                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
+                    <BookText className="h-5 w-5 text-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-lg">Journaling Suggestions</h4>
+                    <p className="text-muted-foreground text-sm">Allow Nirva to suggest journal topics</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    checked={journalingSuggestionsEnabled} 
+                    onCheckedChange={setJournalingSuggestionsEnabled}
+                    className="data-[state=checked]:bg-primary"
+                  />
+                </div>
+              </div>
+              
+              {/* Apple Health Sync */}
+              <div className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-4">
+                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
+                    <Apple className="h-5 w-5 text-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-lg">Sync with Apple Health</h4>
+                    <p className="text-muted-foreground text-sm">Access health data for better insights</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    checked={appleHealthEnabled} 
+                    onCheckedChange={setAppleHealthEnabled}
                     className="data-[state=checked]:bg-primary"
                   />
                 </div>
