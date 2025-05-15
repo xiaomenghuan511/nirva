@@ -1,28 +1,10 @@
-
 import React from 'react';
 import Layout from '../components/layout/Layout';
-import { 
-  Avatar, 
-  AvatarImage, 
-  AvatarFallback 
-} from '@/components/ui/avatar';
-import { 
-  Card, 
-  CardContent 
-} from '@/components/ui/card';
-import { 
-  Clock, 
-  Bell, 
-  Shield, 
-  Download, 
-  Settings, 
-  ChevronRight, 
-  Info 
-} from 'lucide-react';
-
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { Clock, Bell, Shield, Download, Settings, ChevronRight, Info } from 'lucide-react';
 const Me: React.FC = () => {
-  return (
-    <Layout title="Me">
+  return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
         <div className="flex items-center w-full p-4 bg-background rounded-lg border border-border">
@@ -48,11 +30,7 @@ const Me: React.FC = () => {
             
             <div className="flex justify-center my-4">
               <div className="rounded-lg overflow-hidden border border-border p-1">
-                <img 
-                  src="/lovable-uploads/957d9c4b-3a8d-4de6-9846-74215013098e.png" 
-                  alt="Nirva Necklace"
-                  className="w-full max-w-[200px] rounded-lg"
-                />
+                
               </div>
             </div>
             
@@ -62,7 +40,7 @@ const Me: React.FC = () => {
                 <span className="text-foreground">Battery Level</span>
               </div>
               <div className="flex items-center gap-2">
-                <span>High</span>
+                <span>88%</span>
                 <Info size={16} className="text-muted-foreground" />
               </div>
             </div>
@@ -131,8 +109,6 @@ const Me: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Me;
