@@ -3,7 +3,9 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Apple, BookText, Cloud, ToggleRight } from 'lucide-react';
+import { Apple, ArrowRight, BookText, Cloud } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const PrivacyControls: React.FC = () => {
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
@@ -11,6 +13,13 @@ const PrivacyControls: React.FC = () => {
   const [nirvaNecklaceEnabled, setNirvaNecklaceEnabled] = React.useState(true);
   const [journalingSuggestionsEnabled, setJournalingSuggestionsEnabled] = React.useState(true);
   const [appleHealthEnabled, setAppleHealthEnabled] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  
+  const handleJournalSuggestionClick = () => {
+    // In a real app, this would use platform-specific APIs to open system settings
+    // For the web demo, we'll show a dialog explaining what would happen
+    setDialogOpen(true);
+  };
   
   return (
     <Layout title="Privacy Controls">
@@ -113,11 +122,14 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Switch 
-                    checked={journalingSuggestionsEnabled} 
-                    onCheckedChange={setJournalingSuggestionsEnabled}
-                    className="data-[state=checked]:bg-primary"
-                  />
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={handleJournalSuggestionClick}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <ArrowRight className="h-5 w-5" />
+                  </Button>
                 </div>
               </div>
               
@@ -144,6 +156,54 @@ const PrivacyControls: React.FC = () => {
           </Card>
         </div>
       </div>
+      
+      {/* System Settings Dialog (Simulates Apple system page) */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-center">Journaling Suggestions</DialogTitle>
+            <DialogDescription className="text-center pt-4">
+              <div className="flex justify-center mb-6">
+                <div className="bg-blue-500 w-16 h-16 rounded-xl flex items-center justify-center">
+                  <BookText className="h-8 w-8 text-white" />
+                </div>
+              </div>
+              <p className="text-base mb-4">
+                iPhone uses on-device intelligence to create journaling suggestions based on your everyday moments.
+              </p>
+              
+              <div className="flex items-center gap-3 my-6 justify-start text-left">
+                <div className="bg-blue-500 rounded-full p-2">
+                  <BookText className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-base font-medium">Curated for You</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Suggestions can help you reflect on topics you might want to write about.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 my-6 justify-start text-left">
+                <div className="bg-blue-500 rounded-full p-2">
+                  <BookText className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-base font-medium">Your Data Stays Private</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Journaling apps can only access your data if it is included in a suggestion.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 flex flex-col gap-4">
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">Turn On Journaling Suggestions</Button>
+                <Button variant="ghost" onClick={() => setDialogOpen(false)}>Not Now</Button>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
