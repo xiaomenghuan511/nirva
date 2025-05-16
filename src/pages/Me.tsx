@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -8,7 +7,6 @@ import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,44 +14,36 @@ const Me: React.FC = () => {
   const [pairingStep, setPairingStep] = useState<number>(0);
   const [isPairingDialogOpen, setIsPairingDialogOpen] = useState(false);
   const [isPairingSheetOpen, setIsPairingSheetOpen] = useState(false);
-  
+
   // Check if the necklace was forgotten when coming from NecklaceDetails
   useEffect(() => {
     if (location.state?.necklaceForgotten) {
       setIsNecklaceConnected(false);
     }
   }, [location.state]);
-  
   const handleOnboardingClick = () => {
     navigate('/onboarding');
   };
-  
   const handleProfileClick = () => {
     navigate('/user-profile');
   };
-  
   const handleNirvaSettingsClick = () => {
     navigate('/nirva-voice');
   };
-  
   const handleReflectionTimeClick = () => {
     navigate('/notification-settings');
   };
-  
   const handlePrivacyControlsClick = () => {
     navigate('/privacy-controls');
   };
-
   const handleNecklaceDetailsClick = () => {
     navigate('/necklace-details');
   };
-
   const handleConnectNecklace = () => {
     // Start the pairing process
     setPairingStep(1);
     setIsPairingDialogOpen(true);
   };
-  
   const handleNext = () => {
     if (pairingStep < 5) {
       setPairingStep(prevStep => prevStep + 1);
@@ -64,23 +54,20 @@ const Me: React.FC = () => {
       setIsNecklaceConnected(true);
     }
   };
-
   const handleCancel = () => {
     setPairingStep(0);
     setIsPairingDialogOpen(false);
     setIsPairingSheetOpen(false);
   };
-
   const renderPairingContent = () => {
     switch (pairingStep) {
       case 1:
-        return (
-          <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
             </DialogHeader>
             <div className="flex flex-col items-center py-8 space-y-4 bg-purple-900 text-white rounded-lg px-4">
-              <div className="bg-purple-800 rounded-full p-6">
+              <div className="rounded-full p-6 bg-nirva-gold">
                 <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
                   <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
                   <path d="M10 10v7" />
@@ -94,12 +81,9 @@ const Me: React.FC = () => {
               </p>
             </div>
             <Button onClick={handleNext} className="w-full mt-4">Continue</Button>
-          </DialogContent>
-        );
-      
+          </DialogContent>;
       case 2:
-        return (
-          <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
             </DialogHeader>
@@ -129,12 +113,9 @@ const Me: React.FC = () => {
                 </Sheet>
               </div>
             </div>
-          </DialogContent>
-        );
-        
+          </DialogContent>;
       case 3:
-        return (
-          <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
             </DialogHeader>
@@ -164,11 +145,7 @@ const Me: React.FC = () => {
                     <p className="text-center">Pair "Pendant" with "Limitless" app?</p>
                     
                     <div className="flex flex-col items-center py-4">
-                      <img 
-                        src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
-                        alt="Pendant" 
-                        className="w-24 h-24 object-contain mb-2"
-                      />
+                      <img src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" alt="Pendant" className="w-24 h-24 object-contain mb-2" />
                       <span className="text-gray-500">Pendant</span>
                     </div>
                     
@@ -178,12 +155,9 @@ const Me: React.FC = () => {
                 </SheetContent>
               </Sheet>
             </div>
-          </DialogContent>
-        );
-        
+          </DialogContent>;
       case 4:
-        return (
-          <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
             </DialogHeader>
@@ -226,12 +200,9 @@ const Me: React.FC = () => {
                 </SheetContent>
               </Sheet>
             </div>
-          </DialogContent>
-        );
-        
+          </DialogContent>;
       case 5:
-        return (
-          <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
             </DialogHeader>
@@ -278,14 +249,11 @@ const Me: React.FC = () => {
               
               <Button className="w-full" onClick={handleNext}>Done</Button>
             </div>
-          </DialogContent>
-        );
-      
+          </DialogContent>;
       default:
         return null;
     }
   };
-  
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
@@ -305,20 +273,13 @@ const Me: React.FC = () => {
           <CardContent className="p-4 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium">Nirva Necklace</h3>
-              {isNecklaceConnected && (
-                <ChevronRight className="text-muted-foreground cursor-pointer" size={20} onClick={handleNecklaceDetailsClick} />
-              )}
+              {isNecklaceConnected && <ChevronRight className="text-muted-foreground cursor-pointer" size={20} onClick={handleNecklaceDetailsClick} />}
             </div>
             
-            {isNecklaceConnected ? (
-              <>
+            {isNecklaceConnected ? <>
                 <div className="flex flex-col items-center justify-center py-4 cursor-pointer" onClick={handleNecklaceDetailsClick}>
                   <div className="w-32 h-32 relative mb-3">
-                    <img 
-                      src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
-                      alt="Nirva Necklace" 
-                      className="w-full h-full object-contain"
-                    />
+                    <img src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" alt="Nirva Necklace" className="w-full h-full object-contain" />
                   </div>
                   <span className="text-green-500 text-sm flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
@@ -335,19 +296,13 @@ const Me: React.FC = () => {
                     <Info size={16} className="text-muted-foreground" />
                   </div>
                 </div>
-              </>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-8">
+              </> : <div className="flex flex-col items-center justify-center py-8">
                 <WifiOff className="text-muted-foreground mb-4" size={48} />
                 <p className="text-muted-foreground mb-4">No device connected</p>
-                <Button 
-                  onClick={handleConnectNecklace}
-                  className="bg-primary text-primary-foreground"
-                >
+                <Button onClick={handleConnectNecklace} className="bg-primary text-primary-foreground">
                   Connect Your Necklace
                 </Button>
-              </div>
-            )}
+              </div>}
           </CardContent>
         </Card>
 
@@ -421,5 +376,4 @@ const Me: React.FC = () => {
       </Dialog>
     </Layout>;
 };
-
 export default Me;
