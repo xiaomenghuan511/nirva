@@ -74,7 +74,7 @@ const Me: React.FC = () => {
                   <path d="M13.5 9l-3.5 3-3.5-3" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-semibold">Wake up your Pendant</h2>
+              <h2 className="text-2xl font-semibold">Wake up your Nirva</h2>
               <p className="text-center">
                 Your Pendant was put into a deep sleep for shipping. Look in the box for a USB-C cable and 
                 plug it in to wake it. A light will appear within 10 seconds.
