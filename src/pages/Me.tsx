@@ -201,7 +201,7 @@ const Me: React.FC = () => {
               <p className="text-center text-muted-foreground mb-8">
                 Your Nirva was put into a deep sleep for shipping. Put your Nirva on the charging pad. A light will appear within 10 seconds.
               </p>
-              <Button onClick={handleWakeupContinue} className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 rounded-full">
+              <Button onClick={handleWakeupContinue} className="w-full text-white py-6 rounded-full bg-nirva-gold">
                 Continue
               </Button>
             </div>}
