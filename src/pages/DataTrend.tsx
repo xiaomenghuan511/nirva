@@ -146,6 +146,9 @@ const DataTrend: React.FC = () => {
     unknown: '#F1F0FB'
   };
 
+  // Function to determine if the data has a value property
+  const hasValueProperty = (metricType !== 'mood-detail' && metricType !== 'time');
+
   return (
     <Layout title={title} showBackButton>
       <div className="px-4 py-5 space-y-6">
@@ -166,9 +169,9 @@ const DataTrend: React.FC = () => {
 
             {/* Current value display */}
             <div className="px-6 py-10 flex justify-center items-center">
-              {metricType !== 'mood-detail' && metricType !== 'time' && (
+              {hasValueProperty && timeframeData.length > 0 && (
                 <div className="text-7xl font-bold">
-                  {timeframeData[timeframeData.length - 1]?.value || '0'}
+                  {timeframeData[timeframeData.length - 1].value}
                 </div>
               )}
             </div>
