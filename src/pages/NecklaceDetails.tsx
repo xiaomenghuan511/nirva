@@ -1,11 +1,30 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChevronRight, Download } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
+
 const NecklaceDetails: React.FC = () => {
-  return <Layout title="Nirva Necklace" showBackButton={true} backTo="/me">
+  const [showForgetDialog, setShowForgetDialog] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  
+  const handleForget = () => {
+    setShowForgetDialog(false);
+    toast({
+      title: "Device forgotten",
+      description: "Your Nirva Necklace has been successfully disconnected."
+    });
+    navigate('/me', { state: { necklaceForgotten: true } });
+  };
+
+  return (
+    <Layout title="Nirva Necklace" showBackButton={true} backTo="/me">
       <div className="flex flex-col gap-4 px-4 py-6">
         {/* General Info Section */}
         <div className="space-y-2">
@@ -89,12 +108,36 @@ const NecklaceDetails: React.FC = () => {
               {/* Factory Reset */}
               <div className="flex items-center justify-between p-4">
                 <span className="text-foreground">Forget This Device</span>
-                <Button variant="destructive" size="sm">Forget</Button>
+                <Button 
+                  variant="destructive" 
+                  size="sm"
+                  onClick={() => setShowForgetDialog(true)}
+                >
+                  Forget
+                </Button>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
-    </Layout>;
+
+      {/* Forget Device Dialog */}
+      <Dialog open={showForgetDialog} onOpenChange={setShowForgetDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Forget Device</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to forget this device? This will disconnect your Nirva Necklace and remove it from your account.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowForgetDialog(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleForget}>Forget Device</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Layout>
+  );
 };
+
 export default NecklaceDetails;

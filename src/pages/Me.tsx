@@ -1,13 +1,23 @@
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Droplet } from 'lucide-react';
+import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Me: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isNecklaceConnected, setIsNecklaceConnected] = useState(true);
+  
+  // Check if the necklace was forgotten when coming from NecklaceDetails
+  useEffect(() => {
+    if (location.state?.necklaceForgotten) {
+      setIsNecklaceConnected(false);
+    }
+  }, [location.state]);
   
   const handleOnboardingClick = () => {
     navigate('/onboarding');
@@ -32,6 +42,10 @@ const Me: React.FC = () => {
   const handleNecklaceDetailsClick = () => {
     navigate('/necklace-details');
   };
+
+  const handleConnectNecklace = () => {
+    setIsNecklaceConnected(true);
+  };
   
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
@@ -48,36 +62,53 @@ const Me: React.FC = () => {
         </div>
 
         {/* Device Section */}
-        <Card className="border-border cursor-pointer" onClick={handleNecklaceDetailsClick}>
+        <Card className="border-border">
           <CardContent className="p-4 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium">Nirva Necklace</h3>
-              <ChevronRight className="text-muted-foreground" size={20} />
+              {isNecklaceConnected && (
+                <ChevronRight className="text-muted-foreground cursor-pointer" size={20} onClick={handleNecklaceDetailsClick} />
+              )}
             </div>
             
-            <div className="flex flex-col items-center justify-center py-4">
-              <div className="w-32 h-32 relative mb-3">
-                <img 
-                  src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
-                  alt="Nirva Necklace" 
-                  className="w-full h-full object-contain"
-                />
+            {isNecklaceConnected ? (
+              <>
+                <div className="flex flex-col items-center justify-center py-4 cursor-pointer" onClick={handleNecklaceDetailsClick}>
+                  <div className="w-32 h-32 relative mb-3">
+                    <img 
+                      src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
+                      alt="Nirva Necklace" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-green-500 text-sm flex items-center gap-1">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between px-2 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-3 bg-green-500 rounded-sm"></div>
+                    <span className="text-foreground">Battery Level</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>88%</span>
+                    <Info size={16} className="text-muted-foreground" />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8">
+                <WifiOff className="text-muted-foreground mb-4" size={48} />
+                <p className="text-muted-foreground mb-4">No device connected</p>
+                <Button 
+                  onClick={handleConnectNecklace}
+                  className="bg-primary text-primary-foreground"
+                >
+                  Connect Your Necklace
+                </Button>
               </div>
-              <span className="text-green-500 text-sm flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
-              </span>
-            </div>
-            
-            <div className="flex items-center justify-between px-2 py-3">
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-3 bg-green-500 rounded-sm"></div>
-                <span className="text-foreground">Battery Level</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>88%</span>
-                <Info size={16} className="text-muted-foreground" />
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
