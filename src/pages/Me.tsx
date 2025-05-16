@@ -135,7 +135,7 @@ const Me: React.FC = () => {
                       &times;
                     </button>
                     <h3 className="text-2xl font-bold text-center">Set Up Nirva</h3>
-                    <p className="text-center">Pair "Pendant" with "Limitless" app?</p>
+                    <p className="text-center">Pair "Nirva Necklace" with "Nirva" app?</p>
                     
                     <div className="flex flex-col items-center py-4">
                       <img src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" alt="Pendant" className="w-24 h-24 object-contain mb-2" />
