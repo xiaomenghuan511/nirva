@@ -5,6 +5,7 @@ import { Switch } from '@/components/ui/switch';
 import { Apple, ArrowRight, BookText, Cloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
 const PrivacyControls: React.FC = () => {
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
   const [nirvaAppEnabled, setNirvaAppEnabled] = React.useState(true);
@@ -13,16 +14,19 @@ const PrivacyControls: React.FC = () => {
   const [appleHealthEnabled, setAppleHealthEnabled] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [healthDialogOpen, setHealthDialogOpen] = React.useState(false);
+
   const handleJournalSuggestionClick = () => {
     // In a real app, this would use platform-specific APIs to open system settings
     // For the web demo, we'll show a dialog explaining what would happen
     setDialogOpen(true);
   };
+
   const handleAppleHealthClick = () => {
     // In a real app, this would open Apple Health settings
     // For the web demo, we'll show a dialog explaining what would happen
     setHealthDialogOpen(true);
   };
+
   return <Layout title="Privacy Controls" showBackButton={true} backTo="/me">
       <div className="flex flex-col gap-6 px-4 py-6">
         {/* Private Cloud Card */}
@@ -82,7 +86,11 @@ const PrivacyControls: React.FC = () => {
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-4">
                   <div className="bg-background border border-border rounded-md w-10 h-14 flex items-center justify-center">
-                    <span className="text-2xl">📱</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-necklace text-2xl">
+                      <path d="M8 16l-1.447.724a2 2 0 0 0-.553 2.9l.009.01a2 2 0 0 0 2.9.554L12 18l3.09 2.19a2 2 0 0 0 2.9-.556l.009-.01a2 2 0 0 0-.553-2.9L16 16"/>
+                      <path d="M18 16a2 2 0 0 0-1-3.459V9a5 5 0 0 0-10 0v3.541A2 2 0 0 0 6 16"/>
+                      <path d="M12 4v4"/>
+                    </svg>
                   </div>
                   <div>
                     <h4 className="font-medium text-lg">Nirva Necklace</h4>
@@ -218,4 +226,5 @@ const PrivacyControls: React.FC = () => {
       </Dialog>
     </Layout>;
 };
+
 export default PrivacyControls;
