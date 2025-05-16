@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -412,13 +411,7 @@ const AiAssistant: React.FC = () => {
           <div className="px-4 py-2 border-t border-border">
             <div className="relative overflow-hidden">
               <div className="flex items-center">
-                <button 
-                  className="absolute left-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent pl-1 pr-4 py-2"
-                  onClick={() => movePrompt('left')}
-                  disabled={promptIndex === 0}
-                >
-                  <ChevronLeft size={20} className={promptIndex === 0 ? "opacity-30" : ""} />
-                </button>
+                
                 
                 <div 
                   ref={promptsRef}
@@ -449,13 +442,7 @@ const AiAssistant: React.FC = () => {
                   </div>
                 </div>
                 
-                <button 
-                  className="absolute right-0 z-10 bg-gradient-to-l from-background via-background/80 to-transparent pr-1 pl-4 py-2"
-                  onClick={() => movePrompt('right')}
-                  disabled={promptIndex === suggestedPrompts.length - 1}
-                >
-                  <ChevronRight size={20} className={promptIndex === suggestedPrompts.length - 1 ? "opacity-30" : ""} />
-                </button>
+                
               </div>
             </div>
           </div>
@@ -539,13 +526,7 @@ const AiAssistant: React.FC = () => {
             <div className="border-t border-border px-3 py-2">
               <div className="relative overflow-hidden">
                 <div className="flex items-center">
-                  <button 
-                    className="absolute left-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent pl-1 pr-2 py-1"
-                    onClick={() => movePrompt('left')}
-                    disabled={promptIndex === 0}
-                  >
-                    <ChevronLeft size={16} className={promptIndex === 0 ? "opacity-30" : ""} />
-                  </button>
+                  
                   
                   <div 
                     ref={promptsRef}
@@ -576,13 +557,7 @@ const AiAssistant: React.FC = () => {
                     </div>
                   </div>
                   
-                  <button 
-                    className="absolute right-0 z-10 bg-gradient-to-l from-background via-background/80 to-transparent pr-1 pl-2 py-1"
-                    onClick={() => movePrompt('right')}
-                    disabled={promptIndex === suggestedPrompts.length - 1}
-                  >
-                    <ChevronRight size={16} className={promptIndex === suggestedPrompts.length - 1 ? "opacity-30" : ""} />
-                  </button>
+                  
                 </div>
               </div>
             </div>
