@@ -339,8 +339,8 @@ const Index: React.FC = () => {
         <div className="mb-6">
           <div className="flex flex-col">
             <div className="flex justify-between items-center mb-2">
-              {/* Calendar button and date text on the left */}
-              <div className="flex items-center gap-2">
+              {/* Calendar button on the left */}
+              <div className="flex items-center">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -357,12 +357,12 @@ const Index: React.FC = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                
-                {/* Date text moved here */}
-                <h3 className="text-sm font-medium">
-                  {showSavedEvents ? 'Saved Events' : (isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d'))}
-                </h3>
               </div>
+              
+              {/* Date text centered */}
+              <h3 className="text-sm font-medium flex-1 text-center">
+                {showSavedEvents ? 'Saved Events' : (isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d'))}
+              </h3>
               
               {/* Right side with star and search buttons */}
               <div className="flex items-center gap-2">
