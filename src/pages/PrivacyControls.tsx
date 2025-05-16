@@ -28,7 +28,11 @@ const PrivacyControls: React.FC = () => {
   };
   
   return (
-    <Layout title="Privacy Controls">
+    <Layout 
+      title="Privacy Controls" 
+      showBackButton={true}
+      backTo="/me"
+    >
       <div className="flex flex-col gap-6 px-4 py-6">
         {/* Private Cloud Card */}
         <Card className="border-border overflow-hidden">
