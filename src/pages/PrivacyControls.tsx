@@ -117,7 +117,10 @@ const PrivacyControls: React.FC = () => {
           <Card className="border-border overflow-hidden">
             <CardContent className="p-0">
               {/* Journaling Suggestions */}
-              <div className="flex items-center justify-between p-4 border-b border-border">
+              <div 
+                className="flex items-center justify-between p-4 border-b border-border cursor-pointer hover:bg-muted/50"
+                onClick={handleJournalSuggestionClick}
+              >
                 <div className="flex items-center gap-4">
                   <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
                     <BookText className="h-5 w-5 text-foreground" />
@@ -128,19 +131,15 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={handleJournalSuggestionClick}
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </Button>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
                 </div>
               </div>
               
               {/* Apple Health Sync */}
-              <div className="flex items-center justify-between p-4">
+              <div 
+                className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50"
+                onClick={handleAppleHealthClick}
+              >
                 <div className="flex items-center gap-4">
                   <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
                     <Apple className="h-5 w-5 text-foreground" />
@@ -151,14 +150,7 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={handleAppleHealthClick}
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </Button>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground" />
                 </div>
               </div>
             </CardContent>
