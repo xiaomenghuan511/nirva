@@ -103,7 +103,7 @@ const Reflections: React.FC = () => {
               <CardContent>
                 <ul className="space-y-3">
                   {personalReflections.celebrations.map((item, i) => <li key={i} className="flex items-start">
-                      <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                      <div className="h-2 w-2 bg-nirva-soft-yellow rounded-full mt-2 mr-2 flex-shrink-0 bg-nirva-cream"></div>
                       <span>{item}</span>
                     </li>)}
                 </ul>
