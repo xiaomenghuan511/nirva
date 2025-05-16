@@ -66,7 +66,7 @@ const Me: React.FC = () => {
             <DialogHeader>
               
             </DialogHeader>
-            <div className="flex flex-col items-center py-8 space-y-4 bg-purple-900 text-white rounded-lg px-4">
+            <div className="flex flex-col items-center py-8 space-y-4 text-white rounded-lg px-4 bg-nirva-beige">
               <div className="rounded-full p-6 bg-nirva-gold">
                 <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
                   <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
