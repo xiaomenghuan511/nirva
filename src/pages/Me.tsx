@@ -64,7 +64,7 @@ const Me: React.FC = () => {
       case 1:
         return <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-center text-xl font-semibold">Setup your Nirva</DialogTitle>
+              
             </DialogHeader>
             <div className="flex flex-col items-center py-8 space-y-4 bg-purple-900 text-white rounded-lg px-4">
               <div className="rounded-full p-6 bg-nirva-gold">
