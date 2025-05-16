@@ -92,7 +92,7 @@ const Me: React.FC = () => {
                   <SheetContent side="bottom" className="p-0 rounded-t-xl">
                     <div className="p-6">
                       <h3 className="text-xl font-semibold text-center">Bluetooth Pairing Request</h3>
-                      <p className="text-center my-2">"Pendant" would like to pair with your iPhone.</p>
+                      <p className="text-center my-2">"Nirva" would like to pair with your iPhone.</p>
                       <div className="flex border-t mt-4">
                         <Button variant="ghost" className="flex-1 border-r" onClick={handleCancel}>
                           Cancel
