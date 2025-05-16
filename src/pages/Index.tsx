@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
@@ -338,8 +339,8 @@ const Index: React.FC = () => {
         <div className="mb-6">
           <div className="flex flex-col">
             <div className="flex justify-between items-center mb-2">
-              {/* Calendar button on the left */}
-              <div className="flex gap-2">
+              {/* Calendar button and date text on the left */}
+              <div className="flex items-center gap-2">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -356,11 +357,16 @@ const Index: React.FC = () => {
                     />
                   </PopoverContent>
                 </Popover>
+                
+                {/* Date text moved here */}
+                <h3 className="text-sm font-medium">
+                  {showSavedEvents ? 'Saved Events' : (isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d'))}
+                </h3>
               </div>
               
               {/* Right side with star and search buttons */}
               <div className="flex items-center gap-2">
-                {/* Star button for saved events moved here */}
+                {/* Star button for saved events */}
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -421,11 +427,7 @@ const Index: React.FC = () => {
               </Button>
             </div>
             
-            <div className="mt-4 text-center">
-              <h3 className="text-lg font-medium">
-                {showSavedEvents ? 'Saved Events' : (isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d'))}
-              </h3>
-            </div>
+            {/* Removed the date text from here as it's now moved to the top row */}
           </div>
         </div>
         
