@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff } from 'lucide-react';
+import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff, Droplet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -68,11 +68,7 @@ const Me: React.FC = () => {
             </DialogHeader>
             <div className="flex flex-col items-center py-8 space-y-4 text-white rounded-lg px-4 bg-nirva-beige">
               <div className="rounded-full p-6 bg-nirva-gold">
-                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
-                  <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
-                  <path d="M10 10v7" />
-                  <path d="M13.5 9l-3.5 3-3.5-3" />
-                </svg>
+                <Droplet size={32} />
               </div>
               <h2 className="text-2xl font-semibold">Wake up your Nirva</h2>
               <p className="text-center">Your Nirva was put into a deep sleep for shipping. Put your Nirva on the charging pad. A light will appear within 10 seconds.</p>
