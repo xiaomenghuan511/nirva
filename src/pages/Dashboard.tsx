@@ -4,18 +4,26 @@ import Layout from '../components/layout/Layout';
 import MoodChart from '../components/dashboard/MoodChart';
 import TimeAllocation from '../components/dashboard/TimeAllocation';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { ArrowRight, TrendingUp, TrendingDown } from 'lucide-react';
 import EmotionFluxChart from '../components/dashboard/EmotionFluxChart';
 import SocialMap from '../components/dashboard/SocialMap';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../components/ui/button';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+
+  const navigateToTrend = (metricType: string) => {
+    navigate(`/trends/${metricType}`);
+  };
+
   return (
     <Layout title="Dashboard">
       <div className="px-4 py-5 space-y-6">
         {/* Summary cards row - side by side */}
         <div className="grid grid-cols-2 gap-4">
           {/* Mood score card */}
-          <Card>
+          <Card className="relative">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-medium">Mood Score</CardTitle>
             </CardHeader>
@@ -28,10 +36,19 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             </CardContent>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={() => navigateToTrend('mood')}
+              aria-label="View mood trends"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </Card>
 
           {/* Stress level card */}
-          <Card>
+          <Card className="relative">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-medium">Stress Level</CardTitle>
             </CardHeader>
@@ -44,14 +61,48 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             </CardContent>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={() => navigateToTrend('stress')}
+              aria-label="View stress trends"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </Card>
         </div>
 
         {/* Emotion flux chart */}
         <EmotionFluxChart />
         
-        <MoodChart />
-        <TimeAllocation />
+        {/* Mood chart with arrow */}
+        <div className="relative">
+          <MoodChart />
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="absolute top-2 right-2"
+            onClick={() => navigateToTrend('mood-detail')}
+            aria-label="View detailed mood trends"
+          >
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Time allocation with arrow */}
+        <div className="relative">
+          <TimeAllocation />
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="absolute top-2 right-2"
+            onClick={() => navigateToTrend('time')}
+            aria-label="View time allocation trends"
+          >
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
         
         {/* Social Map visualization */}
         <SocialMap />
