@@ -127,7 +127,7 @@ const NirvaVoice: React.FC = () => {
                     </div>
                     
                     {/* Voice name displayed below the bubble */}
-                    <p className="mt-4 text-lg font-medium">{voice.name}</p>
+                    
                     
                     <div className="flex flex-wrap gap-2 mt-4 justify-center">
                       {voice.traits.map((trait, idx) => <div key={idx} className="px-4 py-2 bg-background/80 border border-muted rounded-full text-sm">
