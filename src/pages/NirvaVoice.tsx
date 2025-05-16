@@ -154,7 +154,7 @@ const NirvaVoice: React.FC = () => {
       {/* Footer */}
       <div className="px-4 py-5">
         <Button onClick={handleContinue} className="w-full py-6 bg-foreground text-background">
-          Confirm {currentVoice && `- ${currentVoice.name}`}
+          Confirm
         </Button>
       </div>
     </div>;
