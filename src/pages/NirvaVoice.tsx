@@ -18,33 +18,40 @@ interface Voice {
   name: string;
   traits: string[];
   current?: boolean;
+  color: string;
 }
 
 const voices: Voice[] = [{
   id: 'voice-1',
   name: 'Cindy',
   traits: ['Warm', 'Supportive', 'Friendly'],
-  current: true
+  current: true,
+  color: 'from-primary/60 to-primary/30'
 }, {
   id: 'voice-2',
   name: 'Emma',
-  traits: ['Calm', 'Soothing', 'Professional']
+  traits: ['Calm', 'Soothing', 'Professional'],
+  color: 'from-nirva-soft-gold/70 to-nirva-soft-gold/40'
 }, {
   id: 'voice-3',
   name: 'David',
-  traits: ['Clear', 'Focused', 'Direct']
+  traits: ['Clear', 'Focused', 'Direct'],
+  color: 'from-nirva-soft-sand/70 to-nirva-soft-sand/40'
 }, {
   id: 'voice-4',
   name: 'Sarah',
-  traits: ['Energetic', 'Encouraging', 'Bright']
+  traits: ['Energetic', 'Encouraging', 'Bright'],
+  color: 'from-nirva-soft-cream/70 to-nirva-soft-cream/40'
 }, {
   id: 'voice-5',
   name: 'Michael',
-  traits: ['Thoughtful', 'Gentle', 'Relaxed']
+  traits: ['Thoughtful', 'Gentle', 'Relaxed'],
+  color: 'from-nirva-soft-beige/70 to-nirva-soft-beige/40'
 }, {
   id: 'voice-6',
   name: 'Olivia',
-  traits: ['Articulate', 'Compassionate', 'Warm']
+  traits: ['Articulate', 'Compassionate', 'Warm'],
+  color: 'from-nirva-soft-brown/40 to-nirva-soft-brown/20'
 }];
 
 const NirvaVoice: React.FC = () => {
@@ -126,7 +133,7 @@ const NirvaVoice: React.FC = () => {
           <p className="text-xs text-muted-foreground mt-1">Swipe left or right to explore options</p>
         </div>
         
-        <div className="w-full">
+        <div className="w-full mt-8">
           <Carousel
             setApi={setApi}
             className="w-full"
@@ -140,18 +147,20 @@ const NirvaVoice: React.FC = () => {
                 <CarouselItem key={voice.id} className="flex flex-col items-center">
                   <div className="relative flex flex-col items-center justify-center mb-6">
                     <div 
-                      className={`w-40 h-40 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center relative cursor-pointer ${selectedVoice === voice.id ? 'ring-2 ring-primary' : ''}`}
+                      className={`w-48 h-48 rounded-full bg-gradient-to-br ${voice.color} flex items-center justify-center relative cursor-pointer ${selectedVoice === voice.id ? 'ring-2 ring-primary' : ''}`}
                       onClick={() => {
                         setSelectedVoice(voice.id);
                         playVoiceSample(voice.id);
                       }}
                     >
-                      <div className="w-36 h-36 rounded-full bg-gradient-to-br from-primary/40 to-primary/20 backdrop-blur-sm flex items-center justify-center">
-                        <span className="text-2xl font-bold text-foreground">{voice.name}</span>
-                      </div>
+                      {/* Removed the name display from here */}
+                      <div className="w-44 h-44 rounded-full bg-gradient-to-br backdrop-blur-sm flex items-center justify-center"></div>
                     </div>
                     
-                    <div className="flex flex-wrap gap-2 mt-6 justify-center">
+                    {/* Voice name displayed below the bubble */}
+                    <p className="mt-4 text-lg font-medium">{voice.name}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mt-4 justify-center">
                       {voice.traits.map((trait, idx) => (
                         <div key={idx} className="px-4 py-2 bg-background/80 border border-muted rounded-full text-sm">
                           {trait}
