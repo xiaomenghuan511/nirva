@@ -1,18 +1,15 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReflectionPrompt from '../components/reflections/ReflectionPrompt';
-import { useToast } from '@/hooks/use-toast';
 
 // Single reflection question that combines feeling and learning
 const guidedQuestion = "How did you feel about this experience? What have you learned?";
 
 const ReflectDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { toast } = useToast();
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = React.useState('');
   
   const handleBack = () => {
     navigate(-1);
@@ -20,27 +17,6 @@ const ReflectDetail: React.FC = () => {
   
   const handleSaveAnswer = (answer: string) => {
     setAnswer(answer);
-    
-    // Get existing diary entries from localStorage or initialize
-    const storedEntries = localStorage.getItem('diaryEntries');
-    const diaryEntries = storedEntries ? JSON.parse(storedEntries) : {};
-    
-    // Update the specific entry with the reflection
-    if (diaryEntries[id]) {
-      diaryEntries[id] = {
-        ...diaryEntries[id],
-        reflection: answer
-      };
-      
-      // Save back to localStorage
-      localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
-      
-      toast({
-        title: "Reflection saved",
-        description: "Your reflection has been saved successfully."
-      });
-    }
-    
     // Navigate back to the diary detail page after answering
     navigate(-1);
   };
@@ -68,7 +44,6 @@ const ReflectDetail: React.FC = () => {
         <ReflectionPrompt
           question={guidedQuestion}
           type="self"
-          entryId={id}
           onSave={handleSaveAnswer}
         />
       </main>
