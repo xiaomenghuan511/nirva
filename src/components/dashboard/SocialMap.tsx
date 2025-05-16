@@ -1,5 +1,8 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 interface Person {
   name: string;
@@ -34,8 +37,68 @@ const people: Person[] = [
   }
 ];
 
+export const socialData = [
+  ...people,
+  {
+    name: 'Michael',
+    timeSpent: 8.5,
+    energyImpact: 'positive',
+    description: 'Long-time friend who brings perspective and shared history. Conversations are effortless and restorative.',
+    tips: [
+      'Schedule Regular Check-ins: Make time for your monthly calls even when busy.',
+      'Share Your Growth: Keep them updated on your personal development.',
+      'Plan That Trip: Follow through on your discussed travel plans.'
+    ]
+  },
+  {
+    name: 'Emma',
+    timeSpent: 4.2,
+    energyImpact: 'neutral',
+    description: 'Coworker with shared professional interests. Relationship is primarily work-focused but pleasant.',
+    tips: [
+      'Set Clear Boundaries: Maintain professional focus while being friendly.',
+      'Acknowledge Expertise: Continue to recognize and appreciate their skills.',
+      'Find Common Interests: Look for non-work topics to deepen connection.'
+    ]
+  },
+  {
+    name: 'Jason',
+    timeSpent: 2.1,
+    energyImpact: 'negative',
+    description: 'Interactions often feel draining due to negativity and complaining. Limited shared interests.',
+    tips: [
+      'Limit Duration: Keep interactions brief and purposeful.',
+      'Redirect Conversations: Steer toward more positive topics when possible.',
+      'Consider Distance: It may be healthy to reduce frequency of interaction.'
+    ]
+  },
+  {
+    name: 'Sarah',
+    timeSpent: 6.8,
+    energyImpact: 'positive',
+    description: 'Creative collaborator who inspires new ideas. Time flies during conversations about art and projects.',
+    tips: [
+      'Schedule Making Sessions: Set aside time for collaborative creation.',
+      'Share Inspirations: Continue exchanging creative resources.',
+      'Celebrate Wins: Acknowledge each other\'s creative successes.'
+    ]
+  },
+  {
+    name: 'Raj',
+    timeSpent: 3.7,
+    energyImpact: 'positive',
+    description: 'Wise mentor who provides guidance and perspective on career and personal growth.',
+    tips: [
+      'Come Prepared: Make the most of conversations with specific questions.',
+      'Express Gratitude: Acknowledge the value they bring to your life.',
+      'Pay It Forward: Share lessons learned with others who might benefit.'
+    ]
+  }
+];
+
 const SocialMap: React.FC = () => {
   const [selectedPerson, setSelectedPerson] = React.useState<Person | null>(null);
+  const navigate = useNavigate();
   
   // Calculate dimensions and positions
   const centerX = 150;
@@ -77,9 +140,13 @@ const SocialMap: React.FC = () => {
   };
   
   const peopleWithPositions = calculatePositions();
+
+  const handleViewFullMap = () => {
+    navigate('/social-map-full');
+  };
   
   return (
-    <div className="glass-card p-4">
+    <div className="glass-card p-4 relative">
       <h3 className="font-medium mb-3">Social Map</h3>
       
       <div className="relative h-[300px] mb-4">
@@ -184,6 +251,17 @@ const SocialMap: React.FC = () => {
           <span>Draining</span>
         </div>
       </div>
+
+      {/* View full map button/arrow */}
+      <Button 
+        variant="ghost" 
+        size="icon"
+        className="absolute top-2 right-2"
+        onClick={handleViewFullMap}
+        aria-label="View full social map"
+      >
+        <ArrowRight className="h-4 w-4" />
+      </Button>
     </div>
   );
 };

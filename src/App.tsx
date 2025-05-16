@@ -18,6 +18,7 @@ import Onboarding from "./pages/onboarding/Onboarding";
 import NotificationSettings from "./pages/NotificationSettings";
 import PrivacyControls from "./pages/PrivacyControls";
 import DataTrend from "./pages/DataTrend";
+import SocialMapFull from "./pages/SocialMapFull";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/notification-settings" element={<NotificationSettings />} />
           <Route path="/privacy-controls" element={<PrivacyControls />} />
           <Route path="/trends/:metricType" element={<DataTrend />} />
+          <Route path="/social-map-full" element={<SocialMapFull />} />
           <Route path="/onboarding/*" element={<Onboarding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
