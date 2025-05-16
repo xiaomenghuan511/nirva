@@ -172,7 +172,7 @@ const Me: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Firmware up to date</h3>
-                    <p className="text-gray-500 text-sm">Your pendant is on the latest firmware.</p>
+                    <p className="text-gray-500 text-sm">Your Nirva Necklace is on the latest firmware.</p>
                   </div>
                 </div>
               </div>
