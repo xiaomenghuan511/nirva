@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReflectionPrompt from '../components/reflections/ReflectionPrompt';
 
 // Single reflection question that combines feeling and learning
@@ -9,6 +9,7 @@ const guidedQuestion = "How did you feel about this experience? What have you le
 
 const ReflectDetail: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [answer, setAnswer] = React.useState('');
   
   const handleBack = () => {
@@ -16,9 +17,13 @@ const ReflectDetail: React.FC = () => {
   };
   
   const handleSaveAnswer = (answer: string) => {
-    setAnswer(answer);
+    // Save answer to localStorage so it persists between page views
+    if (id) {
+      localStorage.setItem(`reflection-${id}`, answer);
+    }
+    
     // Navigate back to the diary detail page after answering
-    navigate(-1);
+    navigate(`/diary/${id}`);
   };
   
   return (

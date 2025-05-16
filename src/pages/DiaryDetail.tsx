@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, MapPin, Clock, Star, Share2, MessageSquare } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -137,20 +137,32 @@ After walking around looking for a place to eat, we eventually chose a Nepalese/
     }]
   }
 };
+
 const DiaryDetail: React.FC = () => {
   const navigate = useNavigate();
-  const {
-    id
-  } = useParams();
+  const { id } = useParams();
   const entryId = id ? parseInt(id) : 1;
   const diaryEntry = diaryEntries[entryId as keyof typeof diaryEntries];
+  const [reflection, setReflection] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Load any saved reflection from localStorage
+    if (id) {
+      const savedReflection = localStorage.getItem(`reflection-${id}`);
+      setReflection(savedReflection);
+    }
+  }, [id]);
+  
   const handleBack = () => {
     navigate(-1);
   };
+  
   const handleReflect = () => {
     navigate(`/reflect/${id}`);
   };
-  return <div className="min-h-screen bg-background">
+  
+  return (
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="flex justify-between items-center px-4 h-14">
@@ -179,10 +191,12 @@ const DiaryDetail: React.FC = () => {
             <Clock className="h-4 w-4 mr-1" />
             <span className="mr-4">{diaryEntry.timeRange}</span>
             
-            {diaryEntry.location && <>
+            {diaryEntry.location && (
+              <>
                 <MapPin className="h-4 w-4 mr-1" />
                 <span>{diaryEntry.location}</span>
-              </>}
+              </>
+            )}
           </div>
           
           <div className="mt-1 text-sm text-muted-foreground">
@@ -191,16 +205,33 @@ const DiaryDetail: React.FC = () => {
         </div>
         
         <div className="prose prose-sm max-w-none">
-          {diaryEntry.content.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+          {diaryEntry.content.split('\n\n').map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
         </div>
         
+        {/* My Notes Section - Show only if there's a saved reflection */}
+        {reflection && (
+          <div className="mt-8 border-t border-border pt-4">
+            <h2 className="text-xl font-medium mb-3">My Notes</h2>
+            <div className="bg-accent/30 rounded-lg p-4">
+              <p className="text-sm">{reflection}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="fixed bottom-5 left-0 right-0 flex justify-center">
-          <button onClick={handleReflect} className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center">
+          <button 
+            onClick={handleReflect} 
+            className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center"
+          >
             <MessageSquare className="h-5 w-5 mr-2" />
-            Reflect on this
+            {reflection ? "Edit notes" : "Reflect on this"}
           </button>
         </div>
       </main>
-    </div>;
+    </div>
+  );
 };
+
 export default DiaryDetail;
