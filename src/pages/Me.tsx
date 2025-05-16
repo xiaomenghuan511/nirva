@@ -240,7 +240,7 @@ const Me: React.FC = () => {
               
               <div className="w-full bg-gray-50 rounded-lg p-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="bg-green-500 rounded-full p-2">
+                  <div className="rounded-full p-2 bg-nirva-gold">
                     <Check className="text-white" size={20} />
                   </div>
                   <div>
