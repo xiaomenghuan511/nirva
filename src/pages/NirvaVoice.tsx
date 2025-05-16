@@ -1,18 +1,10 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Volume } from 'lucide-react';
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { toast } from "@/hooks/use-toast";
 import { handleCarouselSwipe } from '@/lib/utils';
-
 interface Voice {
   id: string;
   name: string;
@@ -20,7 +12,6 @@ interface Voice {
   current?: boolean;
   color: string;
 }
-
 const voices: Voice[] = [{
   id: 'voice-1',
   name: 'Cindy',
@@ -53,30 +44,26 @@ const voices: Voice[] = [{
   traits: ['Articulate', 'Compassionate', 'Warm'],
   color: 'from-nirva-soft-brown/40 to-nirva-soft-brown/20'
 }];
-
 const NirvaVoice: React.FC = () => {
   const navigate = useNavigate();
   const [selectedVoice, setSelectedVoice] = useState<string>(voices.find(v => v.current)?.id || voices[0].id);
   const [api, setApi] = React.useState<any>();
-
   const handleBack = () => {
     navigate('/me');
   };
-
   const handleContinue = () => {
     // In a real app, we would save the selected voice
     toast({
       title: "Voice updated",
-      description: `Nirva will now speak with ${currentVoice?.name}'s voice`,
+      description: `Nirva will now speak with ${currentVoice?.name}'s voice`
     });
     navigate('/me');
   };
-
   const playVoiceSample = (voiceId: string) => {
     // In a real app, this would play a voice sample
     toast({
       title: "Playing voice sample",
-      description: `Listening to ${voices.find(v => v.id === voiceId)?.name}'s voice`,
+      description: `Listening to ${voices.find(v => v.id === voiceId)?.name}'s voice`
     });
     console.log(`Playing voice sample for ${voiceId}`);
   };
@@ -90,12 +77,10 @@ const NirvaVoice: React.FC = () => {
       setSelectedVoice(voices[currentIndex].id);
     }
   };
-
   React.useEffect(() => {
     if (!api) return;
-    
     api.on('select', handleSelect);
-    
+
     // Cleanup
     return () => {
       api.off('select', handleSelect);
@@ -106,23 +91,15 @@ const NirvaVoice: React.FC = () => {
   const onSwipe = (direction: 'left' | 'right') => {
     handleCarouselSwipe(api, direction);
   };
-
   const currentVoice = voices.find(voice => voice.id === selectedVoice);
-
-  return (
-    <div className="min-h-screen bg-background flex flex-col">
+  return <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div className="p-4 flex items-center">
         <button onClick={handleBack} className="text-foreground">
           <ArrowLeft size={24} />
         </button>
         <div className="flex-grow"></div>
-        <button 
-          className="text-foreground p-2 rounded-full hover:bg-muted" 
-          onClick={() => playVoiceSample(selectedVoice)}
-        >
-          <Volume size={24} />
-        </button>
+        
       </div>
       
       {/* Content */}
@@ -134,25 +111,17 @@ const NirvaVoice: React.FC = () => {
         </div>
         
         <div className="w-full mt-8">
-          <Carousel
-            setApi={setApi}
-            className="w-full"
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-          >
+          <Carousel setApi={setApi} className="w-full" opts={{
+          align: "center",
+          loop: true
+        }}>
             <CarouselContent>
-              {voices.map((voice, index) => (
-                <CarouselItem key={voice.id} className="flex flex-col items-center">
+              {voices.map((voice, index) => <CarouselItem key={voice.id} className="flex flex-col items-center">
                   <div className="relative flex flex-col items-center justify-center mb-6">
-                    <div 
-                      className={`w-48 h-48 rounded-full bg-gradient-to-br ${voice.color} flex items-center justify-center relative cursor-pointer ${selectedVoice === voice.id ? 'ring-2 ring-primary' : ''}`}
-                      onClick={() => {
-                        setSelectedVoice(voice.id);
-                        playVoiceSample(voice.id);
-                      }}
-                    >
+                    <div className={`w-48 h-48 rounded-full bg-gradient-to-br ${voice.color} flex items-center justify-center relative cursor-pointer ${selectedVoice === voice.id ? 'ring-2 ring-primary' : ''}`} onClick={() => {
+                  setSelectedVoice(voice.id);
+                  playVoiceSample(voice.id);
+                }}>
                       {/* Removed the name display from here */}
                       <div className="w-44 h-44 rounded-full bg-gradient-to-br backdrop-blur-sm flex items-center justify-center"></div>
                     </div>
@@ -161,15 +130,12 @@ const NirvaVoice: React.FC = () => {
                     <p className="mt-4 text-lg font-medium">{voice.name}</p>
                     
                     <div className="flex flex-wrap gap-2 mt-4 justify-center">
-                      {voice.traits.map((trait, idx) => (
-                        <div key={idx} className="px-4 py-2 bg-background/80 border border-muted rounded-full text-sm">
+                      {voice.traits.map((trait, idx) => <div key={idx} className="px-4 py-2 bg-background/80 border border-muted rounded-full text-sm">
                           {trait}
-                        </div>
-                      ))}
+                        </div>)}
                     </div>
                   </div>
-                </CarouselItem>
-              ))}
+                </CarouselItem>)}
             </CarouselContent>
             <div className="hidden sm:block">
               <CarouselPrevious className="left-4" />
@@ -178,15 +144,9 @@ const NirvaVoice: React.FC = () => {
           </Carousel>
           
           <div className="flex justify-center space-x-2 mt-6">
-            {voices.map((voice, index) => (
-              <div 
-                key={index} 
-                className={`w-2 h-2 rounded-full ${currentVoice?.id === voice.id ? 'bg-primary' : 'bg-muted-foreground/40'}`}
-                onClick={() => {
-                  api?.scrollTo(index);
-                }}
-              />
-            ))}
+            {voices.map((voice, index) => <div key={index} className={`w-2 h-2 rounded-full ${currentVoice?.id === voice.id ? 'bg-primary' : 'bg-muted-foreground/40'}`} onClick={() => {
+            api?.scrollTo(index);
+          }} />)}
           </div>
         </div>
       </div>
@@ -197,8 +157,6 @@ const NirvaVoice: React.FC = () => {
           Confirm {currentVoice && `- ${currentVoice.name}`}
         </Button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default NirvaVoice;
