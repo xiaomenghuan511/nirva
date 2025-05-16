@@ -7,7 +7,6 @@ import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -251,7 +250,7 @@ const Me: React.FC = () => {
                 </div>
               </div>
               
-              <Button onClick={handlePairingComplete} className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 rounded-full">
+              <Button onClick={handlePairingComplete} className="w-full text-white py-6 rounded-full bg-nirva-gold">
                 Done
               </Button>
             </div>}
@@ -259,5 +258,4 @@ const Me: React.FC = () => {
       </Dialog>
     </Layout>;
 };
-
 export default Me;
