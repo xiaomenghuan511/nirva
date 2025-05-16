@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
@@ -20,6 +19,7 @@ import type { CarouselApi } from '@/components/ui/carousel';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
+import { handleCarouselSwipe } from '@/lib/utils';
 
 // Sample timeline data based on the diary entry
 const timelineEvents = [
@@ -281,6 +281,11 @@ const Index: React.FC = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const totalSlides = affirmations.length;
+  
+  // Handle manual swiping
+  const handleSwipe = (direction: 'left' | 'right') => {
+    handleCarouselSwipe(api, direction);
+  };
 
   // Set up auto-rotation with useEffect
   useEffect(() => {
@@ -317,6 +322,7 @@ const Index: React.FC = () => {
                 <AffirmationCard 
                   affirmation={affirmation.text}
                   mood={affirmation.mood}
+                  onSwipe={handleSwipe}
                 />
               </CarouselItem>
             ))}

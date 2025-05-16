@@ -13,3 +13,14 @@ export function autoRotateCarousel(api: any, interval: number = 5000): () => voi
   
   return () => clearInterval(intervalId);
 }
+
+// Add a new utility function to handle swipe
+export function handleCarouselSwipe(api: any, direction: 'left' | 'right') {
+  if (!api) return;
+  
+  if (direction === 'left') {
+    api.scrollNext();
+  } else {
+    api.scrollPrev();
+  }
+}
