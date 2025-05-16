@@ -117,7 +117,7 @@ const NirvaVoice: React.FC = () => {
         }}>
             <CarouselContent>
               {voices.map((voice, index) => <CarouselItem key={voice.id} className="flex flex-col items-center">
-                  <div className="relative flex flex-col items-center justify-center mb-6">
+                  <div className="relative flex flex-col items-center justify-center mb-6 mx-0 my-[5px]">
                     <div className={`w-48 h-48 rounded-full bg-gradient-to-br ${voice.color} flex items-center justify-center relative cursor-pointer ${selectedVoice === voice.id ? 'ring-2 ring-primary' : ''}`} onClick={() => {
                   setSelectedVoice(voice.id);
                   playVoiceSample(voice.id);
