@@ -7,6 +7,7 @@ import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,31 +22,42 @@ const Me: React.FC = () => {
       setIsNecklaceConnected(false);
     }
   }, [location.state]);
+
   const handleOnboardingClick = () => {
     navigate('/onboarding');
   };
+
   const handleProfileClick = () => {
     navigate('/user-profile');
   };
+
   const handleNirvaSettingsClick = () => {
     navigate('/nirva-voice');
   };
+
   const handleReflectionTimeClick = () => {
     navigate('/notification-settings');
   };
+
   const handlePrivacyControlsClick = () => {
     navigate('/privacy-controls');
   };
+
   const handleNecklaceDetailsClick = () => {
     navigate('/necklace-details');
   };
+
   const handleConnectNecklace = () => {
     // Start the pairing process
     setPairingStep(1);
     setIsPairingDialogOpen(true);
   };
+
   const handleNext = () => {
-    if (pairingStep < 5) {
+    // Skipping step 3 (which was removed)
+    if (pairingStep === 2) {
+      setPairingStep(4);
+    } else if (pairingStep < 5) {
       setPairingStep(prevStep => prevStep + 1);
     } else {
       // Finish pairing process
@@ -54,11 +66,13 @@ const Me: React.FC = () => {
       setIsNecklaceConnected(true);
     }
   };
+
   const handleCancel = () => {
     setPairingStep(0);
     setIsPairingDialogOpen(false);
     setIsPairingSheetOpen(false);
   };
+
   const renderPairingContent = () => {
     switch (pairingStep) {
       case 1:
@@ -107,48 +121,6 @@ const Me: React.FC = () => {
               </div>
             </div>
           </DialogContent>;
-      case 3:
-        return <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-col items-center py-10 space-y-4 bg-purple-900 text-white rounded-lg px-4">
-              <div className="bg-purple-800 rounded-full p-6">
-                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
-                  <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
-                  <path d="M10 10v7" />
-                  <path d="M13.5 9l-3.5 3-3.5-3" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-semibold">Wake up your Pendant</h2>
-              <p className="text-center">
-                Your Pendant was put into a deep sleep for shipping. Look in the box for a USB-C cable and 
-                plug it in to wake it. A light will appear within 10 seconds.
-              </p>
-            </div>
-            
-            <div className="mt-6">
-              <Sheet open={true}>
-                <SheetContent side="bottom" className="p-6 rounded-t-xl">
-                  <div className="space-y-4">
-                    <button onClick={handleCancel} className="absolute right-4 top-4 rounded-full p-1">
-                      &times;
-                    </button>
-                    <h3 className="text-2xl font-bold text-center">Set Up Nirva</h3>
-                    <p className="text-center">Pair "Nirva Necklace" with "Nirva" app?</p>
-                    
-                    <div className="flex flex-col items-center py-4">
-                      <img src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" alt="Pendant" className="w-24 h-24 object-contain mb-2" />
-                      <span className="text-gray-500">Nirva</span>
-                    </div>
-                    
-                    <Button className="w-full" onClick={handleNext}>Set Up</Button>
-                    <Button variant="link" className="w-full text-blue-500">Learn More</Button>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </DialogContent>;
       case 4:
         return <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -170,28 +142,7 @@ const Me: React.FC = () => {
             </div>
             
             <div className="mt-6">
-              <Sheet open={true}>
-                <SheetContent side="bottom" className="p-6 rounded-t-xl">
-                  <div className="space-y-4">
-                    <button onClick={handleCancel} className="absolute right-4 top-4 rounded-full p-1">
-                      &times;
-                    </button>
-                    <h3 className="text-2xl font-bold text-center">Ready to Use</h3>
-                    <p className="text-center">"Pendant"</p>
-                    
-                    <div className="flex justify-center py-4">
-                      <div className="bg-green-500 rounded-full p-4">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5 12l5 5 9-9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </div>
-                    </div>
-                    
-                    <Button className="w-full" onClick={handleNext}>Continue in App</Button>
-                    <Button variant="link" className="w-full text-blue-500">View in Settings</Button>
-                  </div>
-                </SheetContent>
-              </Sheet>
+                <Button className="w-full" onClick={handleNext}>Continue</Button>
             </div>
           </DialogContent>;
       case 5:
@@ -247,10 +198,15 @@ const Me: React.FC = () => {
         return null;
     }
   };
-  return <Layout title="Me">
+
+  return (
+    <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
-        <div className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer" onClick={handleProfileClick}>
+        <div
+          className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer"
+          onClick={handleProfileClick}
+        >
           <Avatar className="h-16 w-16">
             <AvatarImage src="/placeholder.svg" alt="User" />
             <AvatarFallback>WW</AvatarFallback>
@@ -266,13 +222,27 @@ const Me: React.FC = () => {
           <CardContent className="p-4 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-medium">Nirva Necklace</h3>
-              {isNecklaceConnected && <ChevronRight className="text-muted-foreground cursor-pointer" size={20} onClick={handleNecklaceDetailsClick} />}
+              {isNecklaceConnected && (
+                <ChevronRight
+                  className="text-muted-foreground cursor-pointer"
+                  size={20}
+                  onClick={handleNecklaceDetailsClick}
+                />
+              )}
             </div>
             
-            {isNecklaceConnected ? <>
-                <div className="flex flex-col items-center justify-center py-4 cursor-pointer" onClick={handleNecklaceDetailsClick}>
+            {isNecklaceConnected ? (
+              <>
+                <div
+                  className="flex flex-col items-center justify-center py-4 cursor-pointer"
+                  onClick={handleNecklaceDetailsClick}
+                >
                   <div className="w-32 h-32 relative mb-3">
-                    <img src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" alt="Nirva Necklace" className="w-full h-full object-contain" />
+                    <img
+                      src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png"
+                      alt="Nirva Necklace"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <span className="text-green-500 text-sm flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
@@ -289,13 +259,16 @@ const Me: React.FC = () => {
                     <Info size={16} className="text-muted-foreground" />
                   </div>
                 </div>
-              </> : <div className="flex flex-col items-center justify-center py-8">
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8">
                 <WifiOff className="text-muted-foreground mb-4" size={48} />
                 <p className="text-muted-foreground mb-4">No device connected</p>
                 <Button onClick={handleConnectNecklace} className="bg-primary text-primary-foreground">
                   Connect Your Necklace
                 </Button>
-              </div>}
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -304,7 +277,10 @@ const Me: React.FC = () => {
           <CardContent className="p-0">
             <ul className="divide-y divide-border">
               {/* Onboarding Row */}
-              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handleOnboardingClick}>
+              <li
+                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
+                onClick={handleOnboardingClick}
+              >
                 <div className="flex items-center gap-3">
                   <Undo2 className="text-foreground" size={20} />
                   <div>
@@ -315,7 +291,10 @@ const Me: React.FC = () => {
                 <ChevronRight className="text-muted-foreground" size={20} />
               </li>
               
-              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handleReflectionTimeClick}>
+              <li
+                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
+                onClick={handleReflectionTimeClick}
+              >
                 <div className="flex items-center gap-3">
                   <Clock className="text-foreground" size={20} />
                   <div>
@@ -326,7 +305,10 @@ const Me: React.FC = () => {
                 <ChevronRight className="text-muted-foreground" size={20} />
               </li>
               
-              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handlePrivacyControlsClick}>
+              <li
+                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
+                onClick={handlePrivacyControlsClick}
+              >
                 <div className="flex items-center gap-3">
                   <Shield className="text-foreground" size={20} />
                   <div>
@@ -348,7 +330,10 @@ const Me: React.FC = () => {
                 <ChevronRight className="text-muted-foreground" size={20} />
               </li>
               
-              <li className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50" onClick={handleNirvaSettingsClick}>
+              <li
+                className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-accent/50"
+                onClick={handleNirvaSettingsClick}
+              >
                 <div className="flex items-center gap-3">
                   <Settings className="text-foreground" size={20} />
                   <div>
@@ -367,6 +352,8 @@ const Me: React.FC = () => {
       <Dialog open={isPairingDialogOpen} onOpenChange={setIsPairingDialogOpen}>
         {renderPairingContent()}
       </Dialog>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default Me;
