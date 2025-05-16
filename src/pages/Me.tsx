@@ -62,7 +62,7 @@ const Me: React.FC = () => {
   const renderPairingContent = () => {
     switch (pairingStep) {
       case 1:
-        return <DialogContent className="sm:max-w-md">
+        return <DialogContent className="sm:max-w-md rounded-md">
             <DialogHeader>
               
             </DialogHeader>
