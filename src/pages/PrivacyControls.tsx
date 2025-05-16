@@ -64,55 +64,6 @@ const PrivacyControls: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Log in Protection - New Section */}
-        <div className="space-y-4">
-          <h3 className="text-lg text-muted-foreground font-medium px-2">LOG IN PROTECTION</h3>
-          
-          <Card className="border-border overflow-hidden">
-            <CardContent className="p-0">
-              {/* Pin Protection */}
-              <div className="flex items-center justify-between p-4 border-b border-border">
-                <div className="flex items-center gap-4">
-                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
-                    <LockKeyhole className="h-5 w-5 text-foreground" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-lg">Protect with a Pin</h4>
-                    <p className="text-muted-foreground text-sm">Add an extra layer of security</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Switch checked={pinProtectionEnabled} onCheckedChange={setPinProtectionEnabled} className="data-[state=checked]:bg-primary" />
-                </div>
-              </div>
-              
-              {/* Face ID Protection */}
-              <div className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scan-face">
-                      <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-                      <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-                      <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-                      <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                      <path d="M9 9h.01"/>
-                      <path d="M15 9h.01"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-lg">Protect with Face ID</h4>
-                    <p className="text-muted-foreground text-sm">Use biometric authentication</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Switch checked={faceIDEnabled} onCheckedChange={setFaceIDEnabled} className="data-[state=checked]:bg-primary" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Connected Devices */}
         <div className="space-y-4">
           <h3 className="text-lg text-muted-foreground font-medium px-2">SYNC DEVICES</h3>
@@ -193,6 +144,55 @@ const PrivacyControls: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Log in Protection - Moved to bottom */}
+        <div className="space-y-4">
+          <h3 className="text-lg text-muted-foreground font-medium px-2">LOG IN PROTECTION</h3>
+          
+          <Card className="border-border overflow-hidden">
+            <CardContent className="p-0">
+              {/* Pin Protection */}
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <div className="flex items-center gap-4">
+                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
+                    <LockKeyhole className="h-5 w-5 text-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-lg">Protect with a Pin</h4>
+                    <p className="text-muted-foreground text-sm">Add an extra layer of security</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch checked={pinProtectionEnabled} onCheckedChange={setPinProtectionEnabled} className="data-[state=checked]:bg-primary" />
+                </div>
+              </div>
+              
+              {/* Face ID Protection */}
+              <div className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-4">
+                  <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scan-face">
+                      <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                      <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                      <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                      <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                      <path d="M9 9h.01"/>
+                      <path d="M15 9h.01"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-lg">Protect with Face ID</h4>
+                    <p className="text-muted-foreground text-sm">Use biometric authentication</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch checked={faceIDEnabled} onCheckedChange={setFaceIDEnabled} className="data-[state=checked]:bg-primary" />
                 </div>
               </div>
             </CardContent>
