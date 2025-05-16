@@ -4,13 +4,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff } from 'lucide-react';
+import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
   const [isNecklaceConnected, setIsNecklaceConnected] = useState(true);
+  const [isPairingDialogOpen, setIsPairingDialogOpen] = useState(false);
+  const [pairingStep, setPairingStep] = useState<'wakeup' | 'bluetooth' | 'complete'>(null);
   
   // Check if the necklace was forgotten when coming from NecklaceDetails
   useEffect(() => {
@@ -44,10 +49,40 @@ const Me: React.FC = () => {
   };
 
   const handleConnectNecklace = () => {
+    // Start the pairing process
+    setIsPairingDialogOpen(true);
+    setPairingStep('wakeup');
+  };
+
+  const handleWakeupContinue = () => {
+    // Move to the Bluetooth pairing step
+    setPairingStep('bluetooth');
+  };
+
+  const handleBluetoothPair = () => {
+    // Move to the completion step
+    setPairingStep('complete');
+  };
+
+  const handlePairingComplete = () => {
+    // Close the dialog and set the necklace as connected
+    setIsPairingDialogOpen(false);
+    setPairingStep(null);
     setIsNecklaceConnected(true);
+    toast({
+      title: "Device Connected",
+      description: "Your Nirva Necklace has been successfully paired.",
+    });
+  };
+
+  const handleCancelPairing = () => {
+    // Cancel the pairing process
+    setIsPairingDialogOpen(false);
+    setPairingStep(null);
   };
   
-  return <Layout title="Me">
+  return (
+    <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
         <div className="flex items-center w-full p-4 bg-background rounded-lg border border-border cursor-pointer" onClick={handleProfileClick}>
@@ -175,7 +210,100 @@ const Me: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </Layout>;
+
+      {/* Pairing Dialogs based on the screenshots */}
+      <Dialog open={isPairingDialogOpen} onOpenChange={setIsPairingDialogOpen}>
+        <DialogContent className="max-w-md">
+          {pairingStep === 'wakeup' && (
+            <div className="flex flex-col items-center">
+              <div className="bg-amber-500 w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                <div className="text-white w-10 h-10">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5C8.141 5 5 8.141 5 12C5 15.859 8.141 19 12 19C15.859 19 19 15.859 19 12C19 8.141 15.859 5 12 5ZM12 17C9.243 17 7 14.757 7 12C7 9.243 9.243 7 12 7C14.757 7 17 9.243 17 12C17 14.757 14.757 17 12 17Z" fill="white"/>
+                    <path d="M12 9C11.448 9 11 9.448 11 10V12C11 12.552 11.448 13 12 13C12.552 13 13 12.552 13 12V10C13 9.448 12.552 9 12 9Z" fill="white"/>
+                  </svg>
+                </div>
+              </div>
+              <DialogTitle className="text-3xl font-semibold mb-4 text-center">Wake up your Nirva</DialogTitle>
+              <p className="text-center text-muted-foreground mb-8">
+                Your Nirva was put into a deep sleep for shipping. Put your Nirva on the charging pad. A light will appear within 10 seconds.
+              </p>
+              <Button 
+                onClick={handleWakeupContinue} 
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 rounded-full"
+              >
+                Continue
+              </Button>
+            </div>
+          )}
+
+          {pairingStep === 'bluetooth' && (
+            <div className="flex flex-col items-center">
+              <DialogTitle className="text-2xl font-semibold mb-4">Bluetooth Pairing Request</DialogTitle>
+              <p className="text-center text-lg mb-8">"Nirva" would like to pair with your iPhone.</p>
+              <div className="flex w-full gap-4">
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancelPairing} 
+                  className="flex-1 border-amber-500 text-amber-600 hover:bg-amber-50"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleBluetoothPair} 
+                  variant="link"
+                  className="flex-1 text-blue-500 hover:text-blue-600"
+                >
+                  Pair
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {pairingStep === 'complete' && (
+            <div className="flex flex-col items-center">
+              <div className="bg-green-500 w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                <Check className="text-white" size={48} />
+              </div>
+              <DialogTitle className="text-3xl font-semibold mb-4">Setup complete.</DialogTitle>
+              <p className="text-center text-xl text-gray-500 mb-8">You may now wear your Nirva Necklace.</p>
+              
+              <div className="w-full bg-gray-50 rounded-lg p-4 mb-3">
+                <div className="flex items-center gap-4">
+                  <div className="bg-green-500 rounded-full p-2">
+                    <Check className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">Firmware up to date</p>
+                    <p className="text-gray-500">Your Nirva Necklace is on the latest firmware.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="w-full bg-gray-50 rounded-lg p-4 mb-8">
+                <div className="flex items-center gap-4">
+                  <div className="bg-green-500 rounded-full p-2">
+                    <Check className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">Nirva Necklace paired successfully.</p>
+                    <p className="text-gray-500">Next, we'll check for available updates.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={handlePairingComplete} 
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 rounded-full"
+              >
+                Done
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </Layout>
+  );
 };
 
 export default Me;
