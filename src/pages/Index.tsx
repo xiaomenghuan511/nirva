@@ -11,11 +11,14 @@ import {
   CarouselPrevious 
 } from "@/components/ui/carousel";
 import { format, addDays, subDays, startOfWeek, addWeeks, subWeeks } from 'date-fns';
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import type { CarouselApi } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 // Sample timeline data based on the diary entry
 const timelineEvents = [
@@ -140,6 +143,12 @@ const Index: React.FC = () => {
   const defaultDate = new Date(2025, 3, 19); // April 19, 2025
   const [selectedDate, setSelectedDate] = useState<Date>(defaultDate);
   
+  // Add search functionality
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredEvents, setFilteredEvents] = useState(timelineEvents);
+  const { toast } = useToast();
+  
   // Define April 19, 2025 as a reference date for "Today"
   const isApril19 = (date: Date) => {
     return format(date, 'yyyy-MM-dd') === '2025-04-19';
@@ -164,6 +173,37 @@ const Index: React.FC = () => {
   const handleNextWeek = () => {
     setSelectedDate(prevDate => addWeeks(prevDate, 1));
   };
+
+  // Search functionality
+  const handleSearch = () => {
+    if (!searchQuery.trim()) {
+      setFilteredEvents(timelineEvents);
+      return;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    const results = timelineEvents.filter(event => 
+      event.title.toLowerCase().includes(query) || 
+      event.description.toLowerCase().includes(query) ||
+      event.location?.toLowerCase().includes(query) ||
+      event.people?.some(person => person.name.toLowerCase().includes(query))
+    );
+    
+    setFilteredEvents(results);
+    setSearchDialogOpen(false);
+    
+    toast({
+      title: `Search Results`,
+      description: `Found ${results.length} matching events`,
+    });
+  };
+
+  // Reset search results when search query is cleared
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredEvents(timelineEvents);
+    }
+  }, [searchQuery]);
 
   // Get start of the current week (Sunday)
   const weekStart = startOfWeek(selectedDate);
@@ -242,7 +282,7 @@ const Index: React.FC = () => {
         <div className="mb-6">
           <div className="flex flex-col">
             <div className="flex justify-between items-center mb-2">
-              {/* Moved calendar button to the left */}
+              {/* Calendar button on the left */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -260,8 +300,15 @@ const Index: React.FC = () => {
                 </PopoverContent>
               </Popover>
               
-              {/* Empty div to maintain flex layout */}
-              <div></div>
+              {/* Search button on the right */}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8" 
+                onClick={() => setSearchDialogOpen(true)}
+              >
+                <Search className="h-5 w-5 text-muted-foreground" />
+              </Button>
             </div>
             
             <div className="flex justify-between items-center">
@@ -308,7 +355,34 @@ const Index: React.FC = () => {
           </div>
         </div>
         
-        {timelineEvents.map((event) => (
+        {/* Search Dialog */}
+        <Dialog open={searchDialogOpen} onOpenChange={setSearchDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Search Events</DialogTitle>
+            </DialogHeader>
+            <div className="flex items-center space-x-2">
+              <div className="grid flex-1 gap-2">
+                <Input
+                  type="text"
+                  placeholder="Enter keywords..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSearch();
+                    }
+                  }}
+                  className="col-span-3"
+                  autoFocus
+                />
+              </div>
+              <Button onClick={handleSearch} type="submit">Search</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+        
+        {filteredEvents.map((event) => (
           <TimelineCard
             key={event.id}
             {...event}
