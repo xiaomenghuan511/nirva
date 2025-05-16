@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, PhoneOff, PhoneCall, Minimize } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, PhoneCall, Minimize, ArrowLeft } from 'lucide-react';
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,14 +14,21 @@ const AiAssistant: React.FC = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callTime, setCallTime] = useState(0);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isFullPage, setIsFullPage] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
+    setIsFullPage(true); // Set full page mode when opening chat
     if (isVoiceMode) {
       setIsVoiceMode(false);
     }
     setIsMinimized(false);
+  };
+
+  const closeFullPageChat = () => {
+    setIsOpen(false);
+    setIsFullPage(false);
   };
 
   const toggleVoiceMode = () => {
@@ -135,7 +142,7 @@ const AiAssistant: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && !isVoiceMode && chatRef.current && !chatRef.current.contains(event.target as Node)) {
+      if (isOpen && !isVoiceMode && !isFullPage && chatRef.current && !chatRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -144,7 +151,7 @@ const AiAssistant: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, isVoiceMode]);
+  }, [isOpen, isVoiceMode, isFullPage]);
 
   // Return early if minimized to show the minimized bar
   if (isVoiceMode && isMinimized) {
@@ -255,8 +262,86 @@ const AiAssistant: React.FC = () => {
         </div>
       )}
       
-      {/* Regular Chat overlay */}
-      {isOpen && !isVoiceMode && (
+      {/* Full-Page Chat Mode */}
+      {isOpen && isFullPage && !isVoiceMode && (
+        <div className="fixed inset-0 z-50 bg-background flex flex-col">
+          {/* Chat header */}
+          <div className="bg-primary text-white p-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={closeFullPageChat}
+                className="p-1 rounded hover:bg-primary-foreground/10"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <div className="flex items-center">
+                <div className="h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse-soft"></div>
+                <span className="font-medium">Nirva</span>
+              </div>
+            </div>
+            <button 
+              onClick={toggleVoiceMode}
+              className="p-2 rounded hover:bg-primary-foreground/10"
+              title="Start voice conversation"
+            >
+              <PhoneCall size={18} />
+            </button>
+          </div>
+          
+          {/* Messages area */}
+          <div className="flex-1 p-4 overflow-y-auto flex flex-col space-y-3">
+            {messages.map((msg, index) => (
+              <div 
+                key={index} 
+                className={`max-w-[80%] p-3 rounded-2xl ${msg.isUser ? 
+                  'bg-primary text-white self-end rounded-br-none' : 
+                  'bg-gray-100 dark:bg-gray-800 self-start rounded-bl-none'
+                }`}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+          
+          {/* Input area */}
+          <div className="border-t border-border p-3 bg-background/80 backdrop-blur-sm">
+            <div className="flex items-center gap-2">
+              <form onSubmit={handleSend} className="flex flex-1">
+                <Textarea
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  placeholder="Message Nirva..."
+                  className="flex-1 resize-none py-2 px-3 rounded-l-lg border-l border-y focus:outline-none focus:ring-1 focus:ring-primary h-10 min-h-0"
+                />
+                <Button 
+                  type="submit"
+                  className="bg-primary text-white rounded-r-lg rounded-l-none h-10"
+                >
+                  <span className="sr-only">Send</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                </Button>
+              </form>
+              
+              <Button
+                size="icon"
+                className={`rounded-full ${isRecording ? 'bg-destructive' : 'bg-primary'}`}
+                onMouseDown={startRecording}
+                onMouseUp={stopRecording}
+                onTouchStart={startRecording}
+                onTouchEnd={stopRecording}
+              >
+                <Mic size={18} /> 
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Regular Chat overlay - shown only if not in full-page mode */}
+      {isOpen && !isFullPage && !isVoiceMode && (
         <div className="fixed inset-0 z-10 bg-black/20 backdrop-blur-sm">
           <div 
             ref={chatRef}
