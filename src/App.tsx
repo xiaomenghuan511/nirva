@@ -19,6 +19,7 @@ import NotificationSettings from "./pages/NotificationSettings";
 import PrivacyControls from "./pages/PrivacyControls";
 import DataTrend from "./pages/DataTrend";
 import SocialMapFull from "./pages/SocialMapFull";
+import NecklaceDetails from "./pages/NecklaceDetails";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/trends/:metricType" element={<DataTrend />} />
           <Route path="/social-map-full" element={<SocialMapFull />} />
           <Route path="/onboarding/*" element={<Onboarding />} />
+          <Route path="/necklace-details" element={<NecklaceDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

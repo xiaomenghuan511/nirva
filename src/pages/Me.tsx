@@ -5,23 +5,34 @@ import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
+
 const Me: React.FC = () => {
   const navigate = useNavigate();
+  
   const handleOnboardingClick = () => {
     navigate('/onboarding');
   };
+  
   const handleProfileClick = () => {
     navigate('/user-profile');
   };
+  
   const handleNirvaSettingsClick = () => {
     navigate('/nirva-voice');
   };
+  
   const handleReflectionTimeClick = () => {
     navigate('/notification-settings');
   };
+  
   const handlePrivacyControlsClick = () => {
     navigate('/privacy-controls');
   };
+
+  const handleNecklaceDetailsClick = () => {
+    navigate('/necklace-details');
+  };
+  
   return <Layout title="Me">
       <div className="flex flex-col gap-4 px-4 py-5">
         {/* User Profile Section */}
@@ -37,9 +48,13 @@ const Me: React.FC = () => {
         </div>
 
         {/* Device Section */}
-        <Card className="border-border">
+        <Card className="border-border cursor-pointer" onClick={handleNecklaceDetailsClick}>
           <CardContent className="p-4 space-y-2">
-            <h3 className="text-lg font-medium mb-2">Nirva Necklace</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-medium">Nirva Necklace</h3>
+              <ChevronRight className="text-muted-foreground" size={20} />
+            </div>
+            
             <div className="flex items-center justify-center">
               <span className="text-green-500 text-sm flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
@@ -128,4 +143,5 @@ const Me: React.FC = () => {
       </div>
     </Layout>;
 };
+
 export default Me;
