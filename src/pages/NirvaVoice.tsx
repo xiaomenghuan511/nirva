@@ -107,7 +107,7 @@ const NirvaVoice: React.FC = () => {
         <div className="w-full text-center mb-10">
           <h1 className="text-xl font-medium text-foreground">Choose Nirva's Voice</h1>
           <p className="text-sm text-muted-foreground mt-1">Select a voice that resonates with you</p>
-          <p className="text-xs text-muted-foreground mt-1">Swipe left or right to explore options</p>
+          
         </div>
         
         <div className="w-full mt-8">
