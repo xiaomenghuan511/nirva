@@ -6,11 +6,16 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, WifiOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isNecklaceConnected, setIsNecklaceConnected] = useState(true);
+  const [pairingStep, setPairingStep] = useState<number>(0);
+  const [isPairingDialogOpen, setIsPairingDialogOpen] = useState(false);
+  const [isPairingSheetOpen, setIsPairingSheetOpen] = useState(false);
   
   // Check if the necklace was forgotten when coming from NecklaceDetails
   useEffect(() => {
@@ -44,7 +49,241 @@ const Me: React.FC = () => {
   };
 
   const handleConnectNecklace = () => {
-    setIsNecklaceConnected(true);
+    // Start the pairing process
+    setPairingStep(1);
+    setIsPairingDialogOpen(true);
+  };
+  
+  const handleNext = () => {
+    if (pairingStep < 5) {
+      setPairingStep(prevStep => prevStep + 1);
+    } else {
+      // Finish pairing process
+      setIsPairingDialogOpen(false);
+      setIsPairingSheetOpen(false);
+      setIsNecklaceConnected(true);
+    }
+  };
+
+  const handleCancel = () => {
+    setPairingStep(0);
+    setIsPairingDialogOpen(false);
+    setIsPairingSheetOpen(false);
+  };
+
+  const renderPairingContent = () => {
+    switch (pairingStep) {
+      case 1:
+        return (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col items-center py-8 space-y-4 bg-purple-900 text-white rounded-lg px-4">
+              <div className="bg-purple-800 rounded-full p-6">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
+                  <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
+                  <path d="M10 10v7" />
+                  <path d="M13.5 9l-3.5 3-3.5-3" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-semibold">Wake up your Pendant</h2>
+              <p className="text-center">
+                Your Pendant was put into a deep sleep for shipping. Look in the box for a USB-C cable and 
+                plug it in to wake it. A light will appear within 10 seconds.
+              </p>
+            </div>
+            <Button onClick={handleNext} className="w-full mt-4">Continue</Button>
+          </DialogContent>
+        );
+      
+      case 2:
+        return (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col items-center py-10 space-y-4">
+              <div className="bg-blue-600 rounded-full p-6">
+                <Bluetooth className="text-white" size={32} />
+              </div>
+              <h2 className="text-2xl font-semibold">Connecting to your Pendant</h2>
+              <p className="text-gray-500">Connecting to your pendant...</p>
+              
+              <div className="mt-32 w-full">
+                <Sheet open={true}>
+                  <SheetContent side="bottom" className="p-0 rounded-t-xl">
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold text-center">Bluetooth Pairing Request</h3>
+                      <p className="text-center my-2">"Pendant" would like to pair with your iPhone.</p>
+                      <div className="flex border-t mt-4">
+                        <Button variant="ghost" className="flex-1 border-r" onClick={handleCancel}>
+                          Cancel
+                        </Button>
+                        <Button variant="ghost" className="flex-1 text-blue-500 font-semibold" onClick={handleNext}>
+                          Pair
+                        </Button>
+                      </div>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+            </div>
+          </DialogContent>
+        );
+        
+      case 3:
+        return (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col items-center py-10 space-y-4 bg-purple-900 text-white rounded-lg px-4">
+              <div className="bg-purple-800 rounded-full p-6">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
+                  <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
+                  <path d="M10 10v7" />
+                  <path d="M13.5 9l-3.5 3-3.5-3" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-semibold">Wake up your Pendant</h2>
+              <p className="text-center">
+                Your Pendant was put into a deep sleep for shipping. Look in the box for a USB-C cable and 
+                plug it in to wake it. A light will appear within 10 seconds.
+              </p>
+            </div>
+            
+            <div className="mt-6">
+              <Sheet open={true}>
+                <SheetContent side="bottom" className="p-6 rounded-t-xl">
+                  <div className="space-y-4">
+                    <button onClick={handleCancel} className="absolute right-4 top-4 rounded-full p-1">
+                      &times;
+                    </button>
+                    <h3 className="text-2xl font-bold text-center">Set Up Accessory</h3>
+                    <p className="text-center">Pair "Pendant" with "Limitless" app?</p>
+                    
+                    <div className="flex flex-col items-center py-4">
+                      <img 
+                        src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
+                        alt="Pendant" 
+                        className="w-24 h-24 object-contain mb-2"
+                      />
+                      <span className="text-gray-500">Pendant</span>
+                    </div>
+                    
+                    <Button className="w-full" onClick={handleNext}>Set Up</Button>
+                    <Button variant="link" className="w-full text-blue-500">Learn More</Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </DialogContent>
+        );
+        
+      case 4:
+        return (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col items-center py-10 space-y-4 bg-purple-900 text-white rounded-lg px-4">
+              <div className="bg-purple-800 rounded-full p-6">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" strokeWidth="2" fill="none">
+                  <path d="M18 4h-2.5v-1.5h-7v1.5h-2.5v2h12v-2z" />
+                  <path d="M10 10v7" />
+                  <path d="M13.5 9l-3.5 3-3.5-3" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-semibold">Wake up your Pendant</h2>
+              <p className="text-center">
+                Your Pendant was put into a deep sleep for shipping. Look in the box for a USB-C cable and 
+                plug it in to wake it. A light will appear within 10 seconds.
+              </p>
+            </div>
+            
+            <div className="mt-6">
+              <Sheet open={true}>
+                <SheetContent side="bottom" className="p-6 rounded-t-xl">
+                  <div className="space-y-4">
+                    <button onClick={handleCancel} className="absolute right-4 top-4 rounded-full p-1">
+                      &times;
+                    </button>
+                    <h3 className="text-2xl font-bold text-center">Ready to Use</h3>
+                    <p className="text-center">"Pendant"</p>
+                    
+                    <div className="flex justify-center py-4">
+                      <div className="bg-green-500 rounded-full p-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5 12l5 5 9-9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                    </div>
+                    
+                    <Button className="w-full" onClick={handleNext}>Continue in App</Button>
+                    <Button variant="link" className="w-full text-blue-500">View in Settings</Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </DialogContent>
+        );
+        
+      case 5:
+        return (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-xl font-semibold">Setup your Pendant</DialogTitle>
+            </DialogHeader>
+            
+            <div className="py-6 space-y-4">
+              <div className="flex justify-center">
+                <div className="bg-green-500 rounded-full p-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12l5 5 9-9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </div>
+              
+              <h2 className="text-xl font-semibold text-center">Setup complete.</h2>
+              <p className="text-gray-500 text-center">You may now unplug your Pendant.</p>
+              
+              <div className="bg-gray-100 rounded-lg p-4 my-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-green-500 rounded-full p-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12l5 5 9-9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Firmware up to date</h3>
+                    <p className="text-gray-500 text-sm">Your pendant is on the latest firmware.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-100 rounded-lg p-4 my-4">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-green-500 rounded-full p-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12l5 5 9-9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Pendant paired successfully.</h3>
+                    <p className="text-gray-500 text-sm">Next, we'll check for available updates.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <Button className="w-full" onClick={handleNext}>Done</Button>
+            </div>
+          </DialogContent>
+        );
+      
+      default:
+        return null;
+    }
   };
   
   return <Layout title="Me">
@@ -175,6 +414,11 @@ const Me: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Pairing Process Dialog */}
+      <Dialog open={isPairingDialogOpen} onOpenChange={setIsPairingDialogOpen}>
+        {renderPairingContent()}
+      </Dialog>
     </Layout>;
 };
 
