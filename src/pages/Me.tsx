@@ -220,7 +220,7 @@ const Me: React.FC = () => {
             </div>}
 
           {pairingStep === 'complete' && <div className="flex flex-col items-center">
-              <div className="bg-green-500 w-24 h-24 rounded-full flex items-center justify-center mb-6">
+              <div className="w-24 h-24 rounded-full flex items-center justify-center mb-6 bg-nirva-gold">
                 <Check className="text-white" size={48} />
               </div>
               <DialogTitle className="text-3xl font-semibold mb-4">Setup complete.</DialogTitle>
