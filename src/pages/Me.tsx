@@ -187,7 +187,7 @@ const Me: React.FC = () => {
 
       {/* Pairing Dialogs based on the screenshots */}
       <Dialog open={isPairingDialogOpen} onOpenChange={setIsPairingDialogOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md rounded-md">
           {pairingStep === 'wakeup' && <div className="flex flex-col items-center">
               <div className="w-24 h-24 rounded-full flex items-center justify-center mb-6 bg-nirva-gold">
                 <div className="text-white w-10 h-10">
