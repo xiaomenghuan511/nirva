@@ -241,14 +241,15 @@ const Index: React.FC = () => {
         {/* Date Selection Row */}
         <div className="mb-6">
           <div className="flex flex-col">
-            <div className="flex justify-end items-center mb-2">
+            <div className="flex justify-between items-center mb-2">
+              {/* Moved calendar button to the left */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <Calendar className="h-5 w-5 text-muted-foreground" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="end">
+                <PopoverContent className="w-auto p-0" align="start">
                   <CalendarComponent
                     mode="single"
                     selected={selectedDate}
@@ -258,6 +259,9 @@ const Index: React.FC = () => {
                   />
                 </PopoverContent>
               </Popover>
+              
+              {/* Empty div to maintain flex layout */}
+              <div></div>
             </div>
             
             <div className="flex justify-between items-center">
