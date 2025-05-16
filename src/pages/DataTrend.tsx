@@ -149,6 +149,18 @@ const DataTrend: React.FC = () => {
   // Function to determine if the data has a value property
   const hasValueProperty = (metricType !== 'mood-detail' && metricType !== 'time');
 
+  // Function to safely get the current value
+  const getCurrentValue = () => {
+    if (!hasValueProperty || timeframeData.length === 0) return null;
+    
+    const lastEntry = timeframeData[timeframeData.length - 1];
+    // Check if the entry has a value property before accessing it
+    if ('value' in lastEntry) {
+      return lastEntry.value;
+    }
+    return null;
+  };
+
   return (
     <Layout title={title} showBackButton>
       <div className="px-4 py-5 space-y-6">
@@ -169,9 +181,9 @@ const DataTrend: React.FC = () => {
 
             {/* Current value display */}
             <div className="px-6 py-10 flex justify-center items-center">
-              {hasValueProperty && timeframeData.length > 0 && (
+              {hasValueProperty && (
                 <div className="text-7xl font-bold">
-                  {timeframeData[timeframeData.length - 1].value}
+                  {getCurrentValue() ?? '0'}
                 </div>
               )}
             </div>
