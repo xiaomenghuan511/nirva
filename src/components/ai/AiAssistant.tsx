@@ -1,7 +1,20 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, PhoneOff, PhoneCall, Minimize, ArrowLeft } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, PhoneCall, Minimize, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
+// Add suggested prompts that users can choose from
+const suggestedPrompts = [
+  "I want to talk about my relationship issues",
+  "I want to develop a positive mindset",
+  "How do I manage stress?",
+  "I'm feeling anxious today",
+  "Tell me about mindfulness techniques",
+  "Help me reflect on my day",
+  "How can I improve my sleep?",
+  "I need advice on setting boundaries"
+];
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +29,13 @@ const AiAssistant: React.FC = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isFullPage, setIsFullPage] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Add state for prompt suggestions
+  const [promptIndex, setPromptIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  const promptsRef = useRef<HTMLDivElement>(null);
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -90,6 +110,29 @@ const AiAssistant: React.FC = () => {
       }, 1000);
     }
   };
+
+  // New function to handle sending a suggested prompt
+  const handleSuggestedPrompt = (prompt: string) => {
+    setMessages([...messages, { text: prompt, isUser: true }]);
+    
+    // Simulate AI response
+    setTimeout(() => {
+      let response = "I understand you want to discuss this topic. Let me help you explore that further.";
+      
+      // Customize response based on prompt
+      if (prompt.includes("relationship")) {
+        response = "Relationships can be complex. Would you like to talk about a specific aspect of your relationship concerns?";
+      } else if (prompt.includes("mindset")) {
+        response = "Developing a positive mindset is a great goal! What specific areas would you like to focus on first?";
+      } else if (prompt.includes("stress")) {
+        response = "Managing stress is important for wellbeing. What kind of stress are you experiencing currently?";
+      } else if (prompt.includes("anxious")) {
+        response = "I'm here for you. Can you tell me more about what's causing your anxiety today?";
+      }
+      
+      setMessages(prev => [...prev, { text: response, isUser: false }]);
+    }, 1000);
+  };
   
   const startRecording = () => {
     setIsRecording(true);
@@ -152,6 +195,68 @@ const AiAssistant: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, isVoiceMode, isFullPage]);
+
+  // Implement swipe detection for prompts
+  const handlePromptTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
+    setIsDragging(true);
+    
+    // Get clientX either from touch or mouse event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    setStartX(clientX);
+  };
+
+  const handlePromptTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDragging || !promptsRef.current) return;
+    
+    // Get clientX either from touch or mouse event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    
+    const diff = clientX - startX;
+    const containerWidth = promptsRef.current.offsetWidth;
+    const scrollDistance = containerWidth * 0.5; // Half container width
+    
+    // Limit the drag within reasonable bounds
+    const maxTranslate = 0;
+    const minTranslate = -(suggestedPrompts.length - 1) * scrollDistance;
+    
+    let newTranslateX = translateX + diff;
+    newTranslateX = Math.max(minTranslate, Math.min(maxTranslate, newTranslateX));
+    
+    setTranslateX(newTranslateX);
+    setStartX(clientX);
+  };
+
+  const handlePromptTouchEnd = () => {
+    if (!isDragging || !promptsRef.current) {
+      setIsDragging(false);
+      return;
+    }
+    
+    const containerWidth = promptsRef.current.offsetWidth;
+    const scrollDistance = containerWidth * 0.5; // Half container width
+    
+    // Calculate the nearest card based on current translate position
+    const newIndex = Math.round(Math.abs(translateX) / scrollDistance);
+    const boundedIndex = Math.max(0, Math.min(suggestedPrompts.length - 1, newIndex));
+    
+    // Snap to the nearest card position
+    setTranslateX(-boundedIndex * scrollDistance);
+    setPromptIndex(boundedIndex);
+    setIsDragging(false);
+  };
+  
+  const movePrompt = (direction: 'left' | 'right') => {
+    let newIndex = promptIndex + (direction === 'left' ? -1 : 1);
+    newIndex = Math.max(0, Math.min(suggestedPrompts.length - 1, newIndex));
+    
+    setPromptIndex(newIndex);
+    
+    if (promptsRef.current) {
+      const containerWidth = promptsRef.current.offsetWidth;
+      const scrollDistance = containerWidth * 0.5; // Half container width
+      setTranslateX(-newIndex * scrollDistance);
+    }
+  };
 
   // Return early if minimized to show the minimized bar
   if (isVoiceMode && isMinimized) {
@@ -303,6 +408,58 @@ const AiAssistant: React.FC = () => {
             ))}
           </div>
           
+          {/* Suggested prompts */}
+          <div className="px-4 py-2 border-t border-border">
+            <div className="relative overflow-hidden">
+              <div className="flex items-center">
+                <button 
+                  className="absolute left-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent pl-1 pr-4 py-2"
+                  onClick={() => movePrompt('left')}
+                  disabled={promptIndex === 0}
+                >
+                  <ChevronLeft size={20} className={promptIndex === 0 ? "opacity-30" : ""} />
+                </button>
+                
+                <div 
+                  ref={promptsRef}
+                  className="overflow-hidden w-full px-6"
+                  onMouseDown={handlePromptTouchStart}
+                  onMouseMove={handlePromptTouchMove}
+                  onMouseUp={handlePromptTouchEnd}
+                  onMouseLeave={handlePromptTouchEnd}
+                  onTouchStart={handlePromptTouchStart}
+                  onTouchMove={handlePromptTouchMove}
+                  onTouchEnd={handlePromptTouchEnd}
+                >
+                  <div 
+                    className="flex transition-transform duration-300"
+                    style={{ transform: `translateX(${translateX}px)` }}
+                  >
+                    {suggestedPrompts.map((prompt, index) => (
+                      <div 
+                        key={index}
+                        className="min-w-[80%] px-2"
+                        onClick={() => handleSuggestedPrompt(prompt)}
+                      >
+                        <div className="rounded-full py-2 px-4 bg-muted text-center cursor-pointer hover:bg-muted/80 text-muted-foreground text-sm">
+                          {prompt}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <button 
+                  className="absolute right-0 z-10 bg-gradient-to-l from-background via-background/80 to-transparent pr-1 pl-4 py-2"
+                  onClick={() => movePrompt('right')}
+                  disabled={promptIndex === suggestedPrompts.length - 1}
+                >
+                  <ChevronRight size={20} className={promptIndex === suggestedPrompts.length - 1 ? "opacity-30" : ""} />
+                </button>
+              </div>
+            </div>
+          </div>
+          
           {/* Input area */}
           <div className="border-t border-border p-3 bg-background/80 backdrop-blur-sm">
             <div className="flex items-center gap-2">
@@ -364,7 +521,7 @@ const AiAssistant: React.FC = () => {
             </div>
             
             {/* Messages area */}
-            <div className="p-3 h-[calc(100%-106px)] overflow-y-auto flex flex-col space-y-3">
+            <div className="p-3 h-[calc(100%-146px)] overflow-y-auto flex flex-col space-y-3">
               {messages.map((msg, index) => (
                 <div 
                   key={index} 
@@ -376,6 +533,58 @@ const AiAssistant: React.FC = () => {
                   {msg.text}
                 </div>
               ))}
+            </div>
+            
+            {/* Suggested prompts - smaller version for popup */}
+            <div className="border-t border-border px-3 py-2">
+              <div className="relative overflow-hidden">
+                <div className="flex items-center">
+                  <button 
+                    className="absolute left-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent pl-1 pr-2 py-1"
+                    onClick={() => movePrompt('left')}
+                    disabled={promptIndex === 0}
+                  >
+                    <ChevronLeft size={16} className={promptIndex === 0 ? "opacity-30" : ""} />
+                  </button>
+                  
+                  <div 
+                    ref={promptsRef}
+                    className="overflow-hidden w-full px-5"
+                    onMouseDown={handlePromptTouchStart}
+                    onMouseMove={handlePromptTouchMove}
+                    onMouseUp={handlePromptTouchEnd}
+                    onMouseLeave={handlePromptTouchEnd}
+                    onTouchStart={handlePromptTouchStart}
+                    onTouchMove={handlePromptTouchMove}
+                    onTouchEnd={handlePromptTouchEnd}
+                  >
+                    <div 
+                      className="flex transition-transform duration-300"
+                      style={{ transform: `translateX(${translateX}px)` }}
+                    >
+                      {suggestedPrompts.map((prompt, index) => (
+                        <div 
+                          key={index}
+                          className="min-w-[85%] px-1"
+                          onClick={() => handleSuggestedPrompt(prompt)}
+                        >
+                          <div className="rounded-full py-1 px-3 bg-muted text-center cursor-pointer hover:bg-muted/80 text-muted-foreground text-xs truncate">
+                            {prompt}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <button 
+                    className="absolute right-0 z-10 bg-gradient-to-l from-background via-background/80 to-transparent pr-1 pl-2 py-1"
+                    onClick={() => movePrompt('right')}
+                    disabled={promptIndex === suggestedPrompts.length - 1}
+                  >
+                    <ChevronRight size={16} className={promptIndex === suggestedPrompts.length - 1 ? "opacity-30" : ""} />
+                  </button>
+                </div>
+              </div>
             </div>
             
             {/* Input area */}
