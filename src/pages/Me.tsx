@@ -75,7 +75,7 @@ const Me: React.FC = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-semibold">Wake up your Nirva</h2>
-              <p className="text-center">Your Nirva was put into a deep sleep for shipping.Put your Nirva on the charging pad. A light will appear within 10 seconds.</p>
+              <p className="text-center">Your Nirva was put into a deep sleep for shipping. Put your Nirva on the charging pad. A light will appear within 10 seconds.</p>
             </div>
             <Button onClick={handleNext} className="w-full mt-4">Continue</Button>
           </DialogContent>;
