@@ -1,14 +1,11 @@
-
 import React from 'react';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChevronRight, Download } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-
 const NecklaceDetails: React.FC = () => {
-  return (
-    <Layout title="Nirva Necklace" showBackButton={true} backTo="/me">
+  return <Layout title="Nirva Necklace" showBackButton={true} backTo="/me">
       <div className="flex flex-col gap-4 px-4 py-6">
         {/* General Info Section */}
         <div className="space-y-2">
@@ -91,15 +88,13 @@ const NecklaceDetails: React.FC = () => {
               
               {/* Factory Reset */}
               <div className="flex items-center justify-between p-4">
-                <span className="text-foreground">Factory Reset</span>
+                <span className="text-foreground">Forget This Device</span>
                 <Button variant="destructive" size="sm">Reset</Button>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default NecklaceDetails;
