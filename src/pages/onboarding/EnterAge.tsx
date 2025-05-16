@@ -37,9 +37,11 @@ const EnterAge: React.FC = () => {
       
       <div className="flex flex-col items-center justify-center text-center mt-8">
         <h1 className="text-2xl font-bold mb-2 text-nirva-neutral-heading">How old are you?</h1>
-        <p className="text-nirva-neutral-body text-sm mb-6 max-w-xs border-l-2 border-nirva-soft-gold px-4 py-2">
-          Your answer will help Nirva better know you.
-        </p>
+        <div className="bg-white p-4 rounded-xl shadow-sm mb-6 max-w-xs">
+          <p className="text-center text-nirva-neutral-body">
+            Your answer will help Nirva better know you.
+          </p>
+        </div>
         
         <div className="w-full space-y-3 mt-4">
           {ageRanges.map((range) => (
