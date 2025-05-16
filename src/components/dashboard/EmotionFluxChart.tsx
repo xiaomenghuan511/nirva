@@ -3,6 +3,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ChartContainer } from '@/components/ui/chart';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 // Energy level data throughout the day based on the description
 const energyData = [
@@ -20,7 +22,11 @@ const energyData = [
   { time: '19:00', level: 8, event: 'Evening continues' },
 ];
 
-const EmotionFluxChart: React.FC = () => {
+interface EmotionFluxChartProps {
+  onViewTrend?: () => void;
+}
+
+const EmotionFluxChart: React.FC<EmotionFluxChartProps> = ({ onViewTrend }) => {
   const chartConfig = {
     line: { theme: { light: '#9b87f5', dark: '#9b87f5' } },
     grid: { theme: { light: '#f0f0f0', dark: '#333' } },
@@ -29,7 +35,7 @@ const EmotionFluxChart: React.FC = () => {
   };
 
   return (
-    <Card>
+    <Card className="relative">
       <CardHeader>
         <CardTitle className="text-lg font-medium">Energy Level</CardTitle>
       </CardHeader>
@@ -86,6 +92,17 @@ const EmotionFluxChart: React.FC = () => {
           </ChartContainer>
         </div>
       </CardContent>
+      {onViewTrend && (
+        <Button 
+          variant="ghost" 
+          size="icon"
+          className="absolute top-2 right-2"
+          onClick={onViewTrend}
+          aria-label="View energy level trends"
+        >
+          <ArrowRight className="h-4 w-4" />
+        </Button>
+      )}
     </Card>
   );
 };

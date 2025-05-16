@@ -74,7 +74,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Emotion flux chart */}
-        <EmotionFluxChart />
+        <EmotionFluxChart onViewTrend={() => navigateToTrend('energy')} />
         
         {/* Mood chart with arrow */}
         <div className="relative">
