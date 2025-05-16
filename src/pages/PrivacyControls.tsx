@@ -5,7 +5,6 @@ import { Switch } from '@/components/ui/switch';
 import { Apple, ArrowRight, BookText, Cloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-
 const PrivacyControls: React.FC = () => {
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
   const [nirvaAppEnabled, setNirvaAppEnabled] = React.useState(true);
@@ -14,25 +13,17 @@ const PrivacyControls: React.FC = () => {
   const [appleHealthEnabled, setAppleHealthEnabled] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [healthDialogOpen, setHealthDialogOpen] = React.useState(false);
-  
   const handleJournalSuggestionClick = () => {
     // In a real app, this would use platform-specific APIs to open system settings
     // For the web demo, we'll show a dialog explaining what would happen
     setDialogOpen(true);
   };
-  
   const handleAppleHealthClick = () => {
     // In a real app, this would open Apple Health settings
     // For the web demo, we'll show a dialog explaining what would happen
     setHealthDialogOpen(true);
   };
-  
-  return (
-    <Layout 
-      title="Privacy Controls" 
-      showBackButton={true}
-      backTo="/me"
-    >
+  return <Layout title="Privacy Controls" showBackButton={true} backTo="/me">
       <div className="flex flex-col gap-6 px-4 py-6">
         {/* Private Cloud Card */}
         <Card className="border-border overflow-hidden">
@@ -67,7 +58,7 @@ const PrivacyControls: React.FC = () => {
 
         {/* Connected Devices */}
         <div className="space-y-4">
-          <h3 className="text-lg text-muted-foreground font-medium px-2">CONNECTED DEVICES</h3>
+          <h3 className="text-lg text-muted-foreground font-medium px-2">SYNC DEVICES</h3>
           
           <Card className="border-border overflow-hidden">
             <CardContent className="p-0">
@@ -83,11 +74,7 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Switch 
-                    checked={nirvaAppEnabled} 
-                    onCheckedChange={setNirvaAppEnabled}
-                    className="data-[state=checked]:bg-primary"
-                  />
+                  <Switch checked={nirvaAppEnabled} onCheckedChange={setNirvaAppEnabled} className="data-[state=checked]:bg-primary" />
                 </div>
               </div>
               
@@ -103,11 +90,7 @@ const PrivacyControls: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Switch 
-                    checked={nirvaNecklaceEnabled} 
-                    onCheckedChange={setNirvaNecklaceEnabled} 
-                    className="data-[state=checked]:bg-primary"
-                  />
+                  <Switch checked={nirvaNecklaceEnabled} onCheckedChange={setNirvaNecklaceEnabled} className="data-[state=checked]:bg-primary" />
                 </div>
               </div>
             </CardContent>
@@ -121,10 +104,7 @@ const PrivacyControls: React.FC = () => {
           <Card className="border-border overflow-hidden">
             <CardContent className="p-0">
               {/* Journaling Suggestions */}
-              <div 
-                className="flex items-center justify-between p-4 border-b border-border cursor-pointer hover:bg-muted/50"
-                onClick={handleJournalSuggestionClick}
-              >
+              <div className="flex items-center justify-between p-4 border-b border-border cursor-pointer hover:bg-muted/50" onClick={handleJournalSuggestionClick}>
                 <div className="flex items-center gap-4">
                   <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
                     <BookText className="h-5 w-5 text-foreground" />
@@ -140,10 +120,7 @@ const PrivacyControls: React.FC = () => {
               </div>
               
               {/* Apple Health Sync */}
-              <div 
-                className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50"
-                onClick={handleAppleHealthClick}
-              >
+              <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50" onClick={handleAppleHealthClick}>
                 <div className="flex items-center gap-4">
                   <div className="bg-background border border-border rounded-md w-10 h-10 flex items-center justify-center">
                     <Apple className="h-5 w-5 text-foreground" />
@@ -239,8 +216,6 @@ const PrivacyControls: React.FC = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default PrivacyControls;
