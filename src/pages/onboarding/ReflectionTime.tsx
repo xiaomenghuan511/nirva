@@ -20,7 +20,7 @@ const ReflectionTime: React.FC = () => {
       
       <div className="flex flex-col items-center justify-center text-center mt-8">
         <h1 className="text-2xl font-bold mb-6 text-nirva-neutral-heading">
-          When do you want to carve out time for <span className="bg-white px-3 py-1 rounded">morning intention and evening reflection</span>
+          When do you want to carve out time for <span className="border-b-2 border-nirva-gold px-1">morning intention and evening reflection</span>
         </h1>
         
         <div className="w-full mt-12">
