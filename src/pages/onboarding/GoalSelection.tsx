@@ -35,7 +35,7 @@ const GoalSelection: React.FC = () => {
       
       <div className="flex flex-col items-center justify-center text-center mt-8">
         <h1 className="text-2xl font-bold mb-2 text-nirva-neutral-heading">How can I make your life better?</h1>
-        <div className="bg-white p-4 rounded-xl shadow-sm mb-6 max-w-xs">
+        <div className="border-l-4 border-nirva-gold p-4 rounded-r-xl mb-6 max-w-xs">
           <p className="text-center text-nirva-neutral-body">
             Your answer will help Nirva better know you.
           </p>
