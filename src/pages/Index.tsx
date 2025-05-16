@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
@@ -11,7 +12,7 @@ import {
   CarouselPrevious 
 } from "@/components/ui/carousel";
 import { format, addDays, subDays, startOfWeek, addWeeks, subWeeks } from 'date-fns';
-import { Calendar, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Search, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
@@ -149,6 +150,23 @@ const Index: React.FC = () => {
   const [filteredEvents, setFilteredEvents] = useState(timelineEvents);
   const { toast } = useToast();
   
+  // Add saved events functionality
+  const [savedEvents, setSavedEvents] = useState<number[]>([]);
+  const [showSavedEvents, setShowSavedEvents] = useState(false);
+  
+  // Initialize savedEvents from localStorage on component mount
+  useEffect(() => {
+    const savedIds = localStorage.getItem('savedEvents');
+    if (savedIds) {
+      setSavedEvents(JSON.parse(savedIds));
+    }
+  }, []);
+  
+  // Save to localStorage whenever savedEvents changes
+  useEffect(() => {
+    localStorage.setItem('savedEvents', JSON.stringify(savedEvents));
+  }, [savedEvents]);
+  
   // Define April 19, 2025 as a reference date for "Today"
   const isApril19 = (date: Date) => {
     return format(date, 'yyyy-MM-dd') === '2025-04-19';
@@ -205,6 +223,40 @@ const Index: React.FC = () => {
     }
   }, [searchQuery]);
 
+  // Save event functionality
+  const handleToggleSaveEvent = (id: number) => {
+    setSavedEvents(prev => {
+      if (prev.includes(id)) {
+        // If already saved, remove it
+        const newSavedEvents = prev.filter(eventId => eventId !== id);
+        toast({
+          title: 'Event removed from saved collection',
+          description: 'The event has been removed from your saved collection.',
+        });
+        return newSavedEvents;
+      } else {
+        // If not saved, add it
+        toast({
+          title: 'Event saved',
+          description: 'The event has been added to your saved collection.',
+        });
+        return [...prev, id];
+      }
+    });
+  };
+
+  // Toggle between showing all events and saved events
+  const handleToggleSavedEventsView = () => {
+    setShowSavedEvents(prev => !prev);
+    
+    if (!showSavedEvents && savedEvents.length === 0) {
+      toast({
+        title: 'No saved events',
+        description: 'You have not saved any events yet. Click the star icon on an event to save it.',
+      });
+    }
+  };
+
   // Get start of the current week (Sunday)
   const weekStart = startOfWeek(selectedDate);
   
@@ -219,6 +271,11 @@ const Index: React.FC = () => {
       isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     };
   });
+
+  // Calculate events to display based on the current view mode
+  const eventsToDisplay = showSavedEvents 
+    ? filteredEvents.filter(event => savedEvents.includes(event.id))
+    : filteredEvents;
 
   // Add state for carousel API and current slide
   const [api, setApi] = useState<CarouselApi>();
@@ -283,22 +340,37 @@ const Index: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex justify-between items-center mb-2">
               {/* Calendar button on the left */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Calendar className="h-5 w-5 text-muted-foreground" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <CalendarComponent
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={handleDateChange}
-                    initialFocus
-                    className="p-3 pointer-events-auto"
+              <div className="flex gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Calendar className="h-5 w-5 text-muted-foreground" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={handleDateChange}
+                      initialFocus
+                      className="p-3 pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+                
+                {/* Star button for saved events */}
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8" 
+                  onClick={handleToggleSavedEventsView}
+                >
+                  <Star 
+                    className="h-5 w-5 text-muted-foreground" 
+                    fill={showSavedEvents ? "currentColor" : "none"}
                   />
-                </PopoverContent>
-              </Popover>
+                </Button>
+              </div>
               
               {/* Search button on the right */}
               <Button 
@@ -349,7 +421,7 @@ const Index: React.FC = () => {
             
             <div className="mt-4 text-center">
               <h3 className="text-lg font-medium">
-                {isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d')}
+                {showSavedEvents ? 'Saved Events' : (isApril19(selectedDate) ? `Today ${format(selectedDate, 'MMMM d')}` : format(selectedDate, 'MMMM d'))}
               </h3>
             </div>
           </div>
@@ -382,10 +454,20 @@ const Index: React.FC = () => {
           </DialogContent>
         </Dialog>
         
-        {filteredEvents.map((event) => (
+        {eventsToDisplay.length === 0 && showSavedEvents && (
+          <div className="text-center py-12 text-muted-foreground">
+            <Star className="h-12 w-12 mx-auto mb-4 opacity-30" />
+            <h4 className="text-lg font-medium">No saved events</h4>
+            <p className="mt-2">You haven't saved any events yet. Click the star icon on an event to save it.</p>
+          </div>
+        )}
+        
+        {eventsToDisplay.map((event) => (
           <TimelineCard
             key={event.id}
             {...event}
+            isBookmarked={savedEvents.includes(event.id)}
+            onBookmarkToggle={() => handleToggleSaveEvent(event.id)}
             onClick={() => handleEventClick(event.id)}
           />
         ))}

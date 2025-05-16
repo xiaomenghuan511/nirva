@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   BookOpen, Clock, MapPin, Star, Heart, Home, Briefcase, 
@@ -22,6 +21,7 @@ interface TimelineCardProps {
   activityType?: string;
   energyImpact?: 'positive' | 'negative';
   onClick?: () => void;
+  onBookmarkToggle?: () => void;
 }
 
 const TimelineCard: React.FC<TimelineCardProps> = ({
@@ -37,7 +37,8 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
   locationType,
   activityType,
   energyImpact,
-  onClick
+  onClick,
+  onBookmarkToggle
 }) => {
   // Generate a dynamic icon based on activity type
   const getActivityIcon = () => {
@@ -233,6 +234,14 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
     }
   };
 
+  // Handle bookmark button click without propagation to the card
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onBookmarkToggle) {
+      onBookmarkToggle();
+    }
+  };
+
   return (
     <div 
       className="timeline-card cursor-pointer transition-all hover:shadow-lg active:scale-98"
@@ -251,8 +260,14 @@ const TimelineCard: React.FC<TimelineCardProps> = ({
           {/* Title and bookmark */}
           <div className="flex justify-between items-start">
             <h3 className="font-medium">{title}</h3>
-            <button className="text-muted-foreground hover:text-amber-400">
-              <Star className="h-4 w-4" fill={isBookmarked ? "currentColor" : "none"} />
+            <button 
+              className="text-muted-foreground hover:text-amber-400 transition-colors"
+              onClick={handleBookmarkClick}
+            >
+              <Star 
+                className="h-4 w-4" 
+                fill={isBookmarked ? "currentColor" : "none"}
+              />
             </button>
           </div>
           
