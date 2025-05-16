@@ -46,7 +46,10 @@ const Welcome: React.FC = () => {
           Hi, Nirva!
         </Button>
         
-        <p className="text-nirva-neutral-body/70 text-xs text-center mt-4">
+        <p 
+          className="text-nirva-neutral-body/70 text-xs text-center mt-4 cursor-pointer hover:underline"
+          onClick={() => navigate('/login')}
+        >
           I ALREADY HAVE AN ACCOUNT
         </p>
       </div>
