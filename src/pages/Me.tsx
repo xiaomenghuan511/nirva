@@ -185,7 +185,7 @@ const Me: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold">Pendant paired successfully.</h3>
+                    <h3 className="font-semibold">Nirva Necklace paired successfully.</h3>
                     <p className="text-gray-500 text-sm">Next, we'll check for available updates.</p>
                   </div>
                 </div>
