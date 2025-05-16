@@ -1,10 +1,11 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Volume } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { toast } from "@/hooks/use-toast";
 import { handleCarouselSwipe } from '@/lib/utils';
+
 interface Voice {
   id: string;
   name: string;
@@ -12,6 +13,7 @@ interface Voice {
   current?: boolean;
   color: string;
 }
+
 const voices: Voice[] = [{
   id: 'voice-1',
   name: 'Cindy',
@@ -44,27 +46,24 @@ const voices: Voice[] = [{
   traits: ['Articulate', 'Compassionate', 'Warm'],
   color: 'from-nirva-soft-brown/40 to-nirva-soft-brown/20'
 }];
+
 const NirvaVoice: React.FC = () => {
   const navigate = useNavigate();
   const [selectedVoice, setSelectedVoice] = useState<string>(voices.find(v => v.current)?.id || voices[0].id);
   const [api, setApi] = React.useState<any>();
+
   const handleBack = () => {
     navigate('/me');
   };
+
   const handleContinue = () => {
     // In a real app, we would save the selected voice
-    toast({
-      title: "Voice updated",
-      description: `Nirva will now speak with ${currentVoice?.name}'s voice`
-    });
+    // Removed toast notification
     navigate('/me');
   };
+
   const playVoiceSample = (voiceId: string) => {
     // In a real app, this would play a voice sample
-    toast({
-      title: "Playing voice sample",
-      description: `Listening to ${voices.find(v => v.id === voiceId)?.name}'s voice`
-    });
     console.log(`Playing voice sample for ${voiceId}`);
   };
 
@@ -77,6 +76,7 @@ const NirvaVoice: React.FC = () => {
       setSelectedVoice(voices[currentIndex].id);
     }
   };
+
   React.useEffect(() => {
     if (!api) return;
     api.on('select', handleSelect);
@@ -91,7 +91,9 @@ const NirvaVoice: React.FC = () => {
   const onSwipe = (direction: 'left' | 'right') => {
     handleCarouselSwipe(api, direction);
   };
+
   const currentVoice = voices.find(voice => voice.id === selectedVoice);
+
   return <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div className="p-4 flex items-center">
@@ -159,4 +161,5 @@ const NirvaVoice: React.FC = () => {
       </div>
     </div>;
 };
+
 export default NirvaVoice;
