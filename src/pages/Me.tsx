@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Shield, Download, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
+import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const handleOnboardingClick = () => {
@@ -102,7 +103,7 @@ const Me: React.FC = () => {
               
               <li className="flex items-center justify-between px-4 py-4">
                 <div className="flex items-center gap-3">
-                  <Download className="text-foreground" size={20} />
+                  <Upload className="text-foreground" size={20} />
                   <div>
                     <p className="font-medium">Update Data</p>
                     <p className="text-sm text-muted-foreground">Upload your recorded audio</p>
