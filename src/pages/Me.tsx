@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2 } from 'lucide-react';
+import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Droplet } from 'lucide-react';
 
 const Me: React.FC = () => {
   const navigate = useNavigate();
@@ -55,14 +55,17 @@ const Me: React.FC = () => {
               <ChevronRight className="text-muted-foreground" size={20} />
             </div>
             
-            <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center py-4">
+              <div className="w-32 h-32 relative mb-3">
+                <img 
+                  src="/lovable-uploads/c70c4b88-b8d7-4b5a-a76f-13ee369a2016.png" 
+                  alt="Nirva Necklace" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <span className="text-green-500 text-sm flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-500 rounded-full"></span> Connected
               </span>
-            </div>
-            
-            <div className="flex justify-center my-4">
-              {/* The empty div with rounded border has been removed */}
             </div>
             
             <div className="flex items-center justify-between px-2 py-3">
