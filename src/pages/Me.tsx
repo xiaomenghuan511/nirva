@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -161,7 +162,7 @@ const Me: React.FC = () => {
               </div>
               
               <h2 className="text-xl font-semibold text-center">Setup complete.</h2>
-              <p className="text-gray-500 text-center">You may now unplug your Pendant.</p>
+              <p className="text-gray-500 text-center">You may now wear your Nirva Necklace.</p>
               
               <div className="bg-gray-100 rounded-lg p-4 my-4">
                 <div className="flex items-center space-x-4">
