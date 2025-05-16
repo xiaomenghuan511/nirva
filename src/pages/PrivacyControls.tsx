@@ -1,14 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Apple, ArrowRight, BookText, Cloud, ArrowLeft } from 'lucide-react';
+import { Apple, ArrowRight, BookText, Cloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const PrivacyControls: React.FC = () => {
-  const navigate = useNavigate();
   const [cloudEnabled, setCloudEnabled] = React.useState(true);
   const [nirvaAppEnabled, setNirvaAppEnabled] = React.useState(true);
   const [nirvaNecklaceEnabled, setNirvaNecklaceEnabled] = React.useState(true);
@@ -28,20 +26,9 @@ const PrivacyControls: React.FC = () => {
     // For the web demo, we'll show a dialog explaining what would happen
     setHealthDialogOpen(true);
   };
-
-  const handleBackClick = () => {
-    navigate('/me');
-  };
   
   return (
     <Layout title="Privacy Controls">
-      {/* Back Button */}
-      <div className="fixed left-4 top-3.5 z-20">
-        <Button variant="ghost" size="icon" onClick={handleBackClick} className="h-7 w-7">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-      </div>
-      
       <div className="flex flex-col gap-6 px-4 py-6">
         {/* Private Cloud Card */}
         <Card className="border-border overflow-hidden">
