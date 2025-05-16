@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -422,7 +421,6 @@ const getTitleForMetric = (metricType: string): string => {
       return 'Data Trend';
   }
 };
-
 const DataTrend: React.FC = () => {
   const {
     metricType = 'mood'
@@ -467,16 +465,14 @@ const DataTrend: React.FC = () => {
     }
     return null;
   };
-
-  return (
-    <Layout title={title} showBackButton>
+  return <Layout title={title} showBackButton>
       <div className="px-4 py-5 space-y-6">
         <Card>
           <CardContent className="p-0">
             {/* Tabs for timeframe selection */}
             <Tabs defaultValue="day" onValueChange={value => setTimeframe(value as 'day' | 'week' | 'month')} className="w-full">
               <TabsList className="grid grid-cols-3 w-full rounded-none">
-                <TabsTrigger value="day" className="rounded-none py-3">Day</TabsTrigger>
+                <TabsTrigger value="day" className="py-3 rounded-md">Day</TabsTrigger>
                 <TabsTrigger value="week" className="rounded-none py-3">Week</TabsTrigger>
                 <TabsTrigger value="month" className="rounded-none py-3">Month</TabsTrigger>
               </TabsList>
@@ -484,59 +480,85 @@ const DataTrend: React.FC = () => {
 
             {/* Current value display */}
             <div className="px-6 py-10 flex justify-center items-center">
-              {hasValueProperty && (
-                <div className="text-7xl font-bold">
+              {hasValueProperty && <div className="text-7xl font-bold">
                   {getCurrentValue() ?? '0'}
-                </div>
-              )}
+                </div>}
             </div>
 
             {/* Chart */}
             <div className="h-64 px-2">
               <ResponsiveContainer width="100%" height="100%">
-                {metricType === 'mood-detail' ? (
-                  <LineChart data={timeframeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                {metricType === 'mood-detail' ? <LineChart data={timeframeData} margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20
+              }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} />
-                    <XAxis dataKey={xAxisDataKey} tick={{ fontSize: 12 }} />
+                    <XAxis dataKey={xAxisDataKey} tick={{
+                  fontSize: 12
+                }} />
                     <YAxis hide />
                     <Tooltip />
-                    <Line type="monotone" dataKey="happy" stroke={colors.happy} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="calm" stroke={colors.calm} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="focused" stroke={colors.focused} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="stressed" stroke={colors.stressed} strokeWidth={2} dot={{ r: 3 }} />
-                  </LineChart>
-                ) : metricType === 'time' ? (
-                  <LineChart data={timeframeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                    <Line type="monotone" dataKey="happy" stroke={colors.happy} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="calm" stroke={colors.calm} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="focused" stroke={colors.focused} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="stressed" stroke={colors.stressed} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                  </LineChart> : metricType === 'time' ? <LineChart data={timeframeData} margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20
+              }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} />
-                    <XAxis dataKey={xAxisDataKey} tick={{ fontSize: 12 }} />
+                    <XAxis dataKey={xAxisDataKey} tick={{
+                  fontSize: 12
+                }} />
                     <YAxis hide />
                     <Tooltip />
-                    <Line type="monotone" dataKey="work" stroke={colors.work} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="exercise" stroke={colors.exercise} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="social" stroke={colors.social} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="learning" stroke={colors.learning} strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="selfCare" stroke={colors.selfCare} strokeWidth={2} dot={{ r: 3 }} />
-                  </LineChart>
-                ) : (
-                  <LineChart data={timeframeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                    <Line type="monotone" dataKey="work" stroke={colors.work} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="exercise" stroke={colors.exercise} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="social" stroke={colors.social} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="learning" stroke={colors.learning} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                    <Line type="monotone" dataKey="selfCare" stroke={colors.selfCare} strokeWidth={2} dot={{
+                  r: 3
+                }} />
+                  </LineChart> : <LineChart data={timeframeData} margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20
+              }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.2} />
-                    <XAxis dataKey={xAxisDataKey} tick={{ fontSize: 12 }} />
-                    <YAxis 
-                      domain={metricType === 'mood' ? [40, 100] : [0, 10]} 
-                      allowDecimals={metricType !== 'mood'} 
-                      tick={{ fontSize: 12 }}
-                    />
+                    <XAxis dataKey={xAxisDataKey} tick={{
+                  fontSize: 12
+                }} />
+                    <YAxis domain={metricType === 'mood' ? [40, 100] : [0, 10]} allowDecimals={metricType !== 'mood'} tick={{
+                  fontSize: 12
+                }} />
                     <Tooltip />
-                    <Line 
-                      type="monotone" 
-                      dataKey="value" 
-                      stroke={metricType === 'mood' ? '#9b87f5' : metricType === 'energy' ? '#9b87f5' : '#a0e4b3'} 
-                      strokeWidth={3} 
-                      dot={{ r: 4 }} 
-                      activeDot={{ r: 6 }} 
-                    />
-                  </LineChart>
-                )}
+                    <Line type="monotone" dataKey="value" stroke={metricType === 'mood' ? '#9b87f5' : metricType === 'energy' ? '#9b87f5' : '#a0e4b3'} strokeWidth={3} dot={{
+                  r: 4
+                }} activeDot={{
+                  r: 6
+                }} />
+                  </LineChart>}
               </ResponsiveContainer>
             </div>
 
@@ -544,10 +566,8 @@ const DataTrend: React.FC = () => {
             {timeframe === 'day'}
 
             {/* Legend for complex charts */}
-            {(metricType === 'mood-detail' || metricType === 'time') && (
-              <div className="flex flex-wrap justify-center gap-4 px-4 py-4 text-xs">
-                {metricType === 'mood-detail' ? (
-                  <>
+            {(metricType === 'mood-detail' || metricType === 'time') && <div className="flex flex-wrap justify-center gap-4 px-4 py-4 text-xs">
+                {metricType === 'mood-detail' ? <>
                     <div className="flex items-center">
                       <div className="w-3 h-3 rounded-full bg-[#a0e4b3] mr-1"></div>
                       <span>Happy</span>
@@ -564,9 +584,7 @@ const DataTrend: React.FC = () => {
                       <div className="w-3 h-3 rounded-full bg-[#FFDEE2] mr-1"></div>
                       <span>Stressed</span>
                     </div>
-                  </>
-                ) : (
-                  <>
+                  </> : <>
                     <div className="flex items-center">
                       <div className="w-3 h-3 rounded-full bg-[#9b87f5] mr-1"></div>
                       <span>Work</span>
@@ -587,10 +605,8 @@ const DataTrend: React.FC = () => {
                       <div className="w-3 h-3 rounded-full bg-[#FEF7CD] mr-1"></div>
                       <span>Self-Care</span>
                     </div>
-                  </>
-                )}
-              </div>
-            )}
+                  </>}
+              </div>}
           </CardContent>
         </Card>
 
@@ -602,50 +618,38 @@ const DataTrend: React.FC = () => {
               <h3 className="font-medium">Insights</h3>
             </div>
             
-            {metricType === 'mood' && (
-              <div className="space-y-3">
+            {metricType === 'mood' && <div className="space-y-3">
                 <p>Your mood has been generally trending upward this {timeframe}.</p>
                 <p>Morning periods seem to have higher scores than evenings.</p>
                 <p>Consider activities that boost your mood during lower periods.</p>
-              </div>
-            )}
+              </div>}
             
-            {metricType === 'stress' && (
-              <div className="space-y-3">
+            {metricType === 'stress' && <div className="space-y-3">
                 <p>Your stress levels have decreased over this {timeframe}.</p>
                 <p>Meditation sessions appear to reduce stress levels significantly.</p>
                 <p>Work-related stress peaks on Mondays and gradually decreases throughout the week.</p>
-              </div>
-            )}
+              </div>}
             
-            {metricType === 'energy' && (
-              <div className="space-y-3">
+            {metricType === 'energy' && <div className="space-y-3">
                 <p>Your energy levels peak in the late morning and early afternoon.</p>
                 <p>Social interactions appear to boost your energy significantly.</p>
                 <p>Consider scheduling important tasks during your high-energy periods.</p>
-              </div>
-            )}
+              </div>}
             
-            {metricType === 'mood-detail' && (
-              <div className="space-y-3">
+            {metricType === 'mood-detail' && <div className="space-y-3">
                 <p>Happiness and calmness are your dominant emotions this {timeframe}.</p>
                 <p>Stress levels peak during midweek but decrease on weekends.</p>
                 <p>Focus appears to be strongest in the mornings - consider scheduling important tasks then.</p>
-              </div>
-            )}
+              </div>}
             
-            {metricType === 'time' && (
-              <div className="space-y-3">
+            {metricType === 'time' && <div className="space-y-3">
                 <p>Work takes up the majority of your awake hours this {timeframe}.</p>
                 <p>Self-care and exercise time has increased compared to previous periods.</p>
                 <p>Consider increasing learning activities to meet your personal growth goals.</p>
-              </div>
-            )}
+              </div>}
           </CardContent>
         </Card>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default DataTrend;
