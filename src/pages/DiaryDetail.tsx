@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, MapPin, Clock, Star, Share2, MessageSquare } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -137,24 +137,47 @@ After walking around looking for a place to eat, we eventually chose a Nepalese/
     }]
   }
 };
+
 const DiaryDetail: React.FC = () => {
   const navigate = useNavigate();
-  const {
-    id
-  } = useParams();
+  const { id } = useParams();
   const entryId = id ? parseInt(id) : 1;
-  const diaryEntry = diaryEntries[entryId as keyof typeof diaryEntries];
+  const [diaryEntry, setDiaryEntry] = useState(diaryEntries[entryId as keyof typeof diaryEntries]);
+  const [reflection, setReflection] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Set the initial diary entry from static data
+    setDiaryEntry(diaryEntries[entryId as keyof typeof diaryEntries]);
+    
+    // Check if there's a saved reflection in localStorage
+    const storedEntries = localStorage.getItem('diaryEntries');
+    if (storedEntries) {
+      const parsedEntries = JSON.parse(storedEntries);
+      if (parsedEntries[entryId]?.reflection) {
+        setReflection(parsedEntries[entryId].reflection);
+      } else {
+        setReflection(null);
+      }
+    }
+  }, [entryId]);
+  
   const handleBack = () => {
     navigate(-1);
   };
+  
   const handleReflect = () => {
     navigate(`/reflect/${id}`);
   };
-  return <div className="min-h-screen bg-background">
+  
+  return (
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="flex justify-between items-center px-4 h-14">
-          <button onClick={handleBack} className="p-2 -ml-2 rounded-full hover:bg-accent/50">
+          <button 
+            onClick={handleBack}
+            className="p-2 -ml-2 rounded-full hover:bg-accent/50"
+          >
             <ArrowLeft className="h-5 w-5" />
           </button>
           
@@ -164,14 +187,14 @@ const DiaryDetail: React.FC = () => {
             </button>
             
             <button className="text-muted-foreground hover:text-primary">
-              
+              <Share2 className="h-5 w-5" />
             </button>
           </div>
         </div>
       </header>
       
       {/* Content */}
-      <main className="pt-14 px-4 py-5">
+      <main className="pt-14 px-4 py-5 pb-24">
         <div className="mb-6">
           <h1 className="text-2xl font-medium">{diaryEntry.title}</h1>
           
@@ -179,10 +202,12 @@ const DiaryDetail: React.FC = () => {
             <Clock className="h-4 w-4 mr-1" />
             <span className="mr-4">{diaryEntry.timeRange}</span>
             
-            {diaryEntry.location && <>
+            {diaryEntry.location && (
+              <>
                 <MapPin className="h-4 w-4 mr-1" />
                 <span>{diaryEntry.location}</span>
-              </>}
+              </>
+            )}
           </div>
           
           <div className="mt-1 text-sm text-muted-foreground">
@@ -191,16 +216,33 @@ const DiaryDetail: React.FC = () => {
         </div>
         
         <div className="prose prose-sm max-w-none">
-          {diaryEntry.content.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+          {diaryEntry.content.split('\n\n').map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
         </div>
         
+        {/* User's Reflection Section */}
+        {reflection && (
+          <div className="mt-8 mb-8">
+            <h2 className="text-xl font-medium mb-3">My Reflection</h2>
+            <div className="bg-nirva-soft-purple/30 p-4 rounded-lg">
+              <p className="text-sm">{reflection}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="fixed bottom-5 left-0 right-0 flex justify-center">
-          <button onClick={handleReflect} className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center">
+          <button 
+            onClick={handleReflect}
+            className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center"
+          >
             <MessageSquare className="h-5 w-5 mr-2" />
-            Reflect on this
+            {reflection ? "Edit reflection" : "Reflect on this"}
           </button>
         </div>
       </main>
-    </div>;
+    </div>
+  );
 };
+
 export default DiaryDetail;

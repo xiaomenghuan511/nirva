@@ -1,20 +1,35 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mic } from 'lucide-react';
 
 interface ReflectionPromptProps {
   question: string;
   type: 'self' | 'goal';
+  entryId?: string;
   onSave: (answer: string) => void;
 }
 
 const ReflectionPrompt: React.FC<ReflectionPromptProps> = ({
   question,
   type,
+  entryId,
   onSave
 }) => {
   const [answer, setAnswer] = useState('');
   const [isRecording, setIsRecording] = useState(false);
+  
+  // Load existing reflection if available
+  useEffect(() => {
+    if (entryId) {
+      const storedEntries = localStorage.getItem('diaryEntries');
+      if (storedEntries) {
+        const diaryEntries = JSON.parse(storedEntries);
+        if (diaryEntries[entryId]?.reflection) {
+          setAnswer(diaryEntries[entryId].reflection);
+        }
+      }
+    }
+  }, [entryId]);
   
   const handleSave = () => {
     if (answer.trim()) {
