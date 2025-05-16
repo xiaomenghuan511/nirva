@@ -22,7 +22,7 @@ const AffirmationCard: React.FC<AffirmationCardProps> = ({
   const gradientClass = gradientStyles[mood];
 
   return (
-    <div className={`p-6 rounded-xl mb-6 shadow-sm border border-border ${gradientClass} transition-colors duration-300`}>
+    <div className={`p-6 rounded-xl mb-6 shadow-sm border border-border ${gradientClass} transition-colors duration-300 animate-slide-in-right`}>
       <p className="affirmation">"{affirmation}"</p>
     </div>
   );

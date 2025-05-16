@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
 import TimelineCard from '../components/timeline/TimelineCard';
@@ -16,6 +15,7 @@ import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import type { CarouselApi } from '@/components/ui/carousel';
 
 // Sample timeline data based on the diary entry
 const timelineEvents = [
@@ -179,11 +179,41 @@ const Index: React.FC = () => {
       isSelected: format(day, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     };
   });
+
+  // Add state for carousel API and current slide
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const totalSlides = affirmations.length;
+
+  // Set up auto-rotation with useEffect
+  useEffect(() => {
+    if (!api) return;
+    
+    const intervalId = setInterval(() => {
+      api.scrollNext();
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [api]);
+
+  // Keep track of current slide
+  useEffect(() => {
+    if (!api) return;
+    
+    const handleSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+    
+    api.on("select", handleSelect);
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
   
   return (
     <Layout title="Smart Diary">
       <div className="px-4 py-5">
-        <Carousel className="mb-8">
+        <Carousel className="mb-8" setApi={setApi}>
           <CarouselContent>
             {affirmations.map((affirmation, index) => (
               <CarouselItem key={index}>
@@ -199,7 +229,9 @@ const Index: React.FC = () => {
               {affirmations.map((_, index) => (
                 <div 
                   key={index} 
-                  className="w-2 h-2 rounded-full bg-primary opacity-60"
+                  className={`w-2 h-2 rounded-full ${
+                    current === index ? 'bg-primary' : 'bg-primary opacity-60'
+                  } transition-opacity duration-300`}
                 />
               ))}
             </div>
