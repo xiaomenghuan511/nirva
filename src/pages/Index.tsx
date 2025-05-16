@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/layout/Layout';
 import AffirmationCard from '../components/timeline/AffirmationCard';
@@ -357,8 +356,11 @@ const Index: React.FC = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                
-                {/* Star button for saved events */}
+              </div>
+              
+              {/* Right side with star and search buttons */}
+              <div className="flex items-center gap-2">
+                {/* Star button for saved events moved here */}
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -370,17 +372,17 @@ const Index: React.FC = () => {
                     fill={showSavedEvents ? "currentColor" : "none"}
                   />
                 </Button>
+                
+                {/* Search button */}
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8" 
+                  onClick={() => setSearchDialogOpen(true)}
+                >
+                  <Search className="h-5 w-5 text-muted-foreground" />
+                </Button>
               </div>
-              
-              {/* Search button on the right */}
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8" 
-                onClick={() => setSearchDialogOpen(true)}
-              >
-                <Search className="h-5 w-5 text-muted-foreground" />
-              </Button>
             </div>
             
             <div className="flex justify-between items-center">
