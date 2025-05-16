@@ -112,7 +112,7 @@ const Me: React.FC = () => {
                   </div>
                 </div>
               </> : <div className="flex flex-col items-center justify-center py-8">
-                <WifiOff className="text-muted-foreground mb-4" size={48} />
+                
                 <p className="text-muted-foreground mb-4">No device connected</p>
                 <Button onClick={handleConnectNecklace} className="bg-primary text-primary-foreground">
                   Connect Your Necklace
