@@ -89,7 +89,7 @@ const NecklaceDetails: React.FC = () => {
               {/* Factory Reset */}
               <div className="flex items-center justify-between p-4">
                 <span className="text-foreground">Forget This Device</span>
-                <Button variant="destructive" size="sm">Reset</Button>
+                <Button variant="destructive" size="sm">Forget</Button>
               </div>
             </CardContent>
           </Card>
