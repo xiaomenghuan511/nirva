@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowLeft, MapPin, Clock, Star, Share2, MessageSquare } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -25,7 +24,10 @@ We also had an in-depth discussion about my fertility plans - waiting until 40 t
     isBookmarked: true,
     mood: 'reflective',
     category: 'personal',
-    people: [{ id: 1, name: 'Ashley' }]
+    people: [{
+      id: 1,
+      name: 'Ashley'
+    }]
   },
   2: {
     id: 2,
@@ -41,7 +43,10 @@ I confirmed my next arrangement: meeting Trent around 1:30 PM to go to San Franc
     isBookmarked: false,
     mood: 'calm',
     category: 'personal',
-    people: [{ id: 1, name: 'Ashley' }]
+    people: [{
+      id: 1,
+      name: 'Ashley'
+    }]
   },
   3: {
     id: 3,
@@ -61,7 +66,10 @@ When Trent asked about my morning picnic, I detailed meeting Ashley at the inten
     isBookmarked: false,
     mood: 'focused',
     category: 'personal',
-    people: [{ id: 2, name: 'Trent' }]
+    people: [{
+      id: 2,
+      name: 'Trent'
+    }]
   },
   4: {
     id: 4,
@@ -81,7 +89,10 @@ We realized we might miss the 3:00 PM movie start and felt a bit anxious, so we 
     isBookmarked: false,
     mood: 'energetic',
     category: 'personal',
-    people: [{ id: 2, name: 'Trent' }]
+    people: [{
+      id: 2,
+      name: 'Trent'
+    }]
   },
   5: {
     id: 5,
@@ -95,7 +106,10 @@ The story touched on the Tiananmen Square incident, which resonated with me pers
     isBookmarked: false,
     mood: 'reflective',
     category: 'personal',
-    people: [{ id: 2, name: 'Trent' }]
+    people: [{
+      id: 2,
+      name: 'Trent'
+    }]
   },
   6: {
     id: 6,
@@ -117,34 +131,30 @@ After walking around looking for a place to eat, we eventually chose a Nepalese/
     isBookmarked: false,
     mood: 'reflective',
     category: 'personal',
-    people: [{ id: 2, name: 'Trent' }]
+    people: [{
+      id: 2,
+      name: 'Trent'
+    }]
   }
 };
-
 const DiaryDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  
+  const {
+    id
+  } = useParams();
   const entryId = id ? parseInt(id) : 1;
   const diaryEntry = diaryEntries[entryId as keyof typeof diaryEntries];
-  
   const handleBack = () => {
     navigate(-1);
   };
-  
   const handleReflect = () => {
     navigate(`/reflect/${id}`);
   };
-  
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="flex justify-between items-center px-4 h-14">
-          <button 
-            onClick={handleBack}
-            className="p-2 -ml-2 rounded-full hover:bg-accent/50"
-          >
+          <button onClick={handleBack} className="p-2 -ml-2 rounded-full hover:bg-accent/50">
             <ArrowLeft className="h-5 w-5" />
           </button>
           
@@ -154,7 +164,7 @@ const DiaryDetail: React.FC = () => {
             </button>
             
             <button className="text-muted-foreground hover:text-primary">
-              <Share2 className="h-5 w-5" />
+              
             </button>
           </div>
         </div>
@@ -169,12 +179,10 @@ const DiaryDetail: React.FC = () => {
             <Clock className="h-4 w-4 mr-1" />
             <span className="mr-4">{diaryEntry.timeRange}</span>
             
-            {diaryEntry.location && (
-              <>
+            {diaryEntry.location && <>
                 <MapPin className="h-4 w-4 mr-1" />
                 <span>{diaryEntry.location}</span>
-              </>
-            )}
+              </>}
           </div>
           
           <div className="mt-1 text-sm text-muted-foreground">
@@ -183,23 +191,16 @@ const DiaryDetail: React.FC = () => {
         </div>
         
         <div className="prose prose-sm max-w-none">
-          {diaryEntry.content.split('\n\n').map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          {diaryEntry.content.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>
         
         <div className="fixed bottom-5 left-0 right-0 flex justify-center">
-          <button
-            onClick={handleReflect}
-            className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center"
-          >
+          <button onClick={handleReflect} className="bg-primary text-white px-6 py-3 rounded-full shadow-lg flex items-center">
             <MessageSquare className="h-5 w-5 mr-2" />
             Reflect on this
           </button>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default DiaryDetail;
