@@ -7,6 +7,7 @@ import { Clock, Shield, Upload, Settings, ChevronRight, Info, Undo2, Bluetooth, 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
+
 const Me: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -210,10 +211,10 @@ const Me: React.FC = () => {
               <DialogTitle className="text-2xl font-semibold mb-4">Bluetooth Pairing Request</DialogTitle>
               <p className="text-center text-lg mb-8">"Nirva" would like to pair with your iPhone.</p>
               <div className="flex w-full gap-4">
-                <Button variant="outline" onClick={handleCancelPairing} className="flex-1 border-amber-500 text-amber-600 hover:bg-amber-50">
+                <Button variant="outline" onClick={handleCancelPairing} className="flex-1 text-muted-foreground border-muted">
                   Cancel
                 </Button>
-                <Button onClick={handleBluetoothPair} variant="link" className="flex-1 text-blue-500 hover:text-blue-600">
+                <Button onClick={handleBluetoothPair} className="flex-1 bg-blue-500 hover:bg-blue-600 text-white">
                   Pair
                 </Button>
               </div>
@@ -258,4 +259,5 @@ const Me: React.FC = () => {
       </Dialog>
     </Layout>;
 };
+
 export default Me;
